@@ -26,14 +26,37 @@ namespace AntiLobby_2
             this.listBox = inListBox;
         }
 
+
+        public void setListObject(ListBox listBox)
+        {
+            this.listBox = listBox;
+        }
+
         public void addItem(ProcessItem inItem)
         {
-            if (!this.list.ContainsKey(inItem.getName()))
+            if (!this.list.ContainsKey(inItem.getName()) && inItem != null)
             {
                 this.list.Add(inItem.getName(), inItem);
             }
         }
 
+        public void addAndCount(ProcessItem inItem)
+        {
+            if (inItem != null && inItem.getName() != "null")
+            {
+                if (!this.list.ContainsKey(inItem.getName()))
+                {
+                    this.list.Add(inItem.getName(), inItem); //add item if it isn't located inside list
+                } else
+                {
+                    this.list[inItem.getName()].addTime(1); //Adds one second to the item if present in list already
+                }
+
+            }
+
+
+
+        }
         /*
         public void removeItem(ProcessItem inItem)
         {

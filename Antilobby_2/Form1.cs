@@ -22,6 +22,7 @@ namespace Antilobby_2
         public Form1()
         {
             InitializeComponent();
+
             AutomationFocusChangedEventHandler focusHandler = OnFocusChanged;
             Automation.AddAutomationFocusChangedEventHandler(focusHandler);
 
@@ -86,12 +87,18 @@ namespace Antilobby_2
 
                 lblMyInfoSessionID.Text = "Session ID: none";
             }
+
+            
         }
 
         private void TimerProcesses_Tick(object sender, EventArgs e)
         {
-            //Where the process inspection goes
-            //superSession.processList.
+
+            //Add process to processList using a ProcessItem object
+            superSession.processList.addAndCount(new ProcessItem(global.processName));
+            superSession.processList.refreshList(listProcesses); //link listProcesses list to use the processList items
+
+            label1.Text = "" + global.processName;
         }
 
 
@@ -109,9 +116,11 @@ namespace Antilobby_2
                     int processId = focusedElement.Current.ProcessId; //error when closing a program that is being focused?
                     using (Process process = Process.GetProcessById(processId))
                     {
-
-                        label4.Text = "" + process.ProcessName;
-
+                        toolStripStatusMain.Text = "Working... " + DateTime.Now;
+                        
+                        //label4.Text = "" + process.ProcessName;
+                        //MessageBox.Show("" + process.ProcessName);
+                        //listProcesses.Items.Add("" + process.ProcessName);
                         //essential for tick to increment a ProcessItem.timeViewed
                         //main.currentProcessName = process.ProcessName.ToString();
 
@@ -120,10 +129,14 @@ namespace Antilobby_2
                         //adds a new ProcessItem with a defined name to the current ProcessList
                         //with the assumption the item is not already defined in the ProcessList
                         //addItem checks if item is located, does nothing if is (so no duplicates)
-                        superSession.processList.addItem(new ProcessItem(process.ProcessName));
+                        
+                        global.processName = process.ProcessName;
+                        //label1.Text = "" + process.ProcessName.ToString();
+                        //superSession.processList.setListObject(listProcesses);
+                        //superSession.processList.addItem(new ProcessItem(global.processName));
 
                         //refreshes the inserted ListBox so that it can reflect new changes
-                        superSession.processList.refreshList(listProcesses);
+                        //superSession.processList.refreshList(listProcesses);
                     }
                 }
             }
@@ -131,9 +144,10 @@ namespace Antilobby_2
             {
                 //something bad happened
                 //MessageBox.Show(ee.ToString());
-
+                toolStripStatusMain.Text = "Error " + DateTime.Now;
             }
         }
+
 
     }
 }
