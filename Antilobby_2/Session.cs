@@ -14,19 +14,20 @@ namespace Antilobby_2
      * */
     class Session
     {
-        private int id;
+        private string id;
         private int tickCount; //total time elapsed
         private User user; //user associated with session
         private ProcessList processList = new ProcessList();
 
         public Session(User user)
         {
-            this.id = MyUtils.getSessionID();
+            
             this.tickCount = 0;
             this.user = user;
+            this.id = MyUtils.getSessionID(); //Create and assign new session ID immediately
         }
 
-        public int Id { get => this.id; set => this.id = value; }
+        public string Id { get => this.id; set => this.id = value; }
         public int TickCount { get => tickCount; set => tickCount = value; }
 
 

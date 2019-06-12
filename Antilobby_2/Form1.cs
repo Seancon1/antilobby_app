@@ -36,10 +36,12 @@ namespace Antilobby_2
         {
             if(superSession != null)
             {
-                MessageBox.Show("Session already started.");
+                MessageBox.Show("Session already exists.");
             } else
             {
-                MessageBox.Show("Session has been started.");
+                //Start new session with existing user
+                superSession = new Session(superUser);
+                MessageBox.Show("A new session ("+ superSession.Id.ToString() +") has been started.");
             
             }
         }
@@ -70,7 +72,7 @@ namespace Antilobby_2
                 startToolStripMenuItem.Enabled = false;
                 stopToolStripMenuItem.Enabled = true;
 
-                lblMyInfoSessionID.Text = "Session ID: " + superSession.Id;
+                lblMyInfoSessionID.Text = "Session ID: " + superSession.Id.ToString();
             } else
             {
                 //Disable UI components

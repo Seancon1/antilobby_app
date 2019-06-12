@@ -14,7 +14,6 @@ namespace Antilobby_2
         
         private string IP;
         private string MAC;
-        private ProcessList processList;
 
         public User()
         {
@@ -30,6 +29,5 @@ namespace Antilobby_2
 
         public string IP1 { get => IP; set => IP = value; }
         public string MAC1 { get => MAC; set => MAC = value; }
-        internal ProcessList ProcessList { get => processList; set => processList = value; }
     }
 }

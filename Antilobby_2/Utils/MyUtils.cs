@@ -39,19 +39,17 @@ namespace AntiLobby_2
             return address;
         }
 
-        public static int getSessionID()
+        public static string getSessionID()
         {
             Random random = new Random();
             StringBuilder id = new StringBuilder();
-            int returnValue;
+
             while(id.Length < 10)
             {
                 id.Append(random.Next(0, 9));
             }
 
-            int.TryParse(id.ToString(), out returnValue);
-
-            return returnValue;
+            return id.ToString();
         }
 
     }
