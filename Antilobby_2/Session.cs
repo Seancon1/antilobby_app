@@ -17,7 +17,7 @@ namespace Antilobby_2
         private string id;
         private int tickCount; //total time elapsed
         private User user; //user associated with session
-        private ProcessList processList = new ProcessList();
+        public ProcessList processList = new ProcessList();
 
         public Session(User user)
         {

@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Automation;
+using System.Diagnostics;
+using AntiLobby_2;
 
 namespace Antilobby_2
 {
@@ -19,6 +22,8 @@ namespace Antilobby_2
         public Form1()
         {
             InitializeComponent();
+            AutomationFocusChangedEventHandler focusHandler = OnFocusChanged;
+            Automation.AddAutomationFocusChangedEventHandler(focusHandler);
 
             // Create user and session
             superUser = new User();
@@ -82,5 +87,52 @@ namespace Antilobby_2
                 lblMyInfoSessionID.Text = "Session ID: none";
             }
         }
+
+        private void TimerProcesses_Tick(object sender, EventArgs e)
+        {
+            //Where the process inspection goes
+            //superSession.processList.
+        }
+
+
+        /*
+         * Detects that the mouse has changed focus, time to do something
+         * */
+        private void OnFocusChanged(object sender, AutomationFocusChangedEventArgs e)
+        {
+            try
+            {
+                AutomationElement focusedElement = sender as AutomationElement;
+                if (focusedElement != null)
+                {
+                    int processId = focusedElement.Current.ProcessId; //error when closing a program that is being focused?
+                    using (Process process = Process.GetProcessById(processId))
+                    {
+
+                        label4.Text = "" + process.ProcessName;
+
+                        //essential for tick to increment a ProcessItem.timeViewed
+                        //main.currentProcessName = process.ProcessName.ToString();
+
+
+                        //Sneak in and add new list handling code for testing
+                        //adds a new ProcessItem with a defined name to the current ProcessList
+                        //with the assumption the item is not already defined in the ProcessList
+                        //addItem checks if item is located, does nothing if is (so no duplicates)
+                        superSession.processList.addItem(new ProcessItem(process.ProcessName));
+
+                        //refreshes the inserted ListBox so that it can reflect new changes
+                        superSession.processList.refreshList(listProcesses);
+                    }
+                }
+            }
+            catch (Exception ee)
+            {
+                //something bad happened
+                //MessageBox.Show(ee.ToString());
+
+            }
+        }
+
     }
 }

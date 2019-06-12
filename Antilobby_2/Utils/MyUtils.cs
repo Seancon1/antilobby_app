@@ -41,6 +41,14 @@ namespace AntiLobby_2
 
         public static string getSessionID()
         {
+
+            /*
+             * 
+             * 
+             Random rand = new Random(DateTime.Now.Millisecond);
+            return rand.Next();
+             * */
+
             Random random = new Random();
             StringBuilder id = new StringBuilder();
 
