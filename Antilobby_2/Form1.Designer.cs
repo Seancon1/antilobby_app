@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,11 +51,19 @@
             this.listProcesses = new System.Windows.Forms.ListBox();
             this.lblCurrentProcess = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.dataSet1 = new System.Data.DataSet();
+            this.startSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TimerMainUIComponents = new System.Windows.Forms.Timer(this.components);
+            this.lblMyInfoSessionID = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -72,6 +81,7 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startSessionToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(37, 20);
@@ -80,8 +90,9 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -236,13 +247,57 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.lblMyInfoSessionID);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(442, 239);
+            this.tabPage4.Size = new System.Drawing.Size(505, 239);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "My Information";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // dataSet1
+            // 
+            this.dataSet1.DataSetName = "NewDataSet";
+            // 
+            // startSessionToolStripMenuItem
+            // 
+            this.startSessionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startToolStripMenuItem,
+            this.stopToolStripMenuItem});
+            this.startSessionToolStripMenuItem.Name = "startSessionToolStripMenuItem";
+            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startSessionToolStripMenuItem.Text = "Session";
+            // 
+            // startToolStripMenuItem
+            // 
+            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startToolStripMenuItem.Text = "Start";
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
+            // 
+            // stopToolStripMenuItem
+            // 
+            this.stopToolStripMenuItem.Enabled = false;
+            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stopToolStripMenuItem.Text = "Stop";
+            this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+            // 
+            // TimerMainUIComponents
+            // 
+            this.TimerMainUIComponents.Enabled = true;
+            this.TimerMainUIComponents.Interval = 1000;
+            this.TimerMainUIComponents.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // lblMyInfoSessionID
+            // 
+            this.lblMyInfoSessionID.AutoSize = true;
+            this.lblMyInfoSessionID.Location = new System.Drawing.Point(30, 19);
+            this.lblMyInfoSessionID.Name = "lblMyInfoSessionID";
+            this.lblMyInfoSessionID.Size = new System.Drawing.Size(124, 13);
+            this.lblMyInfoSessionID.TabIndex = 0;
+            this.lblMyInfoSessionID.Text = "Session ID: 1234567890";
             // 
             // Form1
             // 
@@ -263,6 +318,9 @@
             this.tabPage2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -292,6 +350,12 @@
         private System.Windows.Forms.ListBox listProcesses;
         private System.Windows.Forms.Label lblCurrentProcess;
         private System.Windows.Forms.TabPage tabPage4;
+        private System.Data.DataSet dataSet1;
+        private System.Windows.Forms.ToolStripMenuItem startSessionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
+        private System.Windows.Forms.Timer TimerMainUIComponents;
+        private System.Windows.Forms.Label lblMyInfoSessionID;
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Antilobby_2;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,6 @@ namespace AntiLobby_2
             {
                 this.list.Add(inItem.getName(), inItem);
             }
-            
         }
 
         /*
@@ -75,7 +75,7 @@ namespace AntiLobby_2
            //}
         }
 
-
+        /*
         public void saveToDatabase()
         {
             Logger item = new Logger();
@@ -92,5 +92,6 @@ namespace AntiLobby_2
 
             //MessageBox.Show("Games should be saved");
         }
+        */
     }
 }

@@ -19,6 +19,7 @@ namespace AntiLobby_2
     {
 
         Session session = null;
+        User user = null;
 
         //Place where all database communication happens
 
@@ -27,20 +28,21 @@ namespace AntiLobby_2
 
         }
 
-        public Logger(Session inSession)
+        public Logger(Session inSession, User inUser)
         {
             this.session = inSession;
+            this.user = inUser;
         }
 
-        public async void saveTimeTypeAsync(string MAC, int tickCount)
+        public async void saveTimeTypeAsync()
         {
             using (var client = new HttpClient())
             {
                 var values = new Dictionary<string, string>
             {
-            { "mac", MAC },
+            { "mac", user.MAC1 },
             { "timeType", "1" },
-            { "time", "" + tickCount },
+            { "time", "" + session.TickCount },
             { "date", "" + DateTime.Now.ToString("yyyy-MM-dd h:mm tt")},
             { "sessionValue", "" + session.Id },
             { "action", "logSessionTime" }

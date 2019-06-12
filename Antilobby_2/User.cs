@@ -27,5 +27,9 @@ namespace Antilobby_2
             this.IP = inIP;
             this.MAC = inMAC;
         }
+
+        public string IP1 { get => IP; set => IP = value; }
+        public string MAC1 { get => MAC; set => MAC = value; }
+        internal ProcessList ProcessList { get => processList; set => processList = value; }
     }
 }
