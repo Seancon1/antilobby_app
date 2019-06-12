@@ -97,6 +97,7 @@ namespace Antilobby_2
 
         /*
          * Detects that the mouse has changed focus, time to do something
+         * yes
          * */
         private void OnFocusChanged(object sender, AutomationFocusChangedEventArgs e)
         {
