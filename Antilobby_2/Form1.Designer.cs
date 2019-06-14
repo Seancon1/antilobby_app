@@ -34,10 +34,10 @@
             this.startSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mACAddresssaveToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.iPAddressclipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +47,7 @@
             this.toolStripStatusMain = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblSelectedProcessName = new System.Windows.Forms.Label();
             this.listProcesses = new System.Windows.Forms.ListBox();
@@ -55,8 +56,8 @@
             this.lblMyInfoSessionID = new System.Windows.Forms.Label();
             this.TimerMainUIComponents = new System.Windows.Forms.Timer(this.components);
             this.TimerProcesses = new System.Windows.Forms.Timer(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblTimeElapsed = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -80,6 +81,7 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
             this.startSessionToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
@@ -93,13 +95,13 @@
             this.startToolStripMenuItem,
             this.stopToolStripMenuItem});
             this.startSessionToolStripMenuItem.Name = "startSessionToolStripMenuItem";
-            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.startSessionToolStripMenuItem.Text = "Session";
             // 
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.startToolStripMenuItem.Text = "Start";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
@@ -107,37 +109,36 @@
             // 
             this.stopToolStripMenuItem.Enabled = false;
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.saveToolStripMenuItem});
+            this.toolStripMenuItem1});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // toolStripMenuItem1
             // 
+            this.toolStripMenuItem1.Enabled = false;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem1.Text = "Alert Settings";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.saveToolStripMenuItem.Text = "Save";
             // 
             // getToolStripMenuItem
             // 
@@ -154,18 +155,21 @@
             this.mACAddresssaveToClipboardToolStripMenuItem.Name = "mACAddresssaveToClipboardToolStripMenuItem";
             this.mACAddresssaveToClipboardToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.mACAddresssaveToClipboardToolStripMenuItem.Text = "MAC Address (clipboard)";
+            this.mACAddresssaveToClipboardToolStripMenuItem.Click += new System.EventHandler(this.mACAddresssaveToClipboardToolStripMenuItem_Click);
             // 
             // iPAddressclipboardToolStripMenuItem
             // 
             this.iPAddressclipboardToolStripMenuItem.Name = "iPAddressclipboardToolStripMenuItem";
             this.iPAddressclipboardToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.iPAddressclipboardToolStripMenuItem.Text = "IP Address (clipboard)";
+            this.iPAddressclipboardToolStripMenuItem.Click += new System.EventHandler(this.iPAddressclipboardToolStripMenuItem_Click);
             // 
             // sessionValueclipboardToolStripMenuItem
             // 
             this.sessionValueclipboardToolStripMenuItem.Name = "sessionValueclipboardToolStripMenuItem";
             this.sessionValueclipboardToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.sessionValueclipboardToolStripMenuItem.Text = "Session Value (clipboard)";
+            this.sessionValueclipboardToolStripMenuItem.Click += new System.EventHandler(this.sessionValueclipboardToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -213,6 +217,15 @@
             this.tabPage2.Text = "Processes";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(176, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "label1";
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lblSelectedProcessName);
@@ -240,6 +253,7 @@
             this.listProcesses.Name = "listProcesses";
             this.listProcesses.Size = new System.Drawing.Size(367, 147);
             this.listProcesses.TabIndex = 1;
+            this.listProcesses.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listProcesses_MouseClick);
             // 
             // lblCurrentProcess
             // 
@@ -264,7 +278,7 @@
             // lblMyInfoSessionID
             // 
             this.lblMyInfoSessionID.AutoSize = true;
-            this.lblMyInfoSessionID.Location = new System.Drawing.Point(30, 19);
+            this.lblMyInfoSessionID.Location = new System.Drawing.Point(29, 17);
             this.lblMyInfoSessionID.Name = "lblMyInfoSessionID";
             this.lblMyInfoSessionID.Size = new System.Drawing.Size(124, 13);
             this.lblMyInfoSessionID.TabIndex = 0;
@@ -273,7 +287,6 @@
             // TimerMainUIComponents
             // 
             this.TimerMainUIComponents.Enabled = true;
-            this.TimerMainUIComponents.Interval = 1000;
             this.TimerMainUIComponents.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // TimerProcesses
@@ -282,25 +295,28 @@
             this.TimerProcesses.Interval = 1000;
             this.TimerProcesses.Tick += new System.EventHandler(this.TimerProcesses_Tick);
             // 
-            // label1
+            // saveToolStripMenuItem
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(176, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "label1";
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click_1);
             // 
-            // toolStripSeparator1
+            // lblTimeElapsed
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.lblTimeElapsed.AutoSize = true;
+            this.lblTimeElapsed.Location = new System.Drawing.Point(390, 9);
+            this.lblTimeElapsed.Name = "lblTimeElapsed";
+            this.lblTimeElapsed.Size = new System.Drawing.Size(74, 13);
+            this.lblTimeElapsed.TabIndex = 1;
+            this.lblTimeElapsed.Text = "Time Elapsed:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(529, 330);
+            this.Controls.Add(this.lblTimeElapsed);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -330,7 +346,6 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mACAddresssaveToClipboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem iPAddressclipboardToolStripMenuItem;
@@ -353,6 +368,8 @@
         private System.Windows.Forms.Timer TimerProcesses;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.Label lblTimeElapsed;
     }
 }
 

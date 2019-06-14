@@ -14,12 +14,17 @@ namespace AntiLobby_2
         private Dictionary<string, ProcessItem> list;
         private ProcessItem item;
         private ListBox listBox;
+        private Session session;
+        private User user;
 
-        public ProcessList()
+        public ProcessList(Session session, User user)
         {
             //this.list.Add(new ProcessItem("test"));
+            this.session = session;
+            this.user = user;
             this.list = new Dictionary<string, ProcessItem>();
         }
+
 
         public ProcessList(ListBox inListBox)
         {
@@ -93,28 +98,30 @@ namespace AntiLobby_2
             //{
                 foreach (KeyValuePair<string, ProcessItem> item in this.list)
                 {
-                    inList.Items.Add("" + item.Value.showNameFormatted());
-                }
-           //}
+                //inList.Items.Add("" + item.Value.showNameFormatted());
+                inList.Items.Add("" + item.Value.showNameFormatted());
+            }
+            //}
         }
 
-        /*
+        
         public void saveToDatabase()
         {
-            Logger item = new Logger();
+            Logger item = new Logger(this.session, this.user);
 
-            //Saves to 'antilobby' MAC timeType time, date, and Session Value
-            item.saveTimeTypeAsync(Form1.getMacAddress(), main.TickCount); // attempt to save information via POST to cakePHP
+            //Saves to 'antilobby' uses Session Value to save
+            item.saveSessionAsync(); //uses
+
 
             //SAVES to 'antilobby_appTime'
             foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
             {
                 //iterate through list and save for the MAC address
-                item.saveGameTimeAsync(Form1.getMacAddress(), itemToSave.Value.getName(), itemToSave.Value.getTime());
+                item.saveGameTimeAsync(itemToSave.Value.getName(), itemToSave.Value.getTime());
             }
 
             //MessageBox.Show("Games should be saved");
         }
-        */
+        
     }
 }

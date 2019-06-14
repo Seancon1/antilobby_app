@@ -9,5 +9,7 @@ namespace Antilobby_2
     class global
     {
         public static string processName = "null";
+        public static string showstatus_value = "";
+    
     }
 }

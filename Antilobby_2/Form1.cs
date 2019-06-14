@@ -31,6 +31,11 @@ namespace Antilobby_2
             superSession = new Session(superUser);
         }
 
+        public void showStatus(string inText)
+        {
+            toolStripStatusMain.Text = inText + " " + DateTime.Now;
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //exit application
@@ -93,12 +98,21 @@ namespace Antilobby_2
 
         private void TimerProcesses_Tick(object sender, EventArgs e)
         {
+            if (superSession == null)
+            {
+                saveToolStripMenuItem.Enabled = false;
+                return;
+            }
 
+            superSession.incrementTick();
             //Add process to processList using a ProcessItem object
             superSession.processList.addAndCount(new ProcessItem(global.processName));
             superSession.processList.refreshList(listProcesses); //link listProcesses list to use the processList items
-
+            lblTimeElapsed.Text = "Time Elapsed: " + superSession.TickCount;
             label1.Text = "" + global.processName;
+            showStatus(global.showstatus_value);
+            saveToolStripMenuItem.Enabled = true;
+
         }
 
 
@@ -116,7 +130,7 @@ namespace Antilobby_2
                     int processId = focusedElement.Current.ProcessId; //error when closing a program that is being focused?
                     using (Process process = Process.GetProcessById(processId))
                     {
-                        toolStripStatusMain.Text = "Working... " + DateTime.Now;
+                        //toolStripStatusMain.Text = "Working... " + DateTime.Now;
                         
                         //label4.Text = "" + process.ProcessName;
                         //MessageBox.Show("" + process.ProcessName);
@@ -130,7 +144,9 @@ namespace Antilobby_2
                         //with the assumption the item is not already defined in the ProcessList
                         //addItem checks if item is located, does nothing if is (so no duplicates)
                         
-                        global.processName = process.ProcessName;
+                        global.processName = process.ProcessName; //Store this value in another class to escape Exception Out of Thread
+
+                        
                         //label1.Text = "" + process.ProcessName.ToString();
                         //superSession.processList.setListObject(listProcesses);
                         //superSession.processList.addItem(new ProcessItem(global.processName));
@@ -144,10 +160,53 @@ namespace Antilobby_2
             {
                 //something bad happened
                 //MessageBox.Show(ee.ToString());
-                toolStripStatusMain.Text = "Error " + DateTime.Now;
+                showStatus("Error");
             }
         }
 
+        private void listProcesses_MouseClick(object sender, MouseEventArgs e)
+        {
+            //Interesting property of c#, you can cast a class for a selected ListBox item
+            /*
+            ProcessItem item = listProcesses.SelectedItem as ProcessItem;
+            
+                if(item != null)
+            {
+                lblSelectedProcessName.Text = item.getName() + "" + item.getTime();
+            }
 
+            */
+
+            if(listProcesses.SelectedItem != null)
+            {
+                
+                lblSelectedProcessName.Text = listProcesses.SelectedItem.ToString();
+
+            }
+            
+            
+        }
+
+
+        private void saveToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            superSession.processList.saveToDatabase();
+        }
+
+        private void mACAddresssaveToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            Clipboard.SetText("" + MyUtils.getMacAddress());
+        }
+
+        private void iPAddressclipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText("" + MyUtils.GetIPAddress());
+        }
+
+        private void sessionValueclipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText("" + superSession.Id);
+        }
     }
 }

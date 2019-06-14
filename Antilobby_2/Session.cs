@@ -17,7 +17,8 @@ namespace Antilobby_2
         private string id;
         private int tickCount; //total time elapsed
         private User user; //user associated with session
-        public ProcessList processList = new ProcessList();
+        public ProcessList processList = null;
+        private Logger logger = null;
 
         public Session(User user)
         {
@@ -25,31 +26,21 @@ namespace Antilobby_2
             this.tickCount = 0;
             this.user = user;
             this.id = MyUtils.getSessionID(); //Create and assign new session ID immediately
+            this.logger = new Logger(this, user); //create a logger instance
+            this.processList = new ProcessList(this, user);
         }
 
         public string Id { get => this.id; set => this.id = value; }
         public int TickCount { get => tickCount; set => tickCount = value; }
-
-
+        public void incrementTick()
+        {
+            this.tickCount++;
+        }
 
         public void saveSession()
         {
-            /*
-             pseudo
-
-             if(session is present in database) {
-                update session time
-                update app timers
-                }else{
-
-                insert new values for session instance
-                insert app timers
-              
-             */
-            
+            logger.saveSessionAsync();
         }
     
-
-
     }
 }

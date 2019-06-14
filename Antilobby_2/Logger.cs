@@ -23,19 +23,22 @@ namespace AntiLobby_2
 
         //Place where all database communication happens
 
-        public Logger()
-        {
-
-        }
-
         public Logger(Session inSession, User inUser)
         {
             this.session = inSession;
             this.user = inUser;
         }
 
-        public async void saveTimeTypeAsync()
+        public async void saveSessionAsync()
         {
+            if (this.session.Id == null)
+            {
+                //Form1.showStatus("unable to save");
+                return;
+            }
+            global.showstatus_value = "Saving";
+
+
             using (var client = new HttpClient())
             {
                 var values = new Dictionary<string, string>
@@ -45,7 +48,7 @@ namespace AntiLobby_2
             { "time", "" + session.TickCount },
             { "date", "" + DateTime.Now.ToString("yyyy-MM-dd h:mm tt")},
             { "sessionValue", "" + session.Id },
-            { "action", "logSessionTime" }
+            { "action", "SaveSession" }
             };
 
                 var content = new FormUrlEncodedContent(values);
@@ -57,12 +60,21 @@ namespace AntiLobby_2
                 MessageBox.Show(responseString.ToString());
 
                 //MessageBox.Show("Saving Done");
+                
             }
+            global.showstatus_value = "Saved";
         }
 
-        public async void saveGameTimeAsync(string MAC, string processName, int processTime)
+        public async void saveGameTimeAsync(string processName, int processTime)
         {
-            
+            if (this.session.Id == null)
+            {
+                //Form1.showStatus("unable to save");
+                return;
+            }
+
+            global.showstatus_value = "Saving";
+
             using (var client = new HttpClient())
             {
                 var values = new Dictionary<string, string>
@@ -70,7 +82,7 @@ namespace AntiLobby_2
             { "appName", "" + processName.ToString() },
             { "appTime", "" + processTime },
             { "sessionValue", "" + session.Id },
-            { "action", "logGameTime" },
+            { "action", "SaveSingleGameTime" },
             };
 
                 var content = new FormUrlEncodedContent(values);
@@ -80,7 +92,9 @@ namespace AntiLobby_2
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 //MessageBox.Show("Game Times Saved for " + processName);
+                
             }
+            global.showstatus_value = "Saved";
         }
 
 
