@@ -18,3 +18,4 @@ A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\bin\Debug\Antilobby_2.exe
 A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\bin\Debug\Antilobby_2.pdb
 A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.exe
 A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.pdb
+A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.ClosingForm.resources

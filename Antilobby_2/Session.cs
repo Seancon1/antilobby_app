@@ -19,6 +19,7 @@ namespace Antilobby_2
         private User user; //user associated with session
         public ProcessList processList = null;
         private Logger logger = null;
+        private Boolean state = true;
 
         public Session(User user)
         {
@@ -32,6 +33,8 @@ namespace Antilobby_2
 
         public string Id { get => this.id; set => this.id = value; }
         public int TickCount { get => tickCount; set => tickCount = value; }
+        public bool State { get => state; set => state = value; }
+
         public void incrementTick()
         {
             this.tickCount++;
@@ -41,6 +44,7 @@ namespace Antilobby_2
         {
             logger.saveSessionAsync();
         }
+
     
     }
 }

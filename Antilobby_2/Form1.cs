@@ -160,7 +160,7 @@ namespace Antilobby_2
             {
                 //something bad happened
                 //MessageBox.Show(ee.ToString());
-                showStatus("Error");
+                showStatus("Error" + ee.ToString());
             }
         }
 
@@ -208,5 +208,32 @@ namespace Antilobby_2
         {
             Clipboard.SetText("" + superSession.Id);
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                //ClosingForm form = new ClosingForm(); //pass session values to new form
+                while (superSession.State)
+                        {
+                    this.Enabled = false;
+                    
+                            superSession.processList.saveToDatabase(1); //flag = 1 to set state to false
+                        }
+            } catch (Exception error)
+            {
+                MessageBox.Show(error.ToString());
+            }
+            
+            
+            if(superSession.State == false)
+            {
+                MessageBox.Show("Saving complete, application will close now.");
+                //this.Close();
+            }
+            
+            
+        }
+
     }
 }

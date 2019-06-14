@@ -105,7 +105,7 @@ namespace AntiLobby_2
         }
 
         
-        public void saveToDatabase()
+        public void saveToDatabase(int flag = 0)
         {
             Logger item = new Logger(this.session, this.user);
 
@@ -120,6 +120,10 @@ namespace AntiLobby_2
                 item.saveGameTimeAsync(itemToSave.Value.getName(), itemToSave.Value.getTime());
             }
 
+            if(flag == 1)
+            {
+                this.session.State = false;
+            }
             //MessageBox.Show("Games should be saved");
         }
         
