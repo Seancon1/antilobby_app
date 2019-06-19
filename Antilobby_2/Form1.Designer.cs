@@ -46,7 +46,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusMain = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabAlerts = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -55,15 +55,26 @@
             this.lblCurrentProcess = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.lblMyInfoSessionID = new System.Windows.Forms.Label();
+            this.tabPageMyAlerts = new System.Windows.Forms.TabPage();
+            this.flowLayoutActiveAlerts = new System.Windows.Forms.FlowLayoutPanel();
             this.TimerMainUIComponents = new System.Windows.Forms.Timer(this.components);
             this.TimerProcesses = new System.Windows.Forms.Timer(this.components);
             this.lblTimeElapsed = new System.Windows.Forms.Label();
+            this.lblActiveAlertsTitle = new System.Windows.Forms.Label();
+            this.btnAddAlert = new System.Windows.Forms.Button();
+            this.lblAlertProcessListTitle = new System.Windows.Forms.Label();
+            this.comboBoxSelectableProcessesAlert = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBoxAlertTime = new System.Windows.Forms.ComboBox();
+            this.listViewCurrentAlerts = new System.Windows.Forms.ListView();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabAlerts.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPageMyAlerts.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -200,15 +211,16 @@
             this.toolStripStatusMain.Size = new System.Drawing.Size(16, 17);
             this.toolStripStatusMain.Text = "...";
             // 
-            // tabControl1
+            // tabAlerts
             // 
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(12, 36);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(513, 265);
-            this.tabControl1.TabIndex = 13;
+            this.tabAlerts.Controls.Add(this.tabPage2);
+            this.tabAlerts.Controls.Add(this.tabPage4);
+            this.tabAlerts.Controls.Add(this.tabPageMyAlerts);
+            this.tabAlerts.Location = new System.Drawing.Point(12, 36);
+            this.tabAlerts.Name = "tabAlerts";
+            this.tabAlerts.SelectedIndex = 0;
+            this.tabAlerts.Size = new System.Drawing.Size(513, 265);
+            this.tabAlerts.TabIndex = 13;
             // 
             // tabPage2
             // 
@@ -291,6 +303,34 @@
             this.lblMyInfoSessionID.TabIndex = 0;
             this.lblMyInfoSessionID.Text = "Session ID: 1234567890";
             // 
+            // tabPageMyAlerts
+            // 
+            this.tabPageMyAlerts.Controls.Add(this.button1);
+            this.tabPageMyAlerts.Controls.Add(this.listViewCurrentAlerts);
+            this.tabPageMyAlerts.Controls.Add(this.comboBoxAlertTime);
+            this.tabPageMyAlerts.Controls.Add(this.label2);
+            this.tabPageMyAlerts.Controls.Add(this.comboBoxSelectableProcessesAlert);
+            this.tabPageMyAlerts.Controls.Add(this.lblAlertProcessListTitle);
+            this.tabPageMyAlerts.Controls.Add(this.btnAddAlert);
+            this.tabPageMyAlerts.Controls.Add(this.lblActiveAlertsTitle);
+            this.tabPageMyAlerts.Controls.Add(this.flowLayoutActiveAlerts);
+            this.tabPageMyAlerts.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMyAlerts.Name = "tabPageMyAlerts";
+            this.tabPageMyAlerts.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMyAlerts.Size = new System.Drawing.Size(505, 239);
+            this.tabPageMyAlerts.TabIndex = 4;
+            this.tabPageMyAlerts.Text = "Alerts";
+            this.tabPageMyAlerts.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutActiveAlerts
+            // 
+            this.flowLayoutActiveAlerts.AutoScroll = true;
+            this.flowLayoutActiveAlerts.BackColor = System.Drawing.Color.SeaShell;
+            this.flowLayoutActiveAlerts.Location = new System.Drawing.Point(316, 33);
+            this.flowLayoutActiveAlerts.Name = "flowLayoutActiveAlerts";
+            this.flowLayoutActiveAlerts.Size = new System.Drawing.Size(169, 197);
+            this.flowLayoutActiveAlerts.TabIndex = 0;
+            // 
             // TimerMainUIComponents
             // 
             this.TimerMainUIComponents.Enabled = true;
@@ -311,13 +351,85 @@
             this.lblTimeElapsed.TabIndex = 1;
             this.lblTimeElapsed.Text = "Time Elapsed:";
             // 
+            // lblActiveAlertsTitle
+            // 
+            this.lblActiveAlertsTitle.AutoSize = true;
+            this.lblActiveAlertsTitle.Location = new System.Drawing.Point(316, 14);
+            this.lblActiveAlertsTitle.Name = "lblActiveAlertsTitle";
+            this.lblActiveAlertsTitle.Size = new System.Drawing.Size(98, 13);
+            this.lblActiveAlertsTitle.TabIndex = 1;
+            this.lblActiveAlertsTitle.Text = "Active Alert Timers:";
+            // 
+            // btnAddAlert
+            // 
+            this.btnAddAlert.Location = new System.Drawing.Point(58, 60);
+            this.btnAddAlert.Name = "btnAddAlert";
+            this.btnAddAlert.Size = new System.Drawing.Size(75, 23);
+            this.btnAddAlert.TabIndex = 2;
+            this.btnAddAlert.Text = "Add Alert ->";
+            this.btnAddAlert.UseVisualStyleBackColor = true;
+            this.btnAddAlert.Click += new System.EventHandler(this.btnAddAlert_Click);
+            // 
+            // lblAlertProcessListTitle
+            // 
+            this.lblAlertProcessListTitle.AutoSize = true;
+            this.lblAlertProcessListTitle.Location = new System.Drawing.Point(21, 14);
+            this.lblAlertProcessListTitle.Name = "lblAlertProcessListTitle";
+            this.lblAlertProcessListTitle.Size = new System.Drawing.Size(112, 13);
+            this.lblAlertProcessListTitle.TabIndex = 3;
+            this.lblAlertProcessListTitle.Text = "Selectable Processes:";
+            // 
+            // comboBoxSelectableProcessesAlert
+            // 
+            this.comboBoxSelectableProcessesAlert.FormattingEnabled = true;
+            this.comboBoxSelectableProcessesAlert.Location = new System.Drawing.Point(22, 33);
+            this.comboBoxSelectableProcessesAlert.Name = "comboBoxSelectableProcessesAlert";
+            this.comboBoxSelectableProcessesAlert.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxSelectableProcessesAlert.TabIndex = 4;
+            this.comboBoxSelectableProcessesAlert.MouseHover += new System.EventHandler(this.comboBox1_MouseHover);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(153, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Alert Limit:";
+            // 
+            // comboBoxAlertTime
+            // 
+            this.comboBoxAlertTime.FormattingEnabled = true;
+            this.comboBoxAlertTime.Location = new System.Drawing.Point(156, 33);
+            this.comboBoxAlertTime.Name = "comboBoxAlertTime";
+            this.comboBoxAlertTime.Size = new System.Drawing.Size(59, 21);
+            this.comboBoxAlertTime.TabIndex = 6;
+            // 
+            // listViewCurrentAlerts
+            // 
+            this.listViewCurrentAlerts.Location = new System.Drawing.Point(234, 33);
+            this.listViewCurrentAlerts.Name = "listViewCurrentAlerts";
+            this.listViewCurrentAlerts.Size = new System.Drawing.Size(76, 168);
+            this.listViewCurrentAlerts.TabIndex = 7;
+            this.listViewCurrentAlerts.UseCompatibleStateImageBehavior = false;
+            // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(234, 207);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Remove";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(529, 330);
             this.Controls.Add(this.lblTimeElapsed);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabAlerts);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "Form1";
@@ -328,13 +440,15 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.tabAlerts.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPageMyAlerts.ResumeLayout(false);
+            this.tabPageMyAlerts.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -354,7 +468,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusMain;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabAlerts;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblSelectedProcessName;
@@ -371,6 +485,16 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.Label lblTimeElapsed;
+        private System.Windows.Forms.TabPage tabPageMyAlerts;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutActiveAlerts;
+        private System.Windows.Forms.ComboBox comboBoxAlertTime;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBoxSelectableProcessesAlert;
+        private System.Windows.Forms.Label lblAlertProcessListTitle;
+        private System.Windows.Forms.Button btnAddAlert;
+        private System.Windows.Forms.Label lblActiveAlertsTitle;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ListView listViewCurrentAlerts;
     }
 }
 

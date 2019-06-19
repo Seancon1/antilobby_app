@@ -25,6 +25,8 @@ namespace Antilobby_2
 
             AutomationFocusChangedEventHandler focusHandler = OnFocusChanged;
             Automation.AddAutomationFocusChangedEventHandler(focusHandler);
+            flowLayoutActiveAlerts.VerticalScroll.Enabled = true;
+            //flowLayoutActiveAlerts.scr
 
             // Create user and session
             superUser = new User();
@@ -33,7 +35,15 @@ namespace Antilobby_2
 
         public void showStatus(string inText)
         {
-            toolStripStatusMain.Text = inText + " " + DateTime.Now;
+            //Bug appears after prolonged use
+            //putting try catch here to prevent crash
+            try {
+                toolStripStatusMain.Text = inText + " " + DateTime.Now;
+            }
+            catch (Exception e)
+            {
+                //nothing for now, still investigating bug
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -113,6 +123,22 @@ namespace Antilobby_2
             showStatus(global.showstatus_value);
             saveToolStripMenuItem.Enabled = true;
 
+
+            /*
+             * Alert Handler 
+             * */
+
+            //loop through and check to see if there are any active alerts
+            Button test = new Button();
+            test.Text = "Test " + DateTime.Today;
+
+            flowLayoutActiveAlerts.Controls.Add(test);
+            flowLayoutActiveAlerts.Refresh();
+        }
+
+        private void Test_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
 
@@ -209,15 +235,21 @@ namespace Antilobby_2
             Clipboard.SetText("" + superSession.Id);
         }
 
+        /*
+         * An attempt to save session information before application closes.
+         * */
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            
             try
             {
                 //ClosingForm form = new ClosingForm(); //pass session values to new form
+
+                //Loop until saveToDatabase sets State to false, otherwise keep on trying.
+                //not exactly the best way to approach this but it works now
                 while (superSession.State)
                         {
-                    this.Enabled = false;
-                    
+                            this.Enabled = false; //disables main client to prevent any other actions
                             superSession.processList.saveToDatabase(1); //flag = 1 to set state to false
                         }
             } catch (Exception error)
@@ -235,5 +267,27 @@ namespace Antilobby_2
             
         }
 
+        private void comboBox1_MouseHover(object sender, EventArgs e)
+        {
+            //refresh list for alert selection of previously hovered processes
+            comboBoxSelectableProcessesAlert.Items.Clear();
+
+            foreach(string name in superSession.processList.getListOfNames())
+            {
+                comboBoxSelectableProcessesAlert.Items.Add(name);
+            }
+           
+        
+        }
+
+        private void btnAddAlert_Click(object sender, EventArgs e)
+        {
+            //Controls to look at before proceeding
+            if(comboBoxSelectableProcessesAlert.SelectedText != null && comboBoxAlertTime.SelectedText != null) {
+
+                listViewCurrentAlerts.Items.Add(superSession.processList.GetProcessItem(comboBoxSelectableProcessesAlert.Text).getName() +
+                    "");
+            } 
+        }
     }
 }

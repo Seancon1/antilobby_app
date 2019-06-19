@@ -18,6 +18,11 @@ namespace AntiLobby_2
             this.timeViewed = 0;
         }
 
+        public ProcessItem get()
+        {
+            return this;
+        }
+
 
         public string getName()
         {
@@ -37,5 +42,7 @@ namespace AntiLobby_2
         {
             this.timeViewed += timeQuantity;
         }
+
+   
     }
 }

@@ -66,6 +66,8 @@
     <Reference Include="UIAutomationTypes" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alert\Alert.cs" />
+    <Compile Include="Alert\AlertList.cs" />
     <Compile Include="ClosingForm.cs">
       <SubType>Form</SubType>
     </Compile>

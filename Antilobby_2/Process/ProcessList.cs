@@ -37,12 +37,32 @@ namespace AntiLobby_2
             this.listBox = listBox;
         }
 
+        public ProcessItem GetProcessItem(string inItem)
+        {
+            ProcessItem processItem = null;
+            if (this.list.ContainsKey(inItem) && inItem != null)
+            {
+                this.list.TryGetValue(inItem, out processItem);
+            }
+                return processItem;
+        }
+
         public void addItem(ProcessItem inItem)
         {
             if (!this.list.ContainsKey(inItem.getName()) && inItem != null)
             {
                 this.list.Add(inItem.getName(), inItem);
             }
+        }
+
+        public int ReturnTickOf(string processName)
+        {
+            //IF true list contains name
+            if (this.list.ContainsKey(processName))
+            {
+                return this.list[processName].getTime(); //returns time of process
+            }
+            return 0;
         }
 
         public void addAndCount(ProcessItem inItem)
@@ -104,20 +124,32 @@ namespace AntiLobby_2
             //}
         }
 
+        public List<string> getListOfNames()
+        {
+            List<string> list = new List<string>();
+
+            foreach(KeyValuePair<string, ProcessItem> item in this.list)
+            {
+                list.Add(item.Key);
+            }
+
+            if (list.Count > 0) { return list; } else { return null;  };
+        }
+
         
         public void saveToDatabase(int flag = 0)
         {
-            Logger item = new Logger(this.session, this.user);
+            Logger logger = new Logger(this.session, this.user);
 
             //Saves to 'antilobby' uses Session Value to save
-            item.saveSessionAsync(); //uses
+            logger.saveSessionAsync(); //uses
 
 
             //SAVES to 'antilobby_appTime'
             foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
             {
                 //iterate through list and save for the MAC address
-                item.saveGameTimeAsync(itemToSave.Value.getName(), itemToSave.Value.getTime());
+                logger.saveGameTimeAsync(itemToSave.Value.getName(), itemToSave.Value.getTime());
             }
 
             if(flag == 1)
