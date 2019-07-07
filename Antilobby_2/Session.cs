@@ -20,6 +20,7 @@ namespace Antilobby_2
         public ProcessList processList = null;
         private Logger logger = null;
         private Boolean state = true;
+        public Alert.AlertList alertList = null;
 
         public Session(User user)
         {
@@ -29,6 +30,7 @@ namespace Antilobby_2
             this.id = MyUtils.getSessionID(); //Create and assign new session ID immediately
             this.logger = new Logger(this, user); //create a logger instance
             this.processList = new ProcessList(this, user);
+            this.alertList = new Alert.AlertList(processList); //processList must not be null before linking, aka create processList link before calling this
         }
 
         public string Id { get => this.id; set => this.id = value; }
@@ -45,6 +47,5 @@ namespace Antilobby_2
             logger.saveSessionAsync();
         }
 
-    
     }
 }

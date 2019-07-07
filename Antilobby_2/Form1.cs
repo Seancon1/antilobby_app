@@ -26,6 +26,7 @@ namespace Antilobby_2
             AutomationFocusChangedEventHandler focusHandler = OnFocusChanged;
             Automation.AddAutomationFocusChangedEventHandler(focusHandler);
             flowLayoutActiveAlerts.VerticalScroll.Enabled = true;
+            
             //flowLayoutActiveAlerts.scr
 
             // Create user and session
@@ -103,6 +104,7 @@ namespace Antilobby_2
                 lblMyInfoSessionID.Text = "Session ID: none";
             }
 
+
             
         }
 
@@ -115,9 +117,11 @@ namespace Antilobby_2
             }
 
             superSession.incrementTick();
+
             //Add process to processList using a ProcessItem object
             superSession.processList.addAndCount(new ProcessItem(global.processName));
             superSession.processList.refreshList(listProcesses); //link listProcesses list to use the processList items
+
             lblTimeElapsed.Text = "Time Elapsed: " + superSession.TickCount;
             label1.Text = "" + global.processName;
             showStatus(global.showstatus_value);
@@ -127,12 +131,34 @@ namespace Antilobby_2
             /*
              * Alert Handler 
              * */
+            //clear alerts before checking again
+            flowLayoutActiveAlerts.Controls.Clear();
 
             //loop through and check to see if there are any active alerts
-            Button test = new Button();
-            test.Text = "Test " + DateTime.Today;
+            //check active alerts first
+            if (!superSession.alertList.isEmpty() & superSession.alertList.ActiveAlerts() != null)
+            {
+                foreach(Alert.Alert alert in superSession.alertList.ActiveAlerts())
+                {
+                    Button test = new Button();
+                    test.BackColor = Color.BlueViolet;
+                    test.Text = alert.AlertLimit + ":" + alert.ProcessName;
+                    flowLayoutActiveAlerts.Controls.Add(test);
+                }
+            }
 
-            flowLayoutActiveAlerts.Controls.Add(test);
+            //then add passive alerts, alerts that arent active but still being watched
+            if (!superSession.alertList.isEmpty() & superSession.alertList.PassiveAlerts() != null)
+            {
+                foreach (Alert.Alert alert in superSession.alertList.PassiveAlerts())
+                {
+                    Button test = new Button();
+                    test.BackColor = Color.Gray;
+                    test.Text = alert.AlertLimit + ":" + alert.ProcessName;
+                    flowLayoutActiveAlerts.Controls.Add(test);
+                }
+            }
+
             flowLayoutActiveAlerts.Refresh();
         }
 
@@ -269,25 +295,70 @@ namespace Antilobby_2
 
         private void comboBox1_MouseHover(object sender, EventArgs e)
         {
+            
             //refresh list for alert selection of previously hovered processes
             comboBoxSelectableProcessesAlert.Items.Clear();
-
-            foreach(string name in superSession.processList.getListOfNames())
+            try
             {
-                comboBoxSelectableProcessesAlert.Items.Add(name);
-            }
+                if(superSession.processList != null)
+                            {
+                                foreach(string name in superSession.processList.getListOfNames())
+                                {
+                                    comboBoxSelectableProcessesAlert.Items.Add(name);
+                                }
            
-        
+                            }
+            }catch (Exception ee)
+            {
+                showStatus("Error refreshing");
+            }
+            
         }
 
         private void btnAddAlert_Click(object sender, EventArgs e)
         {
-            //Controls to look at before proceeding
-            if(comboBoxSelectableProcessesAlert.SelectedText != null && comboBoxAlertTime.SelectedText != null) {
+        
+            //MessageBox.Show("Time found: " + comboBoxAlertTime.Text.ToString());
 
-                listViewCurrentAlerts.Items.Add(superSession.processList.GetProcessItem(comboBoxSelectableProcessesAlert.Text).getName() +
-                    "");
+            
+            //Controls to look at before proceeding
+            if(comboBoxSelectableProcessesAlert.Text != null && comboBoxAlertTime.Text != null && comboBoxAlertTime.Text != "") {
+
+                int submittedAlertTime = Convert.ToInt32(comboBoxAlertTime.Text.ToString());
+
+                //Add to alert list
+                superSession.alertList.addNewAlert(comboBoxSelectableProcessesAlert.Text, submittedAlertTime);
+
+                //display
+                listViewCurrentAlerts.Items.Add(comboBoxSelectableProcessesAlert.Text + " (" 
+                    + superSession.alertList.fetchAlertTime(comboBoxSelectableProcessesAlert.Text) + ")"); //Add to display
             } 
+            
+        }
+
+        private void listViewCurrentAlerts_MouseClick(object sender, MouseEventArgs e)
+        {
+
+            
+            //Enable remove and
+            if (listViewCurrentAlerts.FocusedItem != null)
+            {
+                btnAlertRemove.Enabled = true;
+            } else
+            {
+                btnAlertRemove.Enabled = false;
+            }
+                
+            
+        }
+
+        private void btnAlertRemove_Click(object sender, EventArgs e)
+        {
+            if (listViewCurrentAlerts.FocusedItem != null)
+            {
+                listViewCurrentAlerts.FocusedItem.Remove();
+                btnAlertRemove.Enabled = false;
+            }
         }
     }
 }
