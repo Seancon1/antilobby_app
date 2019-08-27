@@ -8,8 +8,9 @@ using AntiLobby_2;
 namespace Antilobby_2
 {
     /*
-     * Session holds all information that is used to identify a session in an application instance
+     * Session holds ALL information that is used to identify a session in an application instance
      * Total time, User and an ID incase we have multiple sessions in an application instance
+     * Alerts also included in session
      *   
      * */
     class Session

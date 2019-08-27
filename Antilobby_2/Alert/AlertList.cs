@@ -8,6 +8,8 @@ namespace Antilobby_2.Alert
 {
     class AlertList
     {
+
+        private AlertPlay alertplay;
         private List<Alert> list;
         private AntiLobby_2.ProcessList processList;
             

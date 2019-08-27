@@ -19,3 +19,14 @@ A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\bin\Debug\Antilobby_2.pdb
 A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.exe
 A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.pdb
 A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.ClosingForm.resources
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\bin\Debug\Antilobby_2.exe.config
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\bin\Debug\Antilobby_2.exe
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\bin\Debug\Antilobby_2.pdb
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.csprojResolveAssemblyReference.cache
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.ClosingForm.resources
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.Form1.resources
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.Properties.Resources.resources
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.csproj.GenerateResource.Cache
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.csproj.CoreCompileInputs.cache
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.exe
+C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.pdb
