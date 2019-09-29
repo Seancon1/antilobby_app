@@ -38,9 +38,22 @@ namespace Antilobby_2
         public int TickCount { get => tickCount; set => tickCount = value; }
         public bool State { get => state; set => state = value; }
 
-        public void incrementTick()
+        /*
+         * String activeProcess - string that represents the current active process 
+         * */
+
+        public void incrementTick(String activeProcess)
         {
             this.tickCount++;
+            //also increment all alert counts
+            if (alertList == null) { } else
+            {
+                /*
+                 * pass the activeProcess to the alertList incrementing so that AFK counter will increment
+                 * */
+                alertList.incrementAllTicks(activeProcess);
+            }
+            
         }
 
         public void saveSession()

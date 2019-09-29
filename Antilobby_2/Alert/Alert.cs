@@ -15,15 +15,29 @@ namespace Antilobby_2.Alert
     {
         private string processName = null;
         private int alertLimit = 0;
+        private int currentCount = 0;
+    
 
         //Default constructor, must have both, default limit is 250 ticks
         public Alert(string inProcessName, int inAlertLimit = 250)
         {
             this.processName = inProcessName;
             this.alertLimit = inAlertLimit;
+            this.currentCount = 0;
         }
 
         public int AlertLimit { get => alertLimit; set => alertLimit = value; }
+        public int CurrentCount { get => currentCount; set => currentCount = value; }
         public string ProcessName { get => processName; set => processName = value; }
+
+        public void addTick()
+        {
+            currentCount++;
+        }
+
+        public void resetTick()
+        {
+            currentCount = 0;
+        }
     }
 }

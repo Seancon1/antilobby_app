@@ -18,6 +18,7 @@ namespace Antilobby_2
     {
         private User superUser = null;
         private Session superSession = null;
+        Button alertButton = new Button();
 
         public Form1()
         {
@@ -26,7 +27,8 @@ namespace Antilobby_2
             AutomationFocusChangedEventHandler focusHandler = OnFocusChanged;
             Automation.AddAutomationFocusChangedEventHandler(focusHandler);
             flowLayoutActiveAlerts.VerticalScroll.Enabled = true;
-            
+            alertButton.MouseClick += AlertButton_MouseClick; //Add a handler so i can do stuff with clicks
+
             //flowLayoutActiveAlerts.scr
 
             // Create user and session
@@ -84,6 +86,7 @@ namespace Antilobby_2
             }
         }
 
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             //Update all interface components
@@ -116,7 +119,7 @@ namespace Antilobby_2
                 return;
             }
 
-            superSession.incrementTick();
+            superSession.incrementTick(global.processName); //pass current process
 
             //Add process to processList using a ProcessItem object
             superSession.processList.addAndCount(new ProcessItem(global.processName));
@@ -133,6 +136,7 @@ namespace Antilobby_2
              * */
             //clear alerts before checking again
             flowLayoutActiveAlerts.Controls.Clear();
+            
 
             //loop through and check to see if there are any active alerts
             //check active alerts first
@@ -140,10 +144,10 @@ namespace Antilobby_2
             {
                 foreach(Alert.Alert alert in superSession.alertList.ActiveAlerts())
                 {
-                    Button test = new Button();
-                    test.BackColor = Color.BlueViolet;
-                    test.Text = alert.AlertLimit + ":" + alert.ProcessName;
-                    flowLayoutActiveAlerts.Controls.Add(test);
+                   
+                    alertButton.BackColor = Color.BlueViolet;
+                    alertButton.Text = "(" + alert.AlertLimit + ":" + alert.CurrentCount + ")" + alert.ProcessName;
+                    flowLayoutActiveAlerts.Controls.Add(alertButton);
                 }
             }
 
@@ -152,14 +156,23 @@ namespace Antilobby_2
             {
                 foreach (Alert.Alert alert in superSession.alertList.PassiveAlerts())
                 {
-                    Button test = new Button();
-                    test.BackColor = Color.Gray;
-                    test.Text = alert.AlertLimit + ":" + alert.ProcessName;
-                    flowLayoutActiveAlerts.Controls.Add(test);
+                    alertButton.BackColor = Color.Gray;
+                    alertButton.Text = "" + alert.AlertLimit + ":" + alert.CurrentCount + "|" + alert.ProcessName;
+                    flowLayoutActiveAlerts.Controls.Add(alertButton);
                 }
             }
 
             flowLayoutActiveAlerts.Refresh();
+        }
+
+        private void AlertButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            //flowLayoutActiveAlerts.Controls.Remove();
+            Button button = sender as Button;
+            flowLayoutActiveAlerts.Controls.Remove(button);
+            //superSession.alertList.removeAlert(button.Text.);
+            //MessageBox.Show("Clicked " + button.Text);
+
         }
 
         private void Test_Click(object sender, EventArgs e)

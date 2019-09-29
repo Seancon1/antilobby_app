@@ -47,6 +47,7 @@ namespace AntiLobby_2
             { "timeType", "1" },
             { "time", "" + session.TickCount },
             { "date", "" + DateTime.Now.ToString("yyyy-MM-dd h:mm tt")},
+            { "userIP", "" + user.IP1 },
             { "sessionValue", "" + session.Id },
             { "action", "SaveSession" }
             };

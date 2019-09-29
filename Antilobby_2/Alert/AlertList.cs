@@ -19,6 +19,26 @@ namespace Antilobby_2.Alert
             this.processList = processList; //must be able to access the current processList
         }
 
+        /**
+         * String exemptProcess - the process that will be exempt when incrementing all process ticks
+         * */
+        public void incrementAllTicks(String exemptProcess)
+        {
+            foreach (Alert alert in this.list)
+            {
+                /*
+                 * exempt process is the current process active, so don't increment the AFK timer.
+                 * This AFK alert is for continuous seconds NOT ACTIVELY on, so a reset is required
+                */ 
+                if (alert.ProcessName == exemptProcess) { alert.resetTick(); } else
+                {
+                    alert.addTick();
+                }
+                
+            }
+
+        }
+
         /*
          * Returns (a list) of all alerts inside the this.list with a tick count that exceeds their limit'
          * */
@@ -29,7 +49,7 @@ namespace Antilobby_2.Alert
 
             foreach (Alert alert in this.list)
             {
-                if (alert.AlertLimit < this.processList.ReturnTickOf(alert.ProcessName) && alert != null)
+                if (alert.AlertLimit < fetchTick(alert.ProcessName) && alert != null)
                 {
                     activeAlerts.Add(alert); //adds the alert to temp list of activeAlerts
                 }
@@ -45,7 +65,7 @@ namespace Antilobby_2.Alert
 
             foreach (Alert alert in this.list)
             {
-                if (alert.AlertLimit > this.processList.ReturnTickOf(alert.ProcessName) && alert != null)
+                if (alert.AlertLimit > fetchTick(alert.ProcessName) && alert != null)
                 {
                     passiveAlerts.Add(alert); //adds the alert to temp list of passiveAlerts
                 }
@@ -90,12 +110,36 @@ namespace Antilobby_2.Alert
             return true;
         }
 
+        public void removeAlertByName(String inprocessName)
+        {
+            foreach (Alert alert in this.list)
+            {
+                if (alert.ProcessName == inprocessName)
+                {
+                    this.list.Remove(alert); //remove
+                }
+            }
+        }
+
         public int fetchAlertTime(string processName)
         {
             foreach(Alert alert in this.list) {
                 if(alert.ProcessName == processName)
                 {
                     return alert.AlertLimit; //return if processName equals the same that is being searched
+                }
+            }
+
+            return -1;
+        }
+
+        public int fetchTick(string processName)
+        {
+            foreach (Alert alert in this.list)
+            {
+                if (alert.ProcessName == processName)
+                {
+                    return alert.CurrentCount;
                 }
             }
 

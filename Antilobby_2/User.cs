@@ -17,7 +17,7 @@ namespace Antilobby_2
 
         public User()
         {
-            this.IP = "" + MyUtils.getIP();
+            this.IP = "" + MyUtils.GetIPAddress();
             this.MAC = "" + MyUtils.getMacAddress();
         }
 
