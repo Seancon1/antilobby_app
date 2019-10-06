@@ -26,16 +26,22 @@ namespace AntiLobby_2
         public static string GetIPAddress()
         {
             String address = "";
-            WebRequest request = WebRequest.Create("http://checkip.dyndns.org/");
+            WebRequest request = WebRequest.Create("https://www.prestigecode.com/projects/antilobby/checkIP.php");
             using (WebResponse response = request.GetResponse())
             using (StreamReader stream = new StreamReader(response.GetResponseStream()))
             {
                 address = stream.ReadToEnd();
             }
 
+            /**
+             * 
+             * Modified old method to use prestigecode and also got rid of trimming the response
+             * webpage returns ONLY the ip of the current user so no need to trim html before returning value
+            
             int first = address.IndexOf("Address: ") + 9;
             int last = address.LastIndexOf("</body>");
             address = address.Substring(first, last - first);
+            */
 
             return address;
         }

@@ -372,5 +372,16 @@ namespace Antilobby_2
                 btnAlertRemove.Enabled = false;
             }
         }
+
+        private void websiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("https://www.prestigecode.com/projects/antilobby/lobby.php");
+            } catch (Exception x)
+            {
+                MessageBox.Show("Unable to open the website." + e.ToString());
+            }
+        }
     }
 }
