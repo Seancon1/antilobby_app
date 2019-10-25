@@ -10,6 +10,8 @@ namespace Antilobby_2.Alert
     {
         private Boolean active;
 
+        //System.Media.SystemSounds.Hand.Play();
+
         public AlertPlay()
         {
             this.active = false;
@@ -25,6 +27,10 @@ namespace Antilobby_2.Alert
             this.active = true;
         }
 
+        public void play()
+        {
+            System.Media.SystemSounds.Hand.Play();
+        }
 
     }
 }

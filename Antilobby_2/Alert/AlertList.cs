@@ -44,7 +44,7 @@ namespace Antilobby_2.Alert
          * */
         public List<Alert> ActiveAlerts()
         {
-
+            AlertPlay alertSound = new AlertPlay();
             List<Alert> activeAlerts = new List<Alert>();
 
             foreach (Alert alert in this.list)
@@ -55,7 +55,9 @@ namespace Antilobby_2.Alert
                 }
             }
 
-            if (activeAlerts.Count < 1) {return null; } else { return activeAlerts;} //return null if no alerts present
+            if (activeAlerts.Count < 1) {return null; } else {
+                alertSound.play();
+                return activeAlerts;} //return null if no alerts present
                 
         }
 
@@ -119,6 +121,11 @@ namespace Antilobby_2.Alert
                     this.list.Remove(alert); //remove
                 }
             }
+        }
+
+        public void clearAlerts()
+        {
+            list.Clear();
         }
 
         public int fetchAlertTime(string processName)

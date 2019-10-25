@@ -34,6 +34,8 @@ namespace Antilobby_2
             // Create user and session
             superUser = new User();
             superSession = new Session(superUser);
+
+
         }
 
         public void showStatus(string inText)
@@ -382,6 +384,17 @@ namespace Antilobby_2
             {
                 MessageBox.Show("Unable to open the website." + e.ToString());
             }
+        }
+
+        private void bindingSource1_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            superSession.alertList.clearAlerts();
+            listViewCurrentAlerts.Clear();
         }
     }
 }

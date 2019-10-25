@@ -108,4 +108,21 @@ namespace AntiLobby_2
             return dtString;
         }
     }
+    /*
+    public void WriteToFile(string programCloseTime)
+    {
+        time endingtime = new time();
+        string path = @"D:\Google Drive\#zpersonal\LOGS\Antilobby\Log.txt";
+        if (File.Exists(@"D:\Google Drive\#zpersonal\LOGS\Antilobby\Log.txt"))
+        {
+            //string content = File.ReadAllText(@"C:\Users\Sean\Documents\ComputerLog\Log.txt");
+
+            string newContent = "Session: " + MasterStartTime + " to " + endingtime.getTimeNow() + " ||  Time Spend: " + main.getConvertTime(main.TickCount) + Environment.NewLine;
+            //label1.Text = newContent;
+            //File.WriteAllText(path, newContent);
+            File.AppendAllText(path, newContent);
+
+        }
+    }
+    */
 }

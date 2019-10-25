@@ -84,6 +84,7 @@
     <Compile Include="global.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Session.cs" />
+    <Compile Include="Storage\OfflineData.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Utils\MyUtils.cs" />
     <Compile Include="Process\ProcessItem.cs" />
@@ -105,6 +106,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Properties\DataSources\AntiLobby_2.ProcessList.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -129,6 +131,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Storage\storage.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
