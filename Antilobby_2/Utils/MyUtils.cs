@@ -92,7 +92,7 @@ namespace AntiLobby_2
             return macAddress;
         }
 
-
+        
     }
 
     public class Time
@@ -108,6 +108,7 @@ namespace AntiLobby_2
             return dtString;
         }
     }
+
     /*
     public void WriteToFile(string programCloseTime)
     {
@@ -125,4 +126,7 @@ namespace AntiLobby_2
         }
     }
     */
+
+    
+
 }

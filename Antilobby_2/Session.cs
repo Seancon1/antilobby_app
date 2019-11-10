@@ -61,5 +61,10 @@ namespace Antilobby_2
             logger.saveSessionAsync();
         }
 
+        public void saveSessionOffline()
+        {
+            logger.SaveOffline(this);
+        }
+
     }
 }

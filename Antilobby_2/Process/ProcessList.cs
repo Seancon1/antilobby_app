@@ -32,6 +32,21 @@ namespace AntiLobby_2
         }
 
 
+        //return items in this list as a single dimension list for easier iteration
+        public List<ProcessItem> ReturnAllItems()
+        {
+            List<ProcessItem> tempList = new List<ProcessItem>();
+          
+            if(this.list.Count() < 1) { return null; }
+
+            foreach(var item in this.list)
+            {
+                tempList.Add(item.Value); //get just the object ProcessItem, which is the value
+            }
+
+           return tempList;
+        } 
+
         public void setListObject(ListBox listBox)
         {
             this.listBox = listBox;
@@ -137,19 +152,26 @@ namespace AntiLobby_2
         }
 
         
-        public void saveToDatabase(int flag = 0)
+        public void saveToDatabase(int flag = 0) 
         {
             Logger logger = new Logger(this.session, this.user);
-
-            //Saves to 'antilobby' uses Session Value to save
-            logger.saveSessionAsync(); //uses
-
-
-            //SAVES to 'antilobby_appTime'
-            foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
+            try
             {
-                //iterate through list and save for the MAC address
-                logger.saveGameTimeAsync(itemToSave.Value.getName(), itemToSave.Value.getTime());
+                //throw new System.Net.WebException("Cannot connect");
+                //Saves to 'antilobby' uses Session Value to save
+                logger.saveSessionAsync(); //uses
+
+
+                //SAVES to 'antilobby_appTime'
+                foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
+                {
+                    //iterate through list and save for the MAC address
+                    logger.saveGameTimeAsync(itemToSave.Value.getName(), itemToSave.Value.getTime());
+                }
+
+            } catch (Exception e)
+            {
+                throw new System.Net.WebException("Cannot connect");
             }
 
             if(flag == 1)

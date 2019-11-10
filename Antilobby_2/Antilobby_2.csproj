@@ -86,6 +86,7 @@
     <Compile Include="Session.cs" />
     <Compile Include="Storage\OfflineData.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="Utils\AesCrypt.cs" />
     <Compile Include="Utils\MyUtils.cs" />
     <Compile Include="Process\ProcessItem.cs" />
     <Compile Include="Process\ProcessList.cs" />

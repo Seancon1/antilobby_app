@@ -23,6 +23,10 @@ namespace AntiLobby_2
             return this;
         }
 
+        public ProcessItem Self(){
+            return this;
+        }
+
 
         public string getName()
         {

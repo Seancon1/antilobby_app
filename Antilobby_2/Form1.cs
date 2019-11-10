@@ -12,6 +12,7 @@ using System.Windows.Automation;
 using System.Diagnostics;
 using AntiLobby_2;
 
+
 namespace Antilobby_2
 {
     public partial class Form1 : Form
@@ -256,7 +257,15 @@ namespace Antilobby_2
 
         private void saveToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            superSession.processList.saveToDatabase();
+            try {
+                superSession.processList.saveToDatabase();
+            } catch (System.Net.WebException error)
+            {
+                MessageBox.Show("Error: " + error.ToString());
+                MessageBox.Show("Saving your session offline, your session will be submitted when you are online.");
+                superSession.saveSessionOffline();
+            }
+
         }
 
         private void mACAddresssaveToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -395,6 +404,11 @@ namespace Antilobby_2
         {
             superSession.alertList.clearAlerts();
             listViewCurrentAlerts.Clear();
+        }
+
+        private void saveOfflineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            superSession.saveSessionOffline();
         }
     }
 }

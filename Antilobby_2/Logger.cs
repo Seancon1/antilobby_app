@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Antilobby_2;
+using Antilobby_2.Utils;
 
 namespace AntiLobby_2
 {
@@ -97,6 +98,69 @@ namespace AntiLobby_2
             }
             global.showstatus_value = "Saved";
         }
+
+        public void SaveOffline(Session session)
+        {
+            //string path = @"D:\Google Drive\#zpersonal\LOGS\Antilobby\Log.txt";
+
+            string saveFile = "_sessionSave.txt";
+            string path = Path.GetTempPath() + "antilobby\\";
+
+
+            if (File.Exists(path + saveFile))
+            {
+                //string content = File.ReadAllText(@"C:\Users\Sean\Documents\ComputerLog\Log.txt");
+
+                //convert processitems to 
+                //get dictionary
+                List<ProcessItem> processList = session.processList.ReturnAllItems();
+                StringBuilder stringBuilder = new StringBuilder();
+
+
+                stringBuilder.Append("!" + session.Id + "|");
+
+                try
+                {
+
+                //File.Open(path + saveFile, FileMode.Open);
+
+                foreach (var item in processList)
+                {
+
+                        stringBuilder.Append(item.getName() + ":" + item.getTime() + "|");
+                }
+
+                /*Encrypt or obfuscate
+                *Pending... still establishing a way to implement this feature
+                * for now keeping it in plaintext
+                */
+           
+                //Add content to file
+                File.AppendAllText(path + saveFile, stringBuilder.ToString());
+
+                } catch (Exception e)
+                {
+                    MessageBox.Show("Unable to save offline data." + e.ToString());
+                }
+               
+                
+
+            }
+            else
+            {
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path); //Create directory
+                    File.Create(path + saveFile); //Create file
+                }
+                else
+                {
+                    File.Create(path + saveFile); //Create file
+                }
+
+            }
+        }
+
 
 
         /* 
