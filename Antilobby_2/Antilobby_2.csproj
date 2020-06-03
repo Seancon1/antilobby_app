@@ -47,6 +47,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -83,6 +89,18 @@
     </Compile>
     <Compile Include="global.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="LoginClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginClient.Designer.cs">
+      <DependentUpon>LoginClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="offline_sessions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="offline_sessions.Designer.cs">
+      <DependentUpon>offline_sessions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Session.cs" />
     <Compile Include="Storage\OfflineData.cs" />
     <Compile Include="User.cs" />
@@ -92,11 +110,18 @@
     <Compile Include="Process\ProcessList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\SessionConverter.cs" />
     <EmbeddedResource Include="ClosingForm.resx">
       <DependentUpon>ClosingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginClient.resx">
+      <DependentUpon>LoginClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="offline_sessions.resx">
+      <DependentUpon>offline_sessions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

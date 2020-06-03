@@ -11,7 +11,7 @@ namespace Antilobby_2
 
         public static string processName = "null";
         public static string showstatus_value = "";
-
+        public static Boolean isLoggedIn = false;
 
 
 

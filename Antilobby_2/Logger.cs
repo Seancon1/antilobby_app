@@ -116,7 +116,6 @@ namespace AntiLobby_2
                 List<ProcessItem> processList = session.processList.ReturnAllItems();
                 StringBuilder stringBuilder = new StringBuilder();
 
-
                 stringBuilder.Append("!" + session.Id + "|");
 
                 try
@@ -142,9 +141,7 @@ namespace AntiLobby_2
                 {
                     MessageBox.Show("Unable to save offline data." + e.ToString());
                 }
-               
-                
-
+              
             }
             else
             {
@@ -159,6 +156,23 @@ namespace AntiLobby_2
                 }
 
             }
+        }
+
+        public String fetchOfflineStorage()
+        {
+            string saveFile = "_sessionSave.txt";
+            string path = Path.GetTempPath() + "antilobby\\";
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            //find file
+            if (File.Exists(path + saveFile)) {
+                stringBuilder.Append(File.ReadAllText(path + saveFile)); //append text from file into stringbuilder
+                return stringBuilder.ToString(); //return text
+            } 
+
+
+                return null;
         }
 
 

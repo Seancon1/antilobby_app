@@ -30,3 +30,5 @@ C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Ant
 C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.csproj.CoreCompileInputs.cache
 C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.exe
 C:\Users\seanc\OneDrive\Documents\GitHub\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.pdb
+A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.offline_sessions.resources
+A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Debug\Antilobby_2.LoginClient.resources

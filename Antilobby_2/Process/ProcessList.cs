@@ -180,6 +180,15 @@ namespace AntiLobby_2
             }
             //MessageBox.Show("Games should be saved");
         }
+
+        public ProcessItem pop()
+        {
+            //retrieve the first item's value, which is the ProcessItem
+            ProcessItem temp = list.First().Value;
+            //remove that item from the dictionary using the key
+            list.Remove(list.First().Key);
+            return list.First().Value;
+        }
         
     }
 }

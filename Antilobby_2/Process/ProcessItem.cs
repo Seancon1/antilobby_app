@@ -18,6 +18,12 @@ namespace AntiLobby_2
             this.timeViewed = 0;
         }
 
+        public ProcessItem(string inName, int time)
+        {
+            this.name = inName;
+            this.timeViewed = time;
+        }
+
         public ProcessItem get()
         {
             return this;

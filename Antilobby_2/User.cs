@@ -14,6 +14,7 @@ namespace Antilobby_2
         
         private string IP;
         private string MAC;
+        private string userToken;
 
         public User()
         {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AntiLobby_2;
-
+using Antilobby_2.Utils;
 namespace Antilobby_2
 {
     /*
@@ -64,6 +64,33 @@ namespace Antilobby_2
         public void saveSessionOffline()
         {
             logger.SaveOffline(this);
+        }
+
+        public String fetchOfflineStorage()
+        {
+            return logger.fetchOfflineStorage();
+        }
+
+        public void saveAllOfflineStorage()
+        {
+            String offlineStorage = logger.fetchOfflineStorage(); //fetch text from file
+            SessionConverter sessionConverter = new SessionConverter(offlineStorage); //put text into converter
+            ProcessList processList = new ProcessList(this, this.user); //create a new processList so we can use save to db function
+
+            while(sessionConverter.getFlag() > 0)
+            {
+                foreach(var item in sessionConverter.GetFirstProcessList())
+                    {
+                        //check flag
+                        processList.addItem(new ProcessItem(item.getName(), item.getTime()));
+                
+                    }
+            }
+            
+            //if(everything is fine)
+
+            processList.saveToDatabase();
+            
         }
 
     }

@@ -35,7 +35,13 @@ namespace Antilobby_2
             // Create user and session
             superUser = new User();
             superSession = new Session(superUser);
+            
 
+            try { lblUserIP.Text = "Your IP: "+ MyUtils.GetIPAddress();} catch (Exception error)
+            {
+                lblUserIP.Text = "Your IP: " + MyUtils.getIP();
+            } 
+            
 
         }
 
@@ -110,7 +116,13 @@ namespace Antilobby_2
                 lblMyInfoSessionID.Text = "Session ID: none";
             }
 
-
+            if(global.isLoggedIn)
+            {
+                accountPanel.Show();
+            } else
+            {
+                accountPanel.Hide();
+            }
             
         }
 
@@ -121,6 +133,7 @@ namespace Antilobby_2
                 saveToolStripMenuItem.Enabled = false;
                 return;
             }
+
 
             superSession.incrementTick(global.processName); //pass current process
 
@@ -409,6 +422,40 @@ namespace Antilobby_2
         private void saveOfflineToolStripMenuItem_Click(object sender, EventArgs e)
         {
             superSession.saveSessionOffline();
+        }
+
+        private void offlineStorageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Open offline storage interface
+            //new offline_sessions().Show();
+        }
+
+        private void testRetrieveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utils.SessionConverter sessionConverter = new Utils.SessionConverter(superSession.fetchOfflineStorage());
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach(var item in sessionConverter.GetFirstProcessList())
+            {
+                stringBuilder.Append("" + item.getName() + " : " +  item.getTime());
+            }
+            MessageBox.Show("" + stringBuilder.ToString());
+
+        }
+
+        private void saveStorageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            superSession.saveAllOfflineStorage();
+        }
+
+        private void loginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new LoginClient().Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            global.isLoggedIn = false;
         }
     }
 }
