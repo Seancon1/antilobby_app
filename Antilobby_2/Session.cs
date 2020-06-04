@@ -28,6 +28,8 @@ namespace Antilobby_2
             
             this.tickCount = 0;
             this.user = user;
+            //assign internally fetched User.userToken here
+            //this.user.setToken = 
             this.id = MyUtils.getSessionID(); //Create and assign new session ID immediately
             this.logger = new Logger(this, user); //create a logger instance
             this.processList = new ProcessList(this, user);
@@ -91,6 +93,27 @@ namespace Antilobby_2
 
             processList.saveToDatabase();
             
+        }
+
+
+        public void saveUserToken()
+        {
+            this.logger.SaveOfflineGeneric("_UserToken.antilobby","test generic");
+        }
+
+        public void readUserToken()
+        {
+            var contents = this.logger.readOfflineGeneric("_UserToken.antilobby");
+            System.Windows.Forms.MessageBox.Show("File contents:" + contents);
+        }
+        /**
+         * Check device storage for token
+         * 1) Find file
+         * 2) Extract token
+         * */
+        public String fetchDeviceToken()
+        {
+            return "null";
         }
 
     }

@@ -457,5 +457,15 @@ namespace Antilobby_2
         {
             global.isLoggedIn = false;
         }
+
+        private void tESTItemSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            superSession.saveUserToken();
+        }
+
+        private void tESTItemRetrieveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            superSession.readUserToken();
+        }
     }
 }

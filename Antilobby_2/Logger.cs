@@ -99,6 +99,159 @@ namespace AntiLobby_2
             global.showstatus_value = "Saved";
         }
 
+        /**
+         * Method made from scratch for creating and adding text to a file at specified path
+         *  String fileName : name of file
+         *  String saveContents :  contents to add or save to file
+         *  int flag : default 0, to adjust logic
+         * */
+        public void SaveOfflineGeneric(String fileName, String saveContents, int flag = 0)
+        {
+            //Directory and File path information
+            var pathFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Antilobby\\" + fileName;
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Antilobby\\";
+
+            if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path); //Create directory
+                }
+
+            try
+            {
+                //Flag indicates different type of file saving, depending on the context
+                switch(flag)
+                            {
+                                case 0:
+                                    File.WriteAllText(pathFile, saveContents);
+                                    break;
+                                case 1:
+                                    File.AppendAllText(pathFile, saveContents);
+                                    break;
+                            }
+            } catch (Exception e)
+            {
+                MessageBox.Show("Unable to save offline data." + e.ToString());
+            }
+        }
+
+        /**
+         * Generic file reading method
+         * String fileName : name of file to read
+         * int flag : flag so ReadFile method can be changed with context
+         * */
+        public String readOfflineGeneric(String fileName, int flag = 0)
+        {
+            //Path to all files used in Antilobby
+            var pathFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Antilobby\\" + fileName;
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            try
+            {
+                switch (flag)
+                {
+                    case 0:
+                        stringBuilder.Append(File.ReadAllText(pathFile));
+                        break;
+
+                    default:
+                        stringBuilder.Append(File.ReadAllText(pathFile));
+                        break;
+                }
+
+            } catch (Exception e)
+            {
+                MessageBox.Show("Unable to read offline data." + e.ToString());
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        public void SaveOfflineGenericDEPRECATED(String filename, String saveContents)
+        {
+            //Flag to check to see if the file is actually available, automatically false
+            Boolean fileExists = false;
+
+            //string saveFile = "_UserToken.antilobby";
+            //string path = Path.GetTempPath() + "antilobby\\";
+
+            /**
+             * Stack overflow user Matthew Hazzard
+             * https://stackoverflow.com/questions/7618132/get-locale-specific-directory-in-my-documents
+             * https://stackoverflow.com/users/974058/matthew-hazzard
+             * var path and
+             * */
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Antilobby\\";
+            //var subFolderPath = Path.Combine(path, "\\Antilobby");
+
+
+            /**
+             * Check if directory or file exists
+             * Creates dir & file if needed
+             * */
+            if (!File.Exists(path + filename))
+            {
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path); //Create directory
+                    File.Create(path + filename); //Create file
+                    fileExists = true;
+                }
+                else
+                {
+                    File.Create(path +  filename); //Create file
+                    //File.c
+                    //fileExists = true;
+
+                }
+
+            } else
+            {
+                fileExists = true;
+            }
+
+            //not sure how to explicitly close the file after it is being
+            File.ReadAllLines(path + filename);
+
+            //File.Close
+        
+                //string content = File.ReadAllText(@"C:\Users\Sean\Documents\ComputerLog\Log.txt");
+
+
+            /**
+             * Continue with saving contents to file
+             * */
+             if(fileExists) {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append(saveContents);
+
+                    try
+                    {
+                        //File.Open(path + filename, FileMode.Open);
+
+                        /*
+                        foreach (var item in processList)
+                        {
+
+                            stringBuilder.Append(item.getName() + ":" + item.getTime() + "|");
+                        }
+                        */
+
+                        //Add content to file
+                        File.AppendAllText(path + filename, stringBuilder.ToString());
+
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Unable to save offline data." + e.ToString());
+                    }
+            }
+                
+        }
+
+
+
         public void SaveOffline(Session session)
         {
             //string path = @"D:\Google Drive\#zpersonal\LOGS\Antilobby\Log.txt";

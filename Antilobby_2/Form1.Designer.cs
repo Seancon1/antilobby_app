@@ -61,6 +61,9 @@
             this.listProcesses = new System.Windows.Forms.ListBox();
             this.lblCurrentProcess = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.accountPanel = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.lblLogginInAccountName = new System.Windows.Forms.Label();
             this.lblUserIP = new System.Windows.Forms.Label();
             this.lblMyInfoSessionID = new System.Windows.Forms.Label();
             this.tabPageMyAlerts = new System.Windows.Forms.TabPage();
@@ -77,17 +80,16 @@
             this.TimerMainUIComponents = new System.Windows.Forms.Timer(this.components);
             this.TimerProcesses = new System.Windows.Forms.Timer(this.components);
             this.lblTimeElapsed = new System.Windows.Forms.Label();
-            this.accountPanel = new System.Windows.Forms.Panel();
-            this.lblLogginInAccountName = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.tESTItemSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tESTItemRetrieveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabAlerts.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.tabPageMyAlerts.SuspendLayout();
             this.accountPanel.SuspendLayout();
+            this.tabPageMyAlerts.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -120,21 +122,21 @@
             // loginToolStripMenuItem
             // 
             this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
-            this.loginToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.loginToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loginToolStripMenuItem.Text = "Login";
             this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click_1);
             // 
             // saveOfflineToolStripMenuItem
             // 
             this.saveOfflineToolStripMenuItem.Name = "saveOfflineToolStripMenuItem";
-            this.saveOfflineToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.saveOfflineToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveOfflineToolStripMenuItem.Text = "SaveOffline";
             this.saveOfflineToolStripMenuItem.Click += new System.EventHandler(this.saveOfflineToolStripMenuItem_Click);
             // 
@@ -144,7 +146,7 @@
             this.startToolStripMenuItem,
             this.stopToolStripMenuItem});
             this.startSessionToolStripMenuItem.Name = "startSessionToolStripMenuItem";
-            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.startSessionToolStripMenuItem.Text = "Session";
             // 
             // startToolStripMenuItem
@@ -165,12 +167,12 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(131, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -202,30 +204,32 @@
             // 
             this.toolStripMenuItem1.Enabled = false;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem1.Text = "Alert Settings";
             // 
             // offlineStorageToolStripMenuItem
             // 
             this.offlineStorageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.testRetrieveToolStripMenuItem,
-            this.saveStorageToolStripMenuItem});
+            this.saveStorageToolStripMenuItem,
+            this.tESTItemSaveToolStripMenuItem,
+            this.tESTItemRetrieveToolStripMenuItem});
             this.offlineStorageToolStripMenuItem.Name = "offlineStorageToolStripMenuItem";
-            this.offlineStorageToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.offlineStorageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.offlineStorageToolStripMenuItem.Text = "Offline Storage";
             this.offlineStorageToolStripMenuItem.Click += new System.EventHandler(this.offlineStorageToolStripMenuItem_Click);
             // 
             // testRetrieveToolStripMenuItem
             // 
             this.testRetrieveToolStripMenuItem.Name = "testRetrieveToolStripMenuItem";
-            this.testRetrieveToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.testRetrieveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.testRetrieveToolStripMenuItem.Text = "Test Convert";
             this.testRetrieveToolStripMenuItem.Click += new System.EventHandler(this.testRetrieveToolStripMenuItem_Click);
             // 
             // saveStorageToolStripMenuItem
             // 
             this.saveStorageToolStripMenuItem.Name = "saveStorageToolStripMenuItem";
-            this.saveStorageToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.saveStorageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveStorageToolStripMenuItem.Text = "Save Storage";
             this.saveStorageToolStripMenuItem.Click += new System.EventHandler(this.saveStorageToolStripMenuItem_Click);
             // 
@@ -367,6 +371,34 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "My Information";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // accountPanel
+            // 
+            this.accountPanel.Controls.Add(this.button2);
+            this.accountPanel.Controls.Add(this.lblLogginInAccountName);
+            this.accountPanel.Location = new System.Drawing.Point(276, 14);
+            this.accountPanel.Name = "accountPanel";
+            this.accountPanel.Size = new System.Drawing.Size(200, 100);
+            this.accountPanel.TabIndex = 2;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(48, 45);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(108, 35);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Disconnect Account";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // lblLogginInAccountName
+            // 
+            this.lblLogginInAccountName.AutoSize = true;
+            this.lblLogginInAccountName.Location = new System.Drawing.Point(63, 13);
+            this.lblLogginInAccountName.Name = "lblLogginInAccountName";
+            this.lblLogginInAccountName.Size = new System.Drawing.Size(75, 13);
+            this.lblLogginInAccountName.TabIndex = 0;
+            this.lblLogginInAccountName.Text = "AccountName";
             // 
             // lblUserIP
             // 
@@ -530,33 +562,19 @@
             this.lblTimeElapsed.TabIndex = 1;
             this.lblTimeElapsed.Text = "Time Elapsed:";
             // 
-            // accountPanel
+            // tESTItemSaveToolStripMenuItem
             // 
-            this.accountPanel.Controls.Add(this.button2);
-            this.accountPanel.Controls.Add(this.lblLogginInAccountName);
-            this.accountPanel.Location = new System.Drawing.Point(276, 14);
-            this.accountPanel.Name = "accountPanel";
-            this.accountPanel.Size = new System.Drawing.Size(200, 100);
-            this.accountPanel.TabIndex = 2;
+            this.tESTItemSaveToolStripMenuItem.Name = "tESTItemSaveToolStripMenuItem";
+            this.tESTItemSaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tESTItemSaveToolStripMenuItem.Text = "TEST item save";
+            this.tESTItemSaveToolStripMenuItem.Click += new System.EventHandler(this.tESTItemSaveToolStripMenuItem_Click);
             // 
-            // lblLogginInAccountName
+            // tESTItemRetrieveToolStripMenuItem
             // 
-            this.lblLogginInAccountName.AutoSize = true;
-            this.lblLogginInAccountName.Location = new System.Drawing.Point(63, 13);
-            this.lblLogginInAccountName.Name = "lblLogginInAccountName";
-            this.lblLogginInAccountName.Size = new System.Drawing.Size(75, 13);
-            this.lblLogginInAccountName.TabIndex = 0;
-            this.lblLogginInAccountName.Text = "AccountName";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(48, 45);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(108, 35);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Disconnect Account";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.tESTItemRetrieveToolStripMenuItem.Name = "tESTItemRetrieveToolStripMenuItem";
+            this.tESTItemRetrieveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tESTItemRetrieveToolStripMenuItem.Text = "TEST item retrieve";
+            this.tESTItemRetrieveToolStripMenuItem.Click += new System.EventHandler(this.tESTItemRetrieveToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -583,10 +601,10 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage4.ResumeLayout(false);
-            this.tabPageMyAlerts.ResumeLayout(false);
-            this.tabPageMyAlerts.PerformLayout();
             this.accountPanel.ResumeLayout(false);
             this.accountPanel.PerformLayout();
+            this.tabPageMyAlerts.ResumeLayout(false);
+            this.tabPageMyAlerts.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -645,6 +663,8 @@
         private System.Windows.Forms.Panel accountPanel;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label lblLogginInAccountName;
+        private System.Windows.Forms.ToolStripMenuItem tESTItemSaveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tESTItemRetrieveToolStripMenuItem;
     }
 }
 
