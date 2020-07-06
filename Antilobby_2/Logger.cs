@@ -105,11 +105,12 @@ namespace AntiLobby_2
          *  String saveContents :  contents to add or save to file
          *  int flag : default 0, to adjust logic
          * */
-        public void SaveOfflineGeneric(String fileName, String saveContents, int flag = 0)
+        public void SaveOfflineGeneric(String fileName, string[] saveContents, int flag = 0)
         {
             //Directory and File path information
-            var pathFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Antilobby\\" + fileName;
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Antilobby\\";
+            //User directory
+            var pathFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\" + fileName;
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\";
 
             if (!Directory.Exists(path))
                 {
@@ -120,14 +121,29 @@ namespace AntiLobby_2
             {
                 //Flag indicates different type of file saving, depending on the context
                 switch(flag)
-                            {
-                                case 0:
-                                    File.WriteAllText(pathFile, saveContents);
-                                    break;
-                                case 1:
-                                    File.AppendAllText(pathFile, saveContents);
-                                    break;
-                            }
+                {
+                    //Clear contents of file, replace with
+                    case 0:
+                        File.WriteAllText(pathFile, saveContents[0]);
+                        break;
+
+                    //Add append contents with current
+                    case 1:
+                        File.AppendAllText(pathFile, saveContents[0]);
+                        break;
+
+                    //Saving session info
+                    case 2:
+                    //Change destination to Antilobby/Sessions/
+                        pathFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\Sessions\\" + fileName;
+                        
+                        for(int x= 0; x < saveContents.Length; x++)
+                        {
+                            File.AppendAllText(pathFile, saveContents[x]);
+                        }
+
+                    break;
+                }
             } catch (Exception e)
             {
                 MessageBox.Show("Unable to save offline data." + e.ToString());
@@ -142,7 +158,7 @@ namespace AntiLobby_2
         public String readOfflineGeneric(String fileName, int flag = 0)
         {
             //Path to all files used in Antilobby
-            var pathFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Antilobby\\" + fileName;
+            var pathFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\" + fileName;
 
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -161,13 +177,14 @@ namespace AntiLobby_2
 
             } catch (Exception e)
             {
-                MessageBox.Show("Unable to read offline data." + e.ToString());
+                //MessageBox.Show("Unable to read offline data." + e.ToString());
+                Console.WriteLine("Unable to read offline data." + e.ToString()); //Print
             }
 
             return stringBuilder.ToString();
         }
 
-        public void SaveOfflineGenericDEPRECATED(String filename, String saveContents)
+        public void SaveOfflineGeneric_DEPRECATED(String filename, String saveContents)
         {
             //Flag to check to see if the file is actually available, automatically false
             Boolean fileExists = false;

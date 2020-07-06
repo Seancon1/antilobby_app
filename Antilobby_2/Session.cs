@@ -25,15 +25,15 @@ namespace Antilobby_2
 
         public Session(User user)
         {
-            
             this.tickCount = 0;
             this.user = user;
             //assign internally fetched User.userToken here
-            //this.user.setToken = 
             this.id = MyUtils.getSessionID(); //Create and assign new session ID immediately
             this.logger = new Logger(this, user); //create a logger instance
             this.processList = new ProcessList(this, user);
             this.alertList = new Alert.AlertList(processList); //processList must not be null before linking, aka create processList link before calling this
+            this.user.setToken = readUserToken(); //gets token if located on machine locally, otherwise set null !! LOGGER instance must be called 
+
         }
 
         public string Id { get => this.id; set => this.id = value; }
@@ -96,22 +96,29 @@ namespace Antilobby_2
         }
 
 
-        public void saveUserToken()
+        public void saveUserToken(string content)
         {
-            this.logger.SaveOfflineGeneric("_UserToken.antilobby","test generic");
+            this.logger.SaveOfflineGeneric("_UserToken.antilobby", new string[] { content });
         }
 
-        public void readUserToken()
+        public string readUserToken()
         {
             var contents = this.logger.readOfflineGeneric("_UserToken.antilobby");
-            System.Windows.Forms.MessageBox.Show("File contents:" + contents);
+            //System.Windows.Forms.MessageBox.Show("File contents:" + contents);
+            
+            if(contents.Length < 1)
+            {
+                return null;
+            } else { return contents; }
         }
+
+
         /**
          * Check device storage for token
          * 1) Find file
          * 2) Extract token
          * */
-        public String fetchDeviceToken()
+        public string fetchDeviceToken()
         {
             return "null";
         }

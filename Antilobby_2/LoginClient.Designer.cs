@@ -44,6 +44,7 @@
             this.webBrowser.Url = new System.Uri("https://www.prestigecode.com/projects/antilobby/clientlogin.php", System.UriKind.Absolute);
             this.webBrowser.WebBrowserShortcutsEnabled = false;
             this.webBrowser.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.webBrowser_Navigated);
+            this.webBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.webBrowser_Navigating);
             // 
             // txtUrlStatus
             // 

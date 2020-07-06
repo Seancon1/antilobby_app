@@ -302,21 +302,24 @@ namespace Antilobby_2
          * */
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+
             try
             {
-                //ClosingForm form = new ClosingForm(); //pass session values to new form
+                //Save offline data as a precaution
+                //superSession.
+                //superSession.
 
                 //Loop until saveToDatabase sets State to false, otherwise keep on trying.
                 //not exactly the best way to approach this but it works now
                 while (superSession.State)
-                        {
-                            this.Enabled = false; //disables main client to prevent any other actions
-                            superSession.processList.saveToDatabase(1); //flag = 1 to set state to false
-                        }
-            } catch (Exception error)
+                {
+                    this.Enabled = false; //disables main client to prevent any other actions
+                    superSession.processList.saveToDatabase(1); //flag = 1 to set state to false
+                }
+            }
+            catch (Exception error)
             {
-                MessageBox.Show(error.ToString());
+                MessageBox.Show("Unable to save to online database, saving offline... \n" + error.ToString());
             }
             
             
@@ -450,7 +453,9 @@ namespace Antilobby_2
 
         private void loginToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new LoginClient().Show();
+            //Open login client and carry session over
+            new LoginClient(superSession).Show();
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -460,7 +465,7 @@ namespace Antilobby_2
 
         private void tESTItemSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            superSession.saveUserToken();
+            superSession.saveUserToken("default");
         }
 
         private void tESTItemRetrieveToolStripMenuItem_Click(object sender, EventArgs e)
