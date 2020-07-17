@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using System.Windows.Automation;
 using System.Diagnostics;
 using AntiLobby_2;
-
+using Antilobby_2.Utils;
 
 namespace Antilobby_2
 {
@@ -20,6 +20,7 @@ namespace Antilobby_2
         private User superUser = null;
         private Session superSession = null;
         Button alertButton = new Button();
+        CursorStatus cursorStatus = new CursorStatus();
 
         public Form1()
         {
@@ -29,6 +30,7 @@ namespace Antilobby_2
             Automation.AddAutomationFocusChangedEventHandler(focusHandler);
             flowLayoutActiveAlerts.VerticalScroll.Enabled = true;
             alertButton.MouseClick += AlertButton_MouseClick; //Add a handler so i can do stuff with clicks
+
 
             //flowLayoutActiveAlerts.scr
 
@@ -135,10 +137,23 @@ namespace Antilobby_2
             }
 
 
-            superSession.incrementTick(global.processName); //pass current process
 
-            //Add process to processList using a ProcessItem object
-            superSession.processList.addAndCount(new ProcessItem(global.processName));
+            superSession.incrementTick(global.processName); //pass current process FOR alertList
+
+            //INCREMENT GLOBAL TICKS 
+            //Check cursor idle status
+            if (cursorStatus.isCursorIdle(Cursor.Position.X, Cursor.Position.Y) && cursorStatus.getIdleCount() > 5)
+            {
+                //update UI for cursor status
+                lblCursorStatus.Text = "Cursor Idle";
+                superSession.processList.addAndCountOrCount(new ProcessItem(global.processName), 1); //essential tick, ignore current process tick
+            }
+            else
+            {
+                lblCursorStatus.Text = "Cursor Active";
+                superSession.processList.addAndCountOrCount(new ProcessItem(global.processName)); //essential tick, normal function
+            }
+
             superSession.processList.refreshList(listProcesses); //link listProcesses list to use the processList items
 
             lblTimeElapsed.Text = "Time Elapsed: " + superSession.TickCount;

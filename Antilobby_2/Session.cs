@@ -47,6 +47,8 @@ namespace Antilobby_2
         public void incrementTick(String activeProcess)
         {
             this.tickCount++;
+
+
             //also increment all alert counts
             if (alertList == null) { } else
             {

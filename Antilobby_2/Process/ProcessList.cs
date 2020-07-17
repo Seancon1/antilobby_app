@@ -79,8 +79,12 @@ namespace AntiLobby_2
             }
             return 0;
         }
-
-        public void addAndCount(ProcessItem inItem)
+        /// <summary>
+        /// Increment the tick to the current process. Flag indicates a change of logic.
+        /// </summary>
+        /// <param name="inItem"></param>
+        /// <param name="flag"></param>
+        public void addAndCountOrCount(ProcessItem inItem, int flag = 0)
         {
             if (inItem != null && inItem.getName() != "null")
             {
@@ -89,7 +93,9 @@ namespace AntiLobby_2
                     this.list.Add(inItem.getName(), inItem); //add item if it isn't located inside list
                 } else
                 {
-                    this.list[inItem.getName()].addTime(1); //Adds one second to the item if present in list already
+                    if (flag == 1) {
+                        //do nothing
+                    } else { this.list[inItem.getName()].addTime(1); } //Adds one second to the item if present in list already
                 }
 
             }
