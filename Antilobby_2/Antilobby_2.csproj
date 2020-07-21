@@ -75,6 +75,9 @@
     <Compile Include="Alert\Alert.cs" />
     <Compile Include="Alert\AlertList.cs" />
     <Compile Include="Alert\AlertPlay.cs" />
+    <Compile Include="ApplicationUpdater\Updater.cs" />
+    <Compile Include="AutoUpdate\AutoUpdate.cs" />
+    <Compile Include="AutoUpdate\FetchUpdateVersion.cs" />
     <Compile Include="ClosingForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -12,6 +12,8 @@ using System.Windows.Automation;
 using System.Diagnostics;
 using AntiLobby_2;
 using Antilobby_2.Utils;
+using Antilobby_2.ApplicationUpdater;
+using Antilobby_2.AutoUpdate;
 
 namespace Antilobby_2
 {
@@ -21,6 +23,7 @@ namespace Antilobby_2
         private Session superSession = null;
         Button alertButton = new Button();
         CursorStatus cursorStatus = new CursorStatus();
+        private AutoUpdate.AutoUpdate VersionControl = new AutoUpdate.AutoUpdate(global.APP_RELEASE_NUM);
 
         public Form1()
         {
@@ -39,10 +42,16 @@ namespace Antilobby_2
             superSession = new Session(superUser);
             
 
-            try { lblUserIP.Text = "Your IP: "+ MyUtils.GetIPAddress();} catch (Exception error)
+            try {
+                lblUserIP.Text = "Your IP: "+ MyUtils.GetIPAddress();
+                toolStripStatuslblVersion.Text = VersionControl.IsOutDated() ? $"v {global.APP_RELEASE_NUM} (outdated)" : $"v {global.APP_RELEASE_NUM} (current)";
+                toolStripStatuslblVersion.BackColor = VersionControl.IsOutDated() ? Color.FromArgb(255,150,152) : Color.FromName("Control");
+                updateToolStripMenuItem.BackColor = VersionControl.IsOutDated() ? Color.FromArgb(255,150,152) : Color.FromName("Control");
+            } catch (Exception error)
             {
-                lblUserIP.Text = "Your IP: " + MyUtils.getIP();
-            } 
+                
+            }
+
             
 
         }
@@ -141,8 +150,8 @@ namespace Antilobby_2
             superSession.incrementTick(global.processName); //pass current process FOR alertList
 
             //INCREMENT GLOBAL TICKS 
-            //Check cursor idle status
-            if (cursorStatus.isCursorIdle(Cursor.Position.X, Cursor.Position.Y) && cursorStatus.getIdleCount() > 5)
+            //Check cursor idle status after (global.AFK_TIMER_LIMIT)
+            if (cursorStatus.isCursorIdle(Cursor.Position.X, Cursor.Position.Y) && cursorStatus.getIdleCount() >= global.AFK_TIMER_LIMIT)
             {
                 //update UI for cursor status
                 lblCursorStatus.Text = "Cursor Idle";
@@ -486,6 +495,65 @@ namespace Antilobby_2
         private void tESTItemRetrieveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             superSession.readUserToken();
+        }
+
+
+        /*
+         * Menu tool strips for setting AFK TIMER limit
+         * 
+         * */
+        public void setAFKTimerLimit(int limit)
+        {
+            global.AFK_TIMER_LIMIT = limit;
+            MessageBox.Show($"AFK Time limit set to: {limit} ticks.");
+           
+        }
+
+        private void minutesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            setAFKTimerLimit(300);
+        }
+
+        private void minutesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            setAFKTimerLimit(600);
+        }
+
+        private void hourToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            setAFKTimerLimit(3600);
+        }
+
+        /// <summary>
+        /// Checks the version and updates current executable associated with this program IF version is out of date.
+        /// </summary>
+        private void doVersionCheck()
+        {
+            try
+            {
+                
+                if (VersionControl.IsOutDated())
+                {
+                    MessageBox.Show("Program is outdated (v" + global.APP_RELEASE_NUM + "). Updating application to version (v" + VersionControl.getNewVersion() + ")");
+                    ApplicationUpdater.Updater updater = new ApplicationUpdater.Updater(); //update program
+                    MessageBox.Show("Application was updated. Please relaunch for new changes.");
+                }
+                else
+                {
+                    MessageBox.Show("Program is running as a beta program or an updated version.");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Unable to update. e:" + e.ToString());
+            }
+
+
+        }
+
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            doVersionCheck();
         }
     }
 }

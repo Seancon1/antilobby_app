@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Antilobby_2.AutoUpdate
+{
+    class FetchUpdateVersion
+    {
+
+        public static string VERSION_URL = "https://www.prestigecode.com/projects/antilobby/releases/version.php";
+
+        public double newVersionNumber;
+
+        public FetchUpdateVersion()
+        {
+
+        }
+
+        /**
+         * Connects to the online version number
+         * returns the result
+         * */
+        public double GetVersion()
+        {
+            string result = null;
+            double returnVersion;
+            var myClient = new WebClient();
+            Stream response = myClient.OpenRead(VERSION_URL);
+            // The stream data is used here.
+            StreamReader streamReader = new StreamReader(response);
+
+            result = streamReader.ReadLine();
+            response.Close();
+
+            double.TryParse(result, out returnVersion);
+            StringBuilder stringBuilder = new StringBuilder();
+            //stringBuilder
+            this.newVersionNumber = returnVersion;//set class public int to this as well
+            return returnVersion;
+        }
+    }
+}
