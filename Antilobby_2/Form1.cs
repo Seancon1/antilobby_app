@@ -19,6 +19,7 @@ namespace Antilobby_2
 {
     public partial class Form1 : Form
     {
+
         private User superUser = null;
         private Session superSession = null;
         Button alertButton = new Button();
@@ -75,6 +76,12 @@ namespace Antilobby_2
             this.Close();
         }
 
+        private void exitWithoutSavingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            global.closeWithoutSave = true; // should toggle no saving
+            this.Close();
+        }
+
         //Tool Tip buttons
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -96,8 +103,8 @@ namespace Antilobby_2
             {
                 //New session destroy method will be made later when session saving is finished
                 superSession = null; //unlink session, keep in memory.
-                    
                 MessageBox.Show("Session stopped.");
+                
             }
             else
             {
@@ -326,34 +333,35 @@ namespace Antilobby_2
          * */
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-
-            try
+            //Optional close without saving, default FALSE
+            if(!global.closeWithoutSave)
             {
-                //Save offline data as a precaution
-                //superSession.
-                //superSession.
-
-                //Loop until saveToDatabase sets State to false, otherwise keep on trying.
-                //not exactly the best way to approach this but it works now
-                while (superSession.State)
+                try
                 {
-                    this.Enabled = false; //disables main client to prevent any other actions
-                    superSession.processList.saveToDatabase(1); //flag = 1 to set state to false
+                    //Save offline data as a precaution
+                    //superSession.
+                    //superSession.
+
+                    //Loop until saveToDatabase sets State to false, otherwise keep on trying.
+                    //not exactly the best way to approach this but it works now
+                    while (superSession.State)
+                    {
+                        this.Enabled = false; //disables main client to prevent any other actions
+                        superSession.processList.saveToDatabase(1); //flag = 1 to set state to false
+                    }
                 }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Unable to save to online database, saving offline... \n" + error.ToString());
-            }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Unable to save to online database, attempting to save offline... \n" + error.ToString());
+                }
             
             
-            if(superSession.State == false)
-            {
-                MessageBox.Show("Saving complete, application will close now.");
-                //this.Close();
-            }
-            
-            
+                if(superSession.State == false)
+                {
+                    MessageBox.Show("Saving complete, application will close now.");
+                    //this.Close();
+                }
+            } 
         }
 
         private void comboBox1_MouseHover(object sender, EventArgs e)
@@ -509,14 +517,19 @@ namespace Antilobby_2
            
         }
 
-        private void minutesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void minutesToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             setAFKTimerLimit(300);
         }
 
-        private void minutesToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void minutesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             setAFKTimerLimit(600);
+        }
+
+        private void minutesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            setAFKTimerLimit(1800);
         }
 
         private void hourToolStripMenuItem_Click(object sender, EventArgs e)
@@ -540,7 +553,7 @@ namespace Antilobby_2
                 }
                 else
                 {
-                    MessageBox.Show("Program is running as a beta program or an updated version.");
+                    MessageBox.Show("You are running the most current version.");
                 }
             }
             catch (Exception e)
@@ -555,5 +568,7 @@ namespace Antilobby_2
         {
             doVersionCheck();
         }
+
+
     }
 }
