@@ -72,7 +72,7 @@ namespace Antilobby_2
 
         public String fetchOfflineStorage()
         {
-            return logger.fetchOfflineStorage();
+           return logger.fetchOfflineStorage();
         }
 
         public void saveAllOfflineStorage()
@@ -111,7 +111,7 @@ namespace Antilobby_2
             if(contents.Length < 1)
             {
                 return null;
-            } else { return contents; }
+            } else { return contents[0]; }
         }
 
 

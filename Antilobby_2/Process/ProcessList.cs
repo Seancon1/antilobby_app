@@ -1,8 +1,10 @@
 ﻿using Antilobby_2;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -60,6 +62,12 @@ namespace AntiLobby_2
                 this.list.TryGetValue(inItem, out processItem);
             }
                 return processItem;
+        }
+
+        public ProcessItem GetFirstProcessItem()
+        {
+            ProcessItem processItem = null; 
+            return this.list.First().Value; //ProcessItem is stored in VALUE as an object, so return that
         }
 
         public void addItem(ProcessItem inItem)
@@ -195,6 +203,50 @@ namespace AntiLobby_2
             list.Remove(list.First().Key);
             return list.First().Value;
         }
+
+        /// <summary>
+        /// Converts each item that exists in the list to a json format and returns it.
+        /// </summary>
+        /// <returns>String in JSON format</returns>
+        public string ReturnEntireProcessListJSONFormat()
+        {
+            string json = "";
+            List<ProcessItem> list = this.ReturnAllItems();
+
+            foreach (ProcessItem item in list)
+            {
+                json += "\n" + JsonConvert.SerializeObject(item);
+            }
+
+            return json;
+        }
+
+        
+        public void LoadProcessListFromJSONString(string[] oInput)
+        {
+
+            List<ProcessItem> itemCollection = new List<ProcessItem>();
+            
+            for(int x =0; oInput.Length > x; x++)
+            {
+                itemCollection.Add(JsonConvert.DeserializeObject<ProcessItem>(oInput[x]));
+            }
+
+            //Clear current list to prevent errors from appearing when adding duplicate
+            this.list.Clear();
+
+            //iterate through and seperate data to be deserialized into items
+            foreach(ProcessItem item in itemCollection)
+            {
+                if(item != null) {
+                    this.list.Add(item.Name.ToString(), item);
+                }
+                
+            }
+            
+            
+        }
+    
         
     }
 }

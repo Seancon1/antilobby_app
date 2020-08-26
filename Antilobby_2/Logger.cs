@@ -155,7 +155,7 @@ namespace AntiLobby_2
          * String fileName : name of file to read
          * int flag : flag so ReadFile method can be changed with context
          * */
-        public String readOfflineGeneric(String fileName, int flag = 0)
+        public String[] readOfflineGeneric(String fileName, int flag = 0)
         {
             //Path to all files used in Antilobby
             var pathFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\" + fileName;
@@ -169,6 +169,31 @@ namespace AntiLobby_2
                     case 0:
                         stringBuilder.Append(File.ReadAllText(pathFile));
                         break;
+                    case 1:
+                        List<string> returnString = new List<string>();
+
+                        using (FileStream fs = File.OpenRead(pathFile))
+                        {
+                            using (var sr = new StreamReader(fs))
+                            {
+                                string line;
+                                while((line = sr.ReadLine()) != null){
+                                    returnString.Add(line);
+                                }
+                            }
+                        }
+
+                        //Allocate size for string
+                        String[] toReturn = new string[returnString.Count];
+                        int count = 0;
+                        foreach(String item in returnString)
+                        {
+                            toReturn[count++] = item;
+                        }
+
+                        return toReturn;
+
+                        break;
 
                     default:
                         stringBuilder.Append(File.ReadAllText(pathFile));
@@ -181,7 +206,7 @@ namespace AntiLobby_2
                 Console.WriteLine("Unable to read offline data." + e.ToString()); //Print
             }
 
-            return stringBuilder.ToString();
+            return new String[] { stringBuilder.ToString() };
         }
 
         public void SaveOfflineGeneric_DEPRECATED(String filename, String saveContents)

@@ -12,6 +12,18 @@ namespace AntiLobby_2
         private string name;
         private int timeViewed;
 
+        /* 
+         * Set up so JSON can serialize the object
+         * */
+        public string Name { get => name; set => name = value; }
+        public int TimeViewed { get => timeViewed; set => timeViewed = value; }
+        /* */
+
+        public ProcessItem()
+        {
+
+        }
+
         public ProcessItem(string inName)
         {
             this.name = inName;

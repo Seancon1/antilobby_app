@@ -14,6 +14,7 @@ using AntiLobby_2;
 using Antilobby_2.Utils;
 using Antilobby_2.ApplicationUpdater;
 using Antilobby_2.AutoUpdate;
+using Newtonsoft.Json;
 
 namespace Antilobby_2
 {
@@ -569,6 +570,22 @@ namespace Antilobby_2
             doVersionCheck();
         }
 
+        private void jSONOfFirstObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //string json = JsonConvert.SerializeObject(superSession.processList.GetFirstProcessItem());
+            Logger logger = new Logger(superSession, superUser);
+            string[] collection = { superSession.processList.ReturnEntireProcessListJSONFormat() };
+            logger.SaveOfflineGeneric("savedSession", collection, 0);
+            MessageBox.Show("Saved session data to offline storage: \n " + superSession.processList.ReturnEntireProcessListJSONFormat());
+        }
 
+        private void loadSavedSessionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Logger logger = new Logger(superSession, superUser);
+            superSession.processList.LoadProcessListFromJSONString(logger.readOfflineGeneric("savedSession", 1));
+            MessageBox.Show("Loaded saved session data.");
+            //save empty item over session data to remove it after loading
+            //logger.SaveOfflineGeneric("savedSession", new string[] {""}, 0);
+        }
     }
 }
