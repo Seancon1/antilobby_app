@@ -12,6 +12,7 @@ namespace Antilobby_2.Alert
         private AlertPlay alertplay;
         private List<Alert> list;
         private AntiLobby_2.ProcessList processList;
+        private AlertAction alertAction = new AlertAction();
             
         public AlertList(AntiLobby_2.ProcessList processList)
         {
@@ -34,7 +35,6 @@ namespace Antilobby_2.Alert
                 {
                     alert.addTick();
                 }
-                
             }
 
         }

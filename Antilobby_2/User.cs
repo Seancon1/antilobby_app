@@ -15,21 +15,25 @@ namespace Antilobby_2
         private string IP;
         private string MAC;
         private string userToken;
+        private string email;
 
         public User()
         {
             this.IP = "" + MyUtils.GetIPAddress();
             this.MAC = "" + MyUtils.getMacAddress();
+            this.email = "null@null.null";
         }
 
         public User(string inIP, string inMAC)
         {
             this.IP = inIP;
             this.MAC = inMAC;
+            this.email = "null@null.null";
         }
 
         public string IP1 { get => IP; set => IP = value; }
         public string MAC1 { get => MAC; set => MAC = value; }
-        public string setToken { get => userToken; set => userToken = value; }
+        public string Token { get => userToken; set => userToken = value; }
+        public string Email { get => email; set => email = value; }
     }
 }

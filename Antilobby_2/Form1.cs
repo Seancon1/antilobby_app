@@ -63,7 +63,8 @@ namespace Antilobby_2
             //Bug appears after prolonged use
             //putting try catch here to prevent crash
             try {
-                toolStripStatusMain.Text = inText + " " + DateTime.Now;
+                toolStripStatusMain.ForeColor = Color.Gray;
+                toolStripStatusMain.Text = "[" + DateTime.Now + "] " + inText;
             }
             catch (Exception e)
             {
@@ -138,11 +139,15 @@ namespace Antilobby_2
             if(global.isLoggedIn)
             {
                 accountPanel.Show();
+                loginToolStripMenuItem.Visible = false;
+                lblLogginInAccountName.Text = superSession.getInMemoryUserEmail();
+                this.Text = "Antilobby" + " (" + superSession.getInMemoryUserEmail() + ")";
             } else
             {
+                loginToolStripMenuItem.Visible = true;
                 accountPanel.Hide();
             }
-            
+
         }
 
         private void TimerProcesses_Tick(object sender, EventArgs e)
@@ -175,13 +180,15 @@ namespace Antilobby_2
 
             lblTimeElapsed.Text = "Time Elapsed: " + superSession.TickCount;
             label1.Text = "" + global.processName;
-            showStatus(global.showstatus_value);
+            //showStatus(global.showstatus_value);
+            toolStripStatusTime.Text = ""+DateTime.Now;
             saveToolStripMenuItem.Enabled = true;
 
 
             /*
-             * Alert Handler 
+             * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Alert Handler 
              * */
+
             //clear alerts before checking again
             flowLayoutActiveAlerts.Controls.Clear();
             
@@ -192,10 +199,12 @@ namespace Antilobby_2
             {
                 foreach(Alert.Alert alert in superSession.alertList.ActiveAlerts())
                 {
-                   
-                    alertButton.BackColor = Color.BlueViolet;
-                    alertButton.Text = "(" + alert.AlertLimit + ":" + alert.CurrentCount + ")" + alert.ProcessName;
-                    flowLayoutActiveAlerts.Controls.Add(alertButton);
+                    Button newButton = new Button();
+                    newButton.MouseClick += AlertButton_MouseClick;
+                    newButton.BackColor = Color.BlueViolet;
+                    newButton.Text = "" + alert.AlertLimit + ":" + alert.CurrentCount + "|" + alert.ProcessName;
+                    flowLayoutActiveAlerts.Controls.Add(newButton);
+                    //flowLayoutActiveAlerts.Controls.
                 }
             }
 
@@ -204,20 +213,28 @@ namespace Antilobby_2
             {
                 foreach (Alert.Alert alert in superSession.alertList.PassiveAlerts())
                 {
-                    alertButton.BackColor = Color.Gray;
-                    alertButton.Text = "" + alert.AlertLimit + ":" + alert.CurrentCount + "|" + alert.ProcessName;
-                    flowLayoutActiveAlerts.Controls.Add(alertButton);
+                    Button newButton = new Button();
+                    newButton.MouseClick += AlertButton_MouseClick;
+                    newButton.BackColor = Color.Gray;
+                    newButton.Text = "" + alert.AlertLimit + ":" + alert.CurrentCount + "|" + alert.ProcessName;
+                    flowLayoutActiveAlerts.Controls.Add(newButton);
                 }
             }
 
             flowLayoutActiveAlerts.Refresh();
+
+            /*
+            * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Alert Handler 
+            * */
         }
 
+        
         private void AlertButton_MouseClick(object sender, MouseEventArgs e)
         {
             //flowLayoutActiveAlerts.Controls.Remove();
             Button button = sender as Button;
             flowLayoutActiveAlerts.Controls.Remove(button);
+            
             //superSession.alertList.removeAlert(button.Text.);
             //MessageBox.Show("Clicked " + button.Text);
 
@@ -303,7 +320,9 @@ namespace Antilobby_2
         private void saveToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             try {
+                
                 superSession.processList.saveToDatabase();
+                showStatus("Saved");
             } catch (System.Net.WebException error)
             {
                 MessageBox.Show("Error: " + error.ToString());
@@ -493,7 +512,8 @@ namespace Antilobby_2
 
         private void button2_Click(object sender, EventArgs e)
         {
-            global.isLoggedIn = false;
+            doLogout();
+
         }
 
         private void tESTItemSaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -586,6 +606,45 @@ namespace Antilobby_2
             MessageBox.Show("Loaded saved session data.");
             //save empty item over session data to remove it after loading
             //logger.SaveOfflineGeneric("savedSession", new string[] {""}, 0);
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void dummyDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            global.closeWithoutSave = true;
+            for (int i = 0; i < 100; i++)
+            {
+                superSession.processList.addItem(new ProcessItem("Dummy"+i, i));
+            }
+            
+            showStatus("Loaded Dummy Data");
+        }
+
+        /// <summary>
+        /// New online save method, POST request to our Antilobby API
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void newOnlineSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fetchSaveTokenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        public void doLogout()
+        {
+            global.isLoggedIn = false;
+            superSession.setInMemoryUserEmail("null");
+            this.Text = "Antilobby";
+            superSession.saveUserToken(""); //save over the saved token
+            MessageBox.Show("You have disconnected your account and deauthorized the client to send requests on your behalf.");
         }
     }
 }

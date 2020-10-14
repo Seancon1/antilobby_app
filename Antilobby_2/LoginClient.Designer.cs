@@ -28,9 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.txtUrlStatus = new System.Windows.Forms.Label();
             this.lblLoginClientCancel = new System.Windows.Forms.Label();
+            this.btnLoginClientLogin = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.panLogin = new System.Windows.Forms.Panel();
+            this.btnLoginClientRegister = new System.Windows.Forms.Button();
+            this.lblLoginClientReturnToLogin = new System.Windows.Forms.Label();
+            this.timerLoginClient = new System.Windows.Forms.Timer(this.components);
+            this.panLogin.SuspendLayout();
             this.SuspendLayout();
             // 
             // webBrowser
@@ -38,10 +49,11 @@
             this.webBrowser.Location = new System.Drawing.Point(12, 25);
             this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser.Name = "webBrowser";
-            this.webBrowser.ScrollBarsEnabled = false;
-            this.webBrowser.Size = new System.Drawing.Size(412, 262);
+            this.webBrowser.ScriptErrorsSuppressed = true;
+            this.webBrowser.Size = new System.Drawing.Size(412, 255);
             this.webBrowser.TabIndex = 0;
-            this.webBrowser.Url = new System.Uri("https://www.prestigecode.com/projects/antilobby/clientlogin.php", System.UriKind.Absolute);
+            this.webBrowser.Url = new System.Uri("https://www.prestigecode.com/api2/register", System.UriKind.Absolute);
+            this.webBrowser.Visible = false;
             this.webBrowser.WebBrowserShortcutsEnabled = false;
             this.webBrowser.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.webBrowser_Navigated);
             this.webBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.webBrowser_Navigating);
@@ -59,18 +71,104 @@
             // lblLoginClientCancel
             // 
             this.lblLoginClientCancel.AutoSize = true;
-            this.lblLoginClientCancel.Location = new System.Drawing.Point(195, 294);
+            this.lblLoginClientCancel.Location = new System.Drawing.Point(198, 291);
             this.lblLoginClientCancel.Name = "lblLoginClientCancel";
             this.lblLoginClientCancel.Size = new System.Drawing.Size(40, 13);
             this.lblLoginClientCancel.TabIndex = 2;
             this.lblLoginClientCancel.Text = "Cancel";
+            this.lblLoginClientCancel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLoginClientCancel.Click += new System.EventHandler(this.lblLoginClientCancel_Click);
+            // 
+            // btnLoginClientLogin
+            // 
+            this.btnLoginClientLogin.Location = new System.Drawing.Point(88, 109);
+            this.btnLoginClientLogin.Name = "btnLoginClientLogin";
+            this.btnLoginClientLogin.Size = new System.Drawing.Size(75, 23);
+            this.btnLoginClientLogin.TabIndex = 3;
+            this.btnLoginClientLogin.Text = "Login";
+            this.btnLoginClientLogin.UseVisualStyleBackColor = true;
+            this.btnLoginClientLogin.Click += new System.EventHandler(this.btnLoginClientLogin_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(25, 40);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Email:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(25, 66);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Password:";
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Location = new System.Drawing.Point(88, 37);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(130, 20);
+            this.txtEmail.TabIndex = 6;
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(88, 63);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(130, 20);
+            this.txtPassword.TabIndex = 7;
+            this.txtPassword.UseSystemPasswordChar = true;
+            // 
+            // panLogin
+            // 
+            this.panLogin.Controls.Add(this.btnLoginClientRegister);
+            this.panLogin.Controls.Add(this.txtEmail);
+            this.panLogin.Controls.Add(this.btnLoginClientLogin);
+            this.panLogin.Controls.Add(this.label1);
+            this.panLogin.Controls.Add(this.txtPassword);
+            this.panLogin.Controls.Add(this.label2);
+            this.panLogin.Location = new System.Drawing.Point(83, 73);
+            this.panLogin.Name = "panLogin";
+            this.panLogin.Size = new System.Drawing.Size(254, 165);
+            this.panLogin.TabIndex = 8;
+            // 
+            // btnLoginClientRegister
+            // 
+            this.btnLoginClientRegister.Location = new System.Drawing.Point(88, 138);
+            this.btnLoginClientRegister.Name = "btnLoginClientRegister";
+            this.btnLoginClientRegister.Size = new System.Drawing.Size(75, 23);
+            this.btnLoginClientRegister.TabIndex = 8;
+            this.btnLoginClientRegister.Text = "Register";
+            this.btnLoginClientRegister.UseVisualStyleBackColor = true;
+            this.btnLoginClientRegister.Click += new System.EventHandler(this.btnLoginClientRegister_Click);
+            // 
+            // lblLoginClientReturnToLogin
+            // 
+            this.lblLoginClientReturnToLogin.AutoSize = true;
+            this.lblLoginClientReturnToLogin.Location = new System.Drawing.Point(335, 291);
+            this.lblLoginClientReturnToLogin.Name = "lblLoginClientReturnToLogin";
+            this.lblLoginClientReturnToLogin.Size = new System.Drawing.Size(80, 13);
+            this.lblLoginClientReturnToLogin.TabIndex = 9;
+            this.lblLoginClientReturnToLogin.Text = "Return to Login";
+            this.lblLoginClientReturnToLogin.Visible = false;
+            this.lblLoginClientReturnToLogin.Click += new System.EventHandler(this.lblLoginClientReturnToLogin_Click);
+            // 
+            // timerLoginClient
+            // 
+            this.timerLoginClient.Enabled = true;
+            this.timerLoginClient.Interval = 1000;
+            this.timerLoginClient.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // LoginClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(436, 313);
+            this.Controls.Add(this.lblLoginClientReturnToLogin);
+            this.Controls.Add(this.panLogin);
             this.Controls.Add(this.lblLoginClientCancel);
             this.Controls.Add(this.txtUrlStatus);
             this.Controls.Add(this.webBrowser);
@@ -79,6 +177,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LoginClient";
             this.TopMost = true;
+            this.panLogin.ResumeLayout(false);
+            this.panLogin.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -89,5 +189,14 @@
         private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.Label txtUrlStatus;
         private System.Windows.Forms.Label lblLoginClientCancel;
+        private System.Windows.Forms.Button btnLoginClientLogin;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.Panel panLogin;
+        private System.Windows.Forms.Button btnLoginClientRegister;
+        private System.Windows.Forms.Label lblLoginClientReturnToLogin;
+        private System.Windows.Forms.Timer timerLoginClient;
     }
 }

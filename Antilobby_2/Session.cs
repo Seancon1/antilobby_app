@@ -32,7 +32,7 @@ namespace Antilobby_2
             this.logger = new Logger(this, user); //create a logger instance
             this.processList = new ProcessList(this, user);
             this.alertList = new Alert.AlertList(processList); //processList must not be null before linking, aka create processList link before calling this
-            this.user.setToken = readUserToken(); //gets token if located on machine locally, otherwise set null !! LOGGER instance must be called 
+            this.user.Token = readUserToken(); //gets token if located on machine locally, otherwise set null !! LOGGER instance must be called 
 
         }
 
@@ -97,6 +97,35 @@ namespace Antilobby_2
             
         }
 
+        public void setInMemoryUserToken(string token)
+        {
+            this.user.Token = token;
+        }
+        public string getInMemoryUserToken()
+        {
+            return this.user.Token;
+        }
+        public bool hasInMemoryUserToken()
+        {
+            try
+            {
+                return (this.user.Token.Length > 0) ? true : false;
+            } catch
+            {
+                return false;
+            }
+            
+        }
+        
+        public void setInMemoryUserEmail(string email)
+        {
+            this.user.Email = email;
+        }
+        public string getInMemoryUserEmail()
+        {
+            return this.user.Email;
+        }
+        
 
         public void saveUserToken(string content)
         {
