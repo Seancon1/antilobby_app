@@ -104,6 +104,7 @@
             this.TimerProcesses = new System.Windows.Forms.Timer(this.components);
             this.lblTimeElapsed = new System.Windows.Forms.Label();
             this.lblCursorStatus = new System.Windows.Forms.Label();
+            this.btnLoginPlease = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabAlerts.SuspendLayout();
@@ -228,6 +229,7 @@
             this.newOnlineSaveToolStripMenuItem.Name = "newOnlineSaveToolStripMenuItem";
             this.newOnlineSaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newOnlineSaveToolStripMenuItem.Text = "New Online Save";
+            this.newOnlineSaveToolStripMenuItem.Visible = false;
             this.newOnlineSaveToolStripMenuItem.Click += new System.EventHandler(this.newOnlineSaveToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
@@ -241,7 +243,7 @@
             // websiteToolStripMenuItem
             // 
             this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.websiteToolStripMenuItem.Text = "Website";
             this.websiteToolStripMenuItem.Click += new System.EventHandler(this.websiteToolStripMenuItem_Click);
             // 
@@ -264,7 +266,7 @@
             this.minutesToolStripMenuItem1,
             this.hourToolStripMenuItem});
             this.aFKLimitToolStripMenuItem.Name = "aFKLimitToolStripMenuItem";
-            this.aFKLimitToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.aFKLimitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aFKLimitToolStripMenuItem.Text = "AFK Limit";
             // 
             // minutesToolStripMenuItem2
@@ -299,7 +301,7 @@
             // 
             this.toolStripMenuItem1.Enabled = false;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem1.Text = "Alert Settings";
             // 
             // offlineStorageToolStripMenuItem
@@ -311,7 +313,7 @@
             this.tESTItemRetrieveToolStripMenuItem});
             this.offlineStorageToolStripMenuItem.Enabled = false;
             this.offlineStorageToolStripMenuItem.Name = "offlineStorageToolStripMenuItem";
-            this.offlineStorageToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.offlineStorageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.offlineStorageToolStripMenuItem.Text = "Offline Storage";
             this.offlineStorageToolStripMenuItem.Click += new System.EventHandler(this.offlineStorageToolStripMenuItem_Click);
             // 
@@ -346,7 +348,7 @@
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.updateToolStripMenuItem.Text = "Update";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
@@ -400,18 +402,19 @@
             this.testValuesToolStripMenuItem.Name = "testValuesToolStripMenuItem";
             this.testValuesToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.testValuesToolStripMenuItem.Text = "Test Values";
+            this.testValuesToolStripMenuItem.Visible = false;
             // 
             // jSONOfFirstObjectToolStripMenuItem
             // 
             this.jSONOfFirstObjectToolStripMenuItem.Name = "jSONOfFirstObjectToolStripMenuItem";
-            this.jSONOfFirstObjectToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.jSONOfFirstObjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.jSONOfFirstObjectToolStripMenuItem.Text = "JSON of first object";
             this.jSONOfFirstObjectToolStripMenuItem.Click += new System.EventHandler(this.jSONOfFirstObjectToolStripMenuItem_Click);
             // 
             // loadSavedSessionToolStripMenuItem
             // 
             this.loadSavedSessionToolStripMenuItem.Name = "loadSavedSessionToolStripMenuItem";
-            this.loadSavedSessionToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.loadSavedSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadSavedSessionToolStripMenuItem.Text = "Load Saved Session";
             this.loadSavedSessionToolStripMenuItem.Click += new System.EventHandler(this.loadSavedSessionToolStripMenuItem_Click);
             // 
@@ -420,6 +423,7 @@
             this.dummyDataToolStripMenuItem.Name = "dummyDataToolStripMenuItem";
             this.dummyDataToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.dummyDataToolStripMenuItem.Text = "Dummy Data";
+            this.dummyDataToolStripMenuItem.Visible = false;
             this.dummyDataToolStripMenuItem.Click += new System.EventHandler(this.dummyDataToolStripMenuItem_Click);
             // 
             // fetchSaveTokenToolStripMenuItem
@@ -427,7 +431,8 @@
             this.fetchSaveTokenToolStripMenuItem.Name = "fetchSaveTokenToolStripMenuItem";
             this.fetchSaveTokenToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.fetchSaveTokenToolStripMenuItem.Tag = "1";
-            this.fetchSaveTokenToolStripMenuItem.Text = "Fetch save token";
+            this.fetchSaveTokenToolStripMenuItem.Text = "Fetch session ID";
+            this.fetchSaveTokenToolStripMenuItem.Visible = false;
             this.fetchSaveTokenToolStripMenuItem.Click += new System.EventHandler(this.fetchSaveTokenToolStripMenuItem_Click);
             // 
             // saveWoTokenToolStripMenuItem
@@ -436,6 +441,7 @@
             this.saveWoTokenToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.saveWoTokenToolStripMenuItem.Tag = "2";
             this.saveWoTokenToolStripMenuItem.Text = "Save w/o token";
+            this.saveWoTokenToolStripMenuItem.Visible = false;
             // 
             // saveWTokenToolStripMenuItem
             // 
@@ -443,6 +449,8 @@
             this.saveWTokenToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.saveWTokenToolStripMenuItem.Tag = "3";
             this.saveWTokenToolStripMenuItem.Text = "Save w/ token";
+            this.saveWTokenToolStripMenuItem.Visible = false;
+            this.saveWTokenToolStripMenuItem.Click += new System.EventHandler(this.saveWTokenToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -490,6 +498,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnLoginPlease);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.listProcesses);
@@ -780,6 +789,16 @@
             this.lblCursorStatus.TabIndex = 14;
             this.lblCursorStatus.Text = "-";
             // 
+            // btnLoginPlease
+            // 
+            this.btnLoginPlease.Location = new System.Drawing.Point(102, 94);
+            this.btnLoginPlease.Name = "btnLoginPlease";
+            this.btnLoginPlease.Size = new System.Drawing.Size(134, 49);
+            this.btnLoginPlease.TabIndex = 7;
+            this.btnLoginPlease.Text = "Please Login";
+            this.btnLoginPlease.UseVisualStyleBackColor = true;
+            this.btnLoginPlease.Click += new System.EventHandler(this.btnLoginPlease_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -893,6 +912,7 @@
         private System.Windows.Forms.ToolStripMenuItem fetchSaveTokenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveWoTokenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveWTokenToolStripMenuItem;
+        private System.Windows.Forms.Button btnLoginPlease;
     }
 }
 

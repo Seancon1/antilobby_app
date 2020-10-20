@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using Antilobby_2;
 using Antilobby_2.Utils;
+using System.Net.Http.Headers;
 
 namespace AntiLobby_2
 {
@@ -22,7 +23,12 @@ namespace AntiLobby_2
         Session session = null;
         User user = null;
 
+
         //Place where all database communication happens
+        public Logger()
+        {
+
+        }
 
         public Logger(Session inSession, User inUser)
         {
@@ -192,8 +198,6 @@ namespace AntiLobby_2
                         }
 
                         return toReturn;
-
-                        break;
 
                     default:
                         stringBuilder.Append(File.ReadAllText(pathFile));
@@ -369,6 +373,137 @@ namespace AntiLobby_2
 
                 return null;
         }
+
+        public async void doGenericSaveViaAPI()
+        {
+            var returnString = "";
+            using (var client = new HttpClient())
+            {
+                
+                var values = new Dictionary<string, string>
+            {
+            { "value", "blank" },
+            };
+            
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+                var content = new FormUrlEncodedContent(values);
+                //var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/sanctum/token", content);
+                var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/user/session/update/" + this.session.Id + "/"+ this.session.TickCount, content);
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                //response modification, probably not the best way to detect an error 
+                //but I expect a string 100% of the time to be smaller than 256 chars
+                returnString = (responseString.ToString().Length <= 7 ) ? ""+responseString.ToString() : "error";
+
+                if (returnString == "error")
+                {
+                    MessageBox.Show("There was an error processing.");
+                }
+            }
+            Debug.WriteLine("Done saving to API: session data");
+        
+        }
+
+        public async void doGetAuthEmail()
+        {
+            var returnString = "";
+            using (var client = new HttpClient())
+            {
+
+                var values = new Dictionary<string, string>
+            {
+            { "value", "blank" },
+            };
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+                var content = new FormUrlEncodedContent(values);
+                var response = await client.GetAsync("https://www.prestigecode.com/api/antilobby/user/get");
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                //response modification, probably not the best way to detect an error 
+                //but I expect a string 100% of the time to be smaller than 256 chars
+                returnString = (responseString.ToString().Length < 256) ? "" + responseString.ToString() : "null";
+                if (returnString == "null")
+                {
+                    MessageBox.Show("There was an issue trying to authenticate the saved token.");
+                } else
+                {
+                    this.session.setInMemoryUserEmail(returnString);
+                    global.isLoggedIn = true;
+                }
+                
+                Debug.WriteLine("Done getting auth email");
+
+            }
+        }
+
+        //for apptime
+        public async void doGenericSaveViaAPI(string processName, int processTime)
+        {
+            var returnString = "";
+            using (var client = new HttpClient())
+            {
+
+                var values = new Dictionary<string, string>
+            {
+            { "value", "blank" },
+            };
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+                var content = new FormUrlEncodedContent(values);
+                //var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/sanctum/token", content);
+                var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/user/apptime/" + this.session.Id + "/" + processName +"/" + processTime, content);
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                //response modification, probably not the best way to detect an error 
+                //but I expect a string 100% of the time to be smaller than 256 chars
+                //returnString = (responseString.ToString() == "success") ? "" + responseString.ToString() : null;
+
+                if (returnString == "success")
+                {
+                    //MessageBox.Show("There was an error processing.");
+                    Debug.WriteLine("Done saving " + processTime.ToString());
+                }
+            }
+            Debug.WriteLine("Done saving to API: session data");
+
+        }
+
+        public async void getSessionIDFromAPI()
+        {
+            Debug.WriteLine("Getting session ID from API");
+
+            var returnString = "";
+            using (var client = new HttpClient())
+            {
+                var values = new Dictionary<string, string>
+            {
+            { "device_name", "antilobby_app" },
+            };
+                var token = (session.hasInMemoryUserToken() == true) ? session.getInMemoryUserToken() : session.readUserToken();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var content = new FormUrlEncodedContent(values);
+                var response = await client.GetAsync("https://www.prestigecode.com/api/antilobby/user/session/id");
+                var responseString = await response.Content.ReadAsStringAsync();
+                
+                Debug.WriteLine("Return string" + returnString.ToString());
+
+                returnString = (responseString.Length < 256) ? "" + responseString.ToString() : null;
+                if (returnString == null)
+                {
+                    //MessageBox.Show("There was an error getting a new Session ID.");
+                    Debug.Print("Error getting a new Session ID.");
+                    this.session.Id = MyUtils.getSessionID(); //get a randomly generated ID from application incase it cannot connect
+                }else
+                {
+                    this.session.Id = returnString;
+                }
+                
+
+            }
+            Debug.WriteLine("Finished");
+        }
+
 
 
 

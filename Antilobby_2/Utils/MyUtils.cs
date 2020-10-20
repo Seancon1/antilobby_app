@@ -48,20 +48,20 @@ namespace AntiLobby_2
 
         public static String getSessionID()
         {
-            Random rand = new Random(DateTime.Now.Millisecond);
-            return rand.Next().ToString();
+            //Random rand = new Random(DateTime.Now.Millisecond);
+            //return rand.Next().ToString();
             
-             /*
+             
             Random random = new Random();
             StringBuilder id = new StringBuilder();
 
-            while(id.Length < 10)
+            while(id.Length < 16)
             {
                 id.Append(random.Next(0, 9));
             }
 
             return id.ToString();
-            */
+            
         }
 
         public static string getMacAddress()

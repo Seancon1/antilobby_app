@@ -173,19 +173,40 @@ namespace AntiLobby_2
             {
                 //throw new System.Net.WebException("Cannot connect");
                 //Saves to 'antilobby' uses Session Value to save
-                logger.saveSessionAsync(); //uses
-
-
-                //SAVES to 'antilobby_appTime'
-                foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
+                switch (flag)
                 {
-                    //iterate through list and save for the MAC address
-                    logger.saveGameTimeAsync(itemToSave.Value.getName(), itemToSave.Value.getTime());
+                    //new save API switch
+                    case 69:
+
+                        logger.doGenericSaveViaAPI();
+
+                        foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
+                        {
+                            logger.doGenericSaveViaAPI(itemToSave.Value.getName(), itemToSave.Value.getTime());
+                        }
+
+                        break;
+
+                    case 0:
+                    default:
+                        logger.saveSessionAsync(); //uses
+
+
+                        //SAVES to 'antilobby_appTime'
+                        foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
+                        {
+                            //iterate through list and save for the MAC address
+                            logger.saveGameTimeAsync(itemToSave.Value.getName(), itemToSave.Value.getTime());
+                        }
+                        break;
                 }
+
 
             } catch (Exception e)
             {
+                logger.SaveOffline(this.session);
                 throw new System.Net.WebException("Cannot connect");
+                
             }
 
             if(flag == 1)

@@ -28,12 +28,12 @@ namespace Antilobby_2
             this.tickCount = 0;
             this.user = user;
             //assign internally fetched User.userToken here
-            this.id = MyUtils.getSessionID(); //Create and assign new session ID immediately
+            this.id = "null"; //Create and assign new session ID immediately
             this.logger = new Logger(this, user); //create a logger instance
             this.processList = new ProcessList(this, user);
             this.alertList = new Alert.AlertList(processList); //processList must not be null before linking, aka create processList link before calling this
             this.user.Token = readUserToken(); //gets token if located on machine locally, otherwise set null !! LOGGER instance must be called 
-
+            logger.getSessionIDFromAPI(); //this will replace null originally placed
         }
 
         public string Id { get => this.id; set => this.id = value; }
@@ -109,7 +109,7 @@ namespace Antilobby_2
         {
             try
             {
-                return (this.user.Token.Length > 0) ? true : false;
+                return (this.user.Token.Length < 1 || this.user.Token == "null") ? false : true;
             } catch
             {
                 return false;

@@ -21,14 +21,14 @@ namespace Antilobby_2
         {
             this.IP = "" + MyUtils.GetIPAddress();
             this.MAC = "" + MyUtils.getMacAddress();
-            this.email = "null@null.null";
+            this.email = "null";
         }
 
         public User(string inIP, string inMAC)
         {
             this.IP = inIP;
             this.MAC = inMAC;
-            this.email = "null@null.null";
+            this.email = "null";
         }
 
         public string IP1 { get => IP; set => IP = value; }

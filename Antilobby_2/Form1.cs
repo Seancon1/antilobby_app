@@ -42,6 +42,7 @@ namespace Antilobby_2
             // Create user and session
             superUser = new User();
             superSession = new Session(superUser);
+            Logger superLogger = new Logger(superSession, superUser);
             
 
             try {
@@ -52,6 +53,23 @@ namespace Antilobby_2
             } catch (Exception error)
             {
                 
+            }
+
+            //try checking existing auth token
+            try
+            {
+                if(superSession.readUserToken().Length > 0)
+                {
+                    superSession.setInMemoryUserToken(superSession.readUserToken());
+                    superLogger.doGetAuthEmail();
+                    superLogger.getSessionIDFromAPI();
+                } else
+                {
+
+                }
+            } catch
+            {
+
             }
 
             
@@ -93,7 +111,7 @@ namespace Antilobby_2
             } else
             {
                 //Start new session with existing user
-                superSession = new Session(superUser);
+                superSession = new Session(superUser); 
                 MessageBox.Show("A new session ("+ superSession.Id.ToString() +") has been started.");
             
             }
@@ -118,6 +136,11 @@ namespace Antilobby_2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if(global.needsRestart)
+            {
+                return;
+            }
+
             //Update all interface components
             if(superSession != null)
             {
@@ -136,14 +159,18 @@ namespace Antilobby_2
                 lblMyInfoSessionID.Text = "Session ID: none";
             }
 
-            if(global.isLoggedIn)
+            if(global.isLoggedIn && superSession != null)
             {
                 accountPanel.Show();
                 loginToolStripMenuItem.Visible = false;
                 lblLogginInAccountName.Text = superSession.getInMemoryUserEmail();
                 this.Text = "Antilobby" + " (" + superSession.getInMemoryUserEmail() + ")";
+                btnLoginPlease.Visible = false;
+                listProcesses.Enabled = true;
             } else
             {
+                btnLoginPlease.Visible = true;
+                listProcesses.Enabled = false;
                 loginToolStripMenuItem.Visible = true;
                 accountPanel.Hide();
             }
@@ -152,6 +179,23 @@ namespace Antilobby_2
 
         private void TimerProcesses_Tick(object sender, EventArgs e)
         {
+       
+            try
+            {
+                if (global.needsRestart)
+                {
+                    superSession = null;
+                    superUser = null;
+                    Application.Restart();
+                    Environment.Exit(0);
+                }
+
+            }
+            catch
+            {
+
+            }
+
             if (superSession == null)
             {
                 saveToolStripMenuItem.Enabled = false;
@@ -320,9 +364,17 @@ namespace Antilobby_2
         private void saveToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             try {
+                if(!global.isLoggedIn)
+                {
+                    MessageBox.Show("You must login now to save sessions.");
+                    showStatus("Error Saving");
+                }
+                else
+                {
+                    superSession.processList.saveToDatabase(69);
+                    showStatus("Saved");
+                }
                 
-                superSession.processList.saveToDatabase();
-                showStatus("Saved");
             } catch (System.Net.WebException error)
             {
                 MessageBox.Show("Error: " + error.ToString());
@@ -353,6 +405,7 @@ namespace Antilobby_2
          * */
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+
             //Optional close without saving, default FALSE
             if(!global.closeWithoutSave)
             {
@@ -361,18 +414,27 @@ namespace Antilobby_2
                     //Save offline data as a precaution
                     //superSession.
                     //superSession.
+                    superSession.processList.saveToDatabase(69); //flag = 1 to set state to false
 
                     //Loop until saveToDatabase sets State to false, otherwise keep on trying.
                     //not exactly the best way to approach this but it works now
+                    /*
                     while (superSession.State)
                     {
                         this.Enabled = false; //disables main client to prevent any other actions
-                        superSession.processList.saveToDatabase(1); //flag = 1 to set state to false
+                        //superSession.processList.saveToDatabase(69); //flag = 1 to set state to false
                     }
+                    */
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show("Unable to save to online database, attempting to save offline... \n" + error.ToString());
+                    if (global.needsRestart)
+                    {
+                        return;
+                    } else
+                    {
+                      MessageBox.Show("Unable to save to online database, attempting to save offline... \n" + error.ToString());
+                    }
                 }
             
             
@@ -456,7 +518,7 @@ namespace Antilobby_2
         {
             try
             {
-                System.Diagnostics.Process.Start("https://www.prestigecode.com/projects/antilobby/lobby.php");
+                System.Diagnostics.Process.Start("https://www.prestigecode.com/api/antilobby");
             } catch (Exception x)
             {
                 MessageBox.Show("Unable to open the website." + e.ToString());
@@ -631,12 +693,13 @@ namespace Antilobby_2
         /// <param name="e"></param>
         private void newOnlineSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            superSession.processList.saveToDatabase(69); //using flag 69 to switch to new API
         }
 
         private void fetchSaveTokenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Logger logger = new Logger(superSession, superUser);
+            logger.getSessionIDFromAPI();
         }
         public void doLogout()
         {
@@ -645,6 +708,20 @@ namespace Antilobby_2
             this.Text = "Antilobby";
             superSession.saveUserToken(""); //save over the saved token
             MessageBox.Show("You have disconnected your account and deauthorized the client to send requests on your behalf.");
+            superSession = null;
+            global.needsRestart = true;
+
+        }
+
+        private void saveWTokenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Logger logger = new Logger(superSession, superUser);
+            logger.doGenericSaveViaAPI();
+        }
+
+        private void btnLoginPlease_Click(object sender, EventArgs e)
+        {
+            new LoginClient(superSession).Show();
         }
     }
 }

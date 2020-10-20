@@ -96,7 +96,9 @@ namespace Antilobby_2
 
         private void btnLoginClientLogin_Click(object sender, EventArgs e)
         {
-            doLogin();
+
+                doLogin();
+            
         }
 
         private void lblLoginClientReturnToLogin_Click(object sender, EventArgs e)
@@ -111,8 +113,11 @@ namespace Antilobby_2
             panLogin.Visible = !panLogin.Visible;
         }
 
+
         private async void doLogin()
         {
+            //putting a new reference to logger to prevent errors when Session is null
+            AntiLobby_2.Logger logger = new AntiLobby_2.Logger();
             var returnString = "";
             using (var client = new HttpClient())
             {
@@ -132,6 +137,8 @@ namespace Antilobby_2
                 returnString = (responseString.Length < 256) ? ""+responseString.ToString() : null;
                 Session.setInMemoryUserToken(returnString);
                 Session.saveUserToken(returnString);
+                //logger.SaveOfflineGeneric("_UserToken.antilobby", new string[] { returnString });
+
                 global.isLoggedIn = Session.hasInMemoryUserToken();
                 Session.setInMemoryUserEmail(txtEmail.Text);
                 
@@ -139,7 +146,13 @@ namespace Antilobby_2
                 if(returnString == null)
                 {
                     MessageBox.Show("There was an error processing your credentials.");
+                    global.needsRestart = false;
+                } else
+                {
+                    global.needsRestart = true;
                 }
+
+                
             }
             
         }
