@@ -88,7 +88,7 @@
             this.lblUserIP = new System.Windows.Forms.Label();
             this.lblMyInfoSessionID = new System.Windows.Forms.Label();
             this.tabPageMyAlerts = new System.Windows.Forms.TabPage();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxAlertAction = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.btnAlertRemove = new System.Windows.Forms.Button();
@@ -617,7 +617,7 @@
             // 
             // tabPageMyAlerts
             // 
-            this.tabPageMyAlerts.Controls.Add(this.comboBox1);
+            this.tabPageMyAlerts.Controls.Add(this.comboBoxAlertAction);
             this.tabPageMyAlerts.Controls.Add(this.label3);
             this.tabPageMyAlerts.Controls.Add(this.button1);
             this.tabPageMyAlerts.Controls.Add(this.btnAlertRemove);
@@ -636,14 +636,18 @@
             this.tabPageMyAlerts.TabIndex = 4;
             this.tabPageMyAlerts.Text = "Alerts (Beta)";
             this.tabPageMyAlerts.UseVisualStyleBackColor = true;
+            this.tabPageMyAlerts.Click += new System.EventHandler(this.tabPageMyAlerts_Click);
             // 
-            // comboBox1
+            // comboBoxAlertAction
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(52, 84);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(76, 21);
-            this.comboBox1.TabIndex = 11;
+            this.comboBoxAlertAction.FormattingEnabled = true;
+            this.comboBoxAlertAction.Items.AddRange(new object[] {
+            "close",
+            "front"});
+            this.comboBoxAlertAction.Location = new System.Drawing.Point(52, 84);
+            this.comboBoxAlertAction.Name = "comboBoxAlertAction";
+            this.comboBoxAlertAction.Size = new System.Drawing.Size(76, 21);
+            this.comboBoxAlertAction.TabIndex = 11;
             // 
             // label3
             // 
@@ -656,7 +660,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(11, 210);
+            this.button1.Location = new System.Drawing.Point(134, 210);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(101, 23);
             this.button1.TabIndex = 9;
@@ -667,12 +671,13 @@
             // btnAlertRemove
             // 
             this.btnAlertRemove.Enabled = false;
-            this.btnAlertRemove.Location = new System.Drawing.Point(200, 210);
+            this.btnAlertRemove.Location = new System.Drawing.Point(134, 210);
             this.btnAlertRemove.Name = "btnAlertRemove";
             this.btnAlertRemove.Size = new System.Drawing.Size(84, 23);
             this.btnAlertRemove.TabIndex = 8;
             this.btnAlertRemove.Text = "Remove";
             this.btnAlertRemove.UseVisualStyleBackColor = true;
+            this.btnAlertRemove.Visible = false;
             this.btnAlertRemove.Click += new System.EventHandler(this.btnAlertRemove_Click);
             // 
             // listViewCurrentAlerts
@@ -681,12 +686,13 @@
             this.listViewCurrentAlerts.FullRowSelect = true;
             this.listViewCurrentAlerts.GridLines = true;
             this.listViewCurrentAlerts.HideSelection = false;
-            this.listViewCurrentAlerts.Location = new System.Drawing.Point(200, 33);
+            this.listViewCurrentAlerts.Location = new System.Drawing.Point(134, 33);
             this.listViewCurrentAlerts.MultiSelect = false;
             this.listViewCurrentAlerts.Name = "listViewCurrentAlerts";
             this.listViewCurrentAlerts.Size = new System.Drawing.Size(84, 171);
             this.listViewCurrentAlerts.TabIndex = 7;
             this.listViewCurrentAlerts.UseCompatibleStateImageBehavior = false;
+            this.listViewCurrentAlerts.Visible = false;
             this.listViewCurrentAlerts.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listViewCurrentAlerts_MouseClick);
             // 
             // comboBoxAlertTime
@@ -745,7 +751,7 @@
             // lblActiveAlertsTitle
             // 
             this.lblActiveAlertsTitle.AutoSize = true;
-            this.lblActiveAlertsTitle.Location = new System.Drawing.Point(348, 14);
+            this.lblActiveAlertsTitle.Location = new System.Drawing.Point(137, 14);
             this.lblActiveAlertsTitle.Name = "lblActiveAlertsTitle";
             this.lblActiveAlertsTitle.Size = new System.Drawing.Size(98, 13);
             this.lblActiveAlertsTitle.TabIndex = 1;
@@ -755,9 +761,9 @@
             // 
             this.flowLayoutActiveAlerts.AutoScroll = true;
             this.flowLayoutActiveAlerts.BackColor = System.Drawing.Color.SeaShell;
-            this.flowLayoutActiveAlerts.Location = new System.Drawing.Point(290, 33);
+            this.flowLayoutActiveAlerts.Location = new System.Drawing.Point(134, 33);
             this.flowLayoutActiveAlerts.Name = "flowLayoutActiveAlerts";
-            this.flowLayoutActiveAlerts.Size = new System.Drawing.Size(220, 171);
+            this.flowLayoutActiveAlerts.Size = new System.Drawing.Size(376, 171);
             this.flowLayoutActiveAlerts.TabIndex = 0;
             // 
             // TimerMainUIComponents
@@ -906,7 +912,7 @@
         private System.Windows.Forms.ToolStripMenuItem loadFromOfflineSaveToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusTime;
         private System.Windows.Forms.ToolStripMenuItem dummyDataToolStripMenuItem;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxAlertAction;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripMenuItem newOnlineSaveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fetchSaveTokenToolStripMenuItem;

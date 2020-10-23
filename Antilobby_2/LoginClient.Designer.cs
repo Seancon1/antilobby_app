@@ -117,7 +117,7 @@
             this.txtEmail.Location = new System.Drawing.Point(128, 57);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(275, 31);
-            this.txtEmail.TabIndex = 6;
+            this.txtEmail.TabIndex = 1;
             // 
             // txtPassword
             // 
@@ -125,7 +125,7 @@
             this.txtPassword.Location = new System.Drawing.Point(128, 94);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(275, 31);
-            this.txtPassword.TabIndex = 7;
+            this.txtPassword.TabIndex = 2;
             this.txtPassword.UseSystemPasswordChar = true;
             // 
             // panLogin

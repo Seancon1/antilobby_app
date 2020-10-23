@@ -291,8 +291,7 @@ namespace Antilobby_2
 
 
         /*
-         * Detects that the mouse has changed focus, time to do something
-         * yes
+         * Detects that the mouse has changed focus
          * */
         private void OnFocusChanged(object sender, AutomationFocusChangedEventArgs e)
         {
@@ -480,7 +479,7 @@ namespace Antilobby_2
                 int submittedAlertTime = Convert.ToInt32(comboBoxAlertTime.Text.ToString());
 
                 //Add to alert list
-                superSession.alertList.addNewAlert(comboBoxSelectableProcessesAlert.Text, submittedAlertTime);
+                superSession.alertList.addNewAlert(comboBoxSelectableProcessesAlert.Text, submittedAlertTime, comboBoxAlertAction.Text);
 
                 //display
                 listViewCurrentAlerts.Items.Add(comboBoxSelectableProcessesAlert.Text + " (" 
@@ -722,6 +721,11 @@ namespace Antilobby_2
         private void btnLoginPlease_Click(object sender, EventArgs e)
         {
             new LoginClient(superSession).Show();
+        }
+
+        private void tabPageMyAlerts_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -11,12 +11,15 @@ namespace Antilobby_2.Alert
 
         private AlertPlay alertplay;
         private List<Alert> list;
+        private List<Alert> disposeList;
         private AntiLobby_2.ProcessList processList;
         private AlertAction alertAction = new AlertAction();
+
             
         public AlertList(AntiLobby_2.ProcessList processList)
         {
             this.list = new List<Alert>();
+            this.disposeList = new List<Alert>();
             this.processList = processList; //must be able to access the current processList
         }
 
@@ -52,14 +55,32 @@ namespace Antilobby_2.Alert
                 if (alert.AlertLimit < fetchTick(alert.ProcessName) && alert != null)
                 {
                     activeAlerts.Add(alert); //adds the alert to temp list of activeAlerts
+
+                    //Check the specific action for the alert when it becomes active
+                    AlertAction alertAction = new AlertAction(alert); //pass to AlertAction class
+                    switch(alert.AlertAction) {
+                        case "close":
+                            alertAction.closeProcess();
+                            this.disposeList.Add(alert);
+                            break;
+                        case "none":
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
-            if (activeAlerts.Count < 1) {return null; } else {
+            ClearDisposeListFromList();
+
+            if (activeAlerts.Count > -1 ) {return null; }
+            else
+            {
                 alertSound.play();
-                return activeAlerts;} //return null if no alerts present
-                
+                return activeAlerts;
+            } //return null if no alerts present
         }
+
 
         public List<Alert> PassiveAlerts()
         {
@@ -73,8 +94,23 @@ namespace Antilobby_2.Alert
                 }
             }
 
+            ClearDisposeListFromList();
+
             if (passiveAlerts.Count < 1) { return null; } else { return passiveAlerts; } //return null if no alerts present
 
+            
+        }
+
+        public void ClearDisposeListFromList()
+        {
+            if (list != null && disposeList != null)
+            if(list.Count > 0)
+            if (disposeList.Count > 0){
+                foreach(Alert alert in disposeList)
+                {
+                    removeAlert(alert);
+                }
+            }
 
         }
 
@@ -92,6 +128,20 @@ namespace Antilobby_2.Alert
             {
             this.list.Add(new Alert(processName, alertTime));
             } catch (Exception ee)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool addNewAlert(string processName, int alertTime, string alertAction)
+        {
+            //Add a new alert to the list
+            try
+            {
+                this.list.Add(new Alert(processName, alertTime, alertAction));
+            }
+            catch (Exception ee)
             {
                 return false;
             }
