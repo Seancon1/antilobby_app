@@ -46,7 +46,7 @@ namespace Antilobby_2
             
 
             try {
-                lblUserIP.Text = "Your IP: "+ MyUtils.GetIPAddress();
+                lblUserIP.Text = $"Your IP: {MyUtils.GetIPAddress()}";
                 toolStripStatuslblVersion.Text = VersionControl.IsOutDated() ? $"v {global.APP_RELEASE_NUM} (outdated)" : $"v {global.APP_RELEASE_NUM} (current)";
                 toolStripStatuslblVersion.BackColor = VersionControl.IsOutDated() ? Color.FromArgb(255,150,152) : Color.FromName("Control");
                 updateToolStripMenuItem.BackColor = VersionControl.IsOutDated() ? Color.FromArgb(255,150,152) : Color.FromName("Control");
@@ -72,6 +72,21 @@ namespace Antilobby_2
 
             }
 
+            /**
+             * Populate AlertTime 
+             * presets. 1-30 min minutes
+             * */
+            for(int i=0; i <= 55; i+=5)
+            {
+                int min = 60;
+                comboBoxAlertTime.Items.Add((i==0) ? ((1 * min) + $" ({1} min)") : ((i * min) + $" ({i} min)"));
+            }
+            //populate more, hours
+            for (int i = 0; i <= 24; i+=2)
+            {
+                int hr = 3600;
+                comboBoxAlertTime.Items.Add((i == 0) ? ((1 * hr) + $" ({1} hr)") : (i * hr) + $" ({i} hr)");
+            }
             
 
         }
@@ -149,7 +164,7 @@ namespace Antilobby_2
                 startToolStripMenuItem.Enabled = false;
                 stopToolStripMenuItem.Enabled = true;
 
-                lblMyInfoSessionID.Text = "Session ID: " + superSession.Id.ToString();
+                lblMyInfoSessionID.Text = "Session ID: \n" + superSession.Id.ToString();
             } else
             {
                 //Disable UI components
@@ -235,22 +250,35 @@ namespace Antilobby_2
 
             //clear alerts before checking again
             flowLayoutActiveAlerts.Controls.Clear();
-            
+
 
             //loop through and check to see if there are any active alerts
             //check active alerts first
-            if (!superSession.alertList.isEmpty() & superSession.alertList.ActiveAlerts() != null)
+            try
             {
-                foreach(Alert.Alert alert in superSession.alertList.ActiveAlerts())
+                if (!superSession.alertList.isEmpty() && superSession.alertList.ActiveAlerts() != null)
                 {
-                    Button newButton = new Button();
-                    newButton.MouseClick += AlertButton_MouseClick;
-                    newButton.BackColor = Color.BlueViolet;
-                    newButton.Text = "" + alert.AlertLimit + ":" + alert.CurrentCount + "|" + alert.ProcessName;
-                    flowLayoutActiveAlerts.Controls.Add(newButton);
-                    //flowLayoutActiveAlerts.Controls.
+                    foreach (Alert.Alert alert in superSession.alertList.ActiveAlerts())
+                    {
+                        Button newButton = new Button();
+                        newButton.MouseClick += AlertButton_MouseClick;
+                        newButton.BackColor = Color.MediumSeaGreen;
+                        newButton.Text = "" + alert.AlertLimit + ":" + alert.CurrentCount + "|" + alert.ProcessName;
+                        newButton.Dock = DockStyle.Fill;
+                        newButton.AutoSize = true;
+                        newButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
+                        newButton.TextAlign = ContentAlignment.MiddleLeft;
+                        newButton.Size = new Size(new Point(200));
+                        newButton.Padding = new Padding(1);
+                        flowLayoutActiveAlerts.Controls.Add(newButton);
+                        //flowLayoutActiveAlerts.Controls.
+                    }
                 }
+            } catch
+            {
+                Debug.WriteLine("ActiveAlerts not instantiated");
             }
+            
 
             //then add passive alerts, alerts that arent active but still being watched
             if (!superSession.alertList.isEmpty() & superSession.alertList.PassiveAlerts() != null)
@@ -259,8 +287,13 @@ namespace Antilobby_2
                 {
                     Button newButton = new Button();
                     newButton.MouseClick += AlertButton_MouseClick;
-                    newButton.BackColor = Color.Gray;
-                    newButton.Text = "" + alert.AlertLimit + ":" + alert.CurrentCount + "|" + alert.ProcessName;
+                    newButton.BackColor = Color.LightGray;
+                    newButton.Text = "" + alert.AlertLimit + " : " + alert.CurrentCount + " | " + alert.ProcessName;
+                    newButton.AutoSize = true;
+                    newButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
+                    newButton.TextAlign = ContentAlignment.MiddleCenter;
+                    newButton.Padding = new Padding(5);
+
                     flowLayoutActiveAlerts.Controls.Add(newButton);
                 }
             }
@@ -470,20 +503,38 @@ namespace Antilobby_2
         private void btnAddAlert_Click(object sender, EventArgs e)
         {
         
-            //MessageBox.Show("Time found: " + comboBoxAlertTime.Text.ToString());
 
             
             //Controls to look at before proceeding
             if(comboBoxSelectableProcessesAlert.Text != null && comboBoxAlertTime.Text != null && comboBoxAlertTime.Text != "") {
 
-                int submittedAlertTime = Convert.ToInt32(comboBoxAlertTime.Text.ToString());
+                var filteredTime = comboBoxAlertTime.Text;
+                int submittedAlertTime = 0;
 
-                //Add to alert list
-                superSession.alertList.addNewAlert(comboBoxSelectableProcessesAlert.Text, submittedAlertTime, comboBoxAlertAction.Text);
+                //Trim string so we don't add (1min) to our alert limit
+                try
+                {   
+        
+                    if (comboBoxAlertTime.Text.Contains(" "))
+                    {
+                        var spaceIndex = comboBoxAlertTime.Text.IndexOf(" "); //index of space
+                        filteredTime = comboBoxAlertTime.Text.Remove(spaceIndex, comboBoxAlertTime.Text.Length - spaceIndex);
+                    }
 
-                //display
-                listViewCurrentAlerts.Items.Add(comboBoxSelectableProcessesAlert.Text + " (" 
-                    + superSession.alertList.fetchAlertTime(comboBoxSelectableProcessesAlert.Text) + ")"); //Add to display
+                    submittedAlertTime = Convert.ToInt32(filteredTime);
+
+                    //Add to alert list
+                    superSession.alertList.addNewAlert(comboBoxSelectableProcessesAlert.Text, submittedAlertTime, comboBoxAlertAction.Text);
+
+                    //display
+                    listViewCurrentAlerts.Items.Add(comboBoxSelectableProcessesAlert.Text + " ("
+                        + superSession.alertList.fetchAlertTime(comboBoxSelectableProcessesAlert.Text) + ")"); //Add to display
+
+                }
+                catch
+                {
+                    MessageBox.Show("Unable to add alert.");
+                }
             } 
             
         }
@@ -726,6 +777,12 @@ namespace Antilobby_2
         private void tabPageMyAlerts_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TimerProcesses.Enabled = !TimerProcesses.Enabled;
+            pauseToolStripMenuItem.Text = (TimerProcesses.Enabled) ? "Pause" : "Resume";
         }
     }
 }

@@ -105,6 +105,7 @@
             this.lblTimeElapsed = new System.Windows.Forms.Label();
             this.lblCursorStatus = new System.Windows.Forms.Label();
             this.btnLoginPlease = new System.Windows.Forms.Button();
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabAlerts.SuspendLayout();
@@ -171,6 +172,7 @@
             this.startSessionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.wARNINGWillNotSaveToolStripMenuItem,
             this.startToolStripMenuItem,
+            this.pauseToolStripMenuItem,
             this.stopToolStripMenuItem,
             this.loadFromOfflineSaveToolStripMenuItem});
             this.startSessionToolStripMenuItem.Name = "startSessionToolStripMenuItem";
@@ -463,6 +465,7 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.statusStrip1.Size = new System.Drawing.Size(526, 22);
+            this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
@@ -514,7 +517,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(176, 15);
+            this.label1.Location = new System.Drawing.Point(174, 3);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 6;
@@ -523,12 +526,13 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lblSelectedProcessName);
-            this.groupBox1.Location = new System.Drawing.Point(344, 31);
+            this.groupBox1.Location = new System.Drawing.Point(370, 31);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(155, 71);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Visible = false;
             // 
             // lblSelectedProcessName
             // 
@@ -542,17 +546,18 @@
             // listProcesses
             // 
             this.listProcesses.FormattingEnabled = true;
-            this.listProcesses.Location = new System.Drawing.Point(6, 31);
+            this.listProcesses.HorizontalScrollbar = true;
+            this.listProcesses.Location = new System.Drawing.Point(6, 18);
             this.listProcesses.MultiColumn = true;
             this.listProcesses.Name = "listProcesses";
-            this.listProcesses.Size = new System.Drawing.Size(332, 199);
+            this.listProcesses.Size = new System.Drawing.Size(509, 225);
             this.listProcesses.TabIndex = 1;
             this.listProcesses.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listProcesses_MouseClick);
             // 
             // lblCurrentProcess
             // 
             this.lblCurrentProcess.AutoSize = true;
-            this.lblCurrentProcess.Location = new System.Drawing.Point(6, 15);
+            this.lblCurrentProcess.Location = new System.Drawing.Point(6, 3);
             this.lblCurrentProcess.Name = "lblCurrentProcess";
             this.lblCurrentProcess.Size = new System.Drawing.Size(96, 13);
             this.lblCurrentProcess.TabIndex = 0;
@@ -573,16 +578,18 @@
             // 
             // accountPanel
             // 
+            this.accountPanel.BackColor = System.Drawing.Color.AliceBlue;
             this.accountPanel.Controls.Add(this.button2);
             this.accountPanel.Controls.Add(this.lblLogginInAccountName);
-            this.accountPanel.Location = new System.Drawing.Point(262, 14);
+            this.accountPanel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.accountPanel.Location = new System.Drawing.Point(249, 6);
             this.accountPanel.Name = "accountPanel";
-            this.accountPanel.Size = new System.Drawing.Size(214, 130);
+            this.accountPanel.Size = new System.Drawing.Size(261, 240);
             this.accountPanel.TabIndex = 2;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(15, 91);
+            this.button2.Location = new System.Drawing.Point(41, 165);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(185, 36);
             this.button2.TabIndex = 1;
@@ -592,26 +599,29 @@
             // 
             // lblLogginInAccountName
             // 
-            this.lblLogginInAccountName.AutoSize = true;
-            this.lblLogginInAccountName.Location = new System.Drawing.Point(63, 36);
+            this.lblLogginInAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogginInAccountName.Location = new System.Drawing.Point(0, 63);
             this.lblLogginInAccountName.Name = "lblLogginInAccountName";
-            this.lblLogginInAccountName.Size = new System.Drawing.Size(75, 13);
+            this.lblLogginInAccountName.Size = new System.Drawing.Size(258, 60);
             this.lblLogginInAccountName.TabIndex = 0;
             this.lblLogginInAccountName.Text = "AccountName";
+            this.lblLogginInAccountName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUserIP
             // 
-            this.lblUserIP.Location = new System.Drawing.Point(23, 14);
+            this.lblUserIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserIP.Location = new System.Drawing.Point(19, 17);
             this.lblUserIP.Name = "lblUserIP";
-            this.lblUserIP.Size = new System.Drawing.Size(220, 33);
+            this.lblUserIP.Size = new System.Drawing.Size(224, 52);
             this.lblUserIP.TabIndex = 1;
             this.lblUserIP.Text = "UserIP: 127.0.0.1";
             // 
             // lblMyInfoSessionID
             // 
-            this.lblMyInfoSessionID.Location = new System.Drawing.Point(23, 47);
+            this.lblMyInfoSessionID.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMyInfoSessionID.Location = new System.Drawing.Point(19, 69);
             this.lblMyInfoSessionID.Name = "lblMyInfoSessionID";
-            this.lblMyInfoSessionID.Size = new System.Drawing.Size(220, 16);
+            this.lblMyInfoSessionID.Size = new System.Drawing.Size(210, 85);
             this.lblMyInfoSessionID.TabIndex = 0;
             this.lblMyInfoSessionID.Text = "Session ID: 1234567890";
             // 
@@ -640,19 +650,20 @@
             // 
             // comboBoxAlertAction
             // 
+            this.comboBoxAlertAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAlertAction.FormattingEnabled = true;
             this.comboBoxAlertAction.Items.AddRange(new object[] {
-            "close",
-            "front"});
-            this.comboBoxAlertAction.Location = new System.Drawing.Point(52, 84);
+            "none",
+            "close"});
+            this.comboBoxAlertAction.Location = new System.Drawing.Point(40, 84);
             this.comboBoxAlertAction.Name = "comboBoxAlertAction";
-            this.comboBoxAlertAction.Size = new System.Drawing.Size(76, 21);
-            this.comboBoxAlertAction.TabIndex = 11;
+            this.comboBoxAlertAction.Size = new System.Drawing.Size(88, 21);
+            this.comboBoxAlertAction.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 87);
+            this.label3.Location = new System.Drawing.Point(3, 87);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 10;
@@ -698,21 +709,15 @@
             // comboBoxAlertTime
             // 
             this.comboBoxAlertTime.FormattingEnabled = true;
-            this.comboBoxAlertTime.Items.AddRange(new object[] {
-            "60",
-            "120",
-            "180",
-            "240",
-            "300"});
-            this.comboBoxAlertTime.Location = new System.Drawing.Point(77, 57);
+            this.comboBoxAlertTime.Location = new System.Drawing.Point(40, 57);
             this.comboBoxAlertTime.Name = "comboBoxAlertTime";
-            this.comboBoxAlertTime.Size = new System.Drawing.Size(51, 21);
-            this.comboBoxAlertTime.TabIndex = 6;
+            this.comboBoxAlertTime.Size = new System.Drawing.Size(88, 21);
+            this.comboBoxAlertTime.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 60);
+            this.label2.Location = new System.Drawing.Point(3, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(31, 13);
             this.label2.TabIndex = 5;
@@ -720,11 +725,12 @@
             // 
             // comboBoxSelectableProcessesAlert
             // 
+            this.comboBoxSelectableProcessesAlert.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSelectableProcessesAlert.FormattingEnabled = true;
             this.comboBoxSelectableProcessesAlert.Location = new System.Drawing.Point(7, 33);
             this.comboBoxSelectableProcessesAlert.Name = "comboBoxSelectableProcessesAlert";
             this.comboBoxSelectableProcessesAlert.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxSelectableProcessesAlert.TabIndex = 4;
+            this.comboBoxSelectableProcessesAlert.TabIndex = 1;
             this.comboBoxSelectableProcessesAlert.Click += new System.EventHandler(this.comboBox1_MouseHover);
             this.comboBoxSelectableProcessesAlert.MouseEnter += new System.EventHandler(this.comboBox1_MouseHover);
             this.comboBoxSelectableProcessesAlert.MouseHover += new System.EventHandler(this.comboBox1_MouseHover);
@@ -740,10 +746,10 @@
             // 
             // btnAddAlert
             // 
-            this.btnAddAlert.Location = new System.Drawing.Point(24, 111);
+            this.btnAddAlert.Location = new System.Drawing.Point(25, 111);
             this.btnAddAlert.Name = "btnAddAlert";
             this.btnAddAlert.Size = new System.Drawing.Size(75, 23);
-            this.btnAddAlert.TabIndex = 2;
+            this.btnAddAlert.TabIndex = 4;
             this.btnAddAlert.Text = "Add Alert ->";
             this.btnAddAlert.UseVisualStyleBackColor = true;
             this.btnAddAlert.Click += new System.EventHandler(this.btnAddAlert_Click);
@@ -805,6 +811,13 @@
             this.btnLoginPlease.UseVisualStyleBackColor = true;
             this.btnLoginPlease.Click += new System.EventHandler(this.btnLoginPlease_Click);
             // 
+            // pauseToolStripMenuItem
+            // 
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.pauseToolStripMenuItem.Text = "Pause";
+            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -833,7 +846,6 @@
             this.groupBox1.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.accountPanel.ResumeLayout(false);
-            this.accountPanel.PerformLayout();
             this.tabPageMyAlerts.ResumeLayout(false);
             this.tabPageMyAlerts.PerformLayout();
             this.ResumeLayout(false);
@@ -919,6 +931,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveWoTokenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveWTokenToolStripMenuItem;
         private System.Windows.Forms.Button btnLoginPlease;
+        private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
     }
 }
 

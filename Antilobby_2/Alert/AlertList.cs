@@ -34,10 +34,17 @@ namespace Antilobby_2.Alert
                  * exempt process is the current process active, so don't increment the AFK timer.
                  * This AFK alert is for continuous seconds NOT ACTIVELY on, so a reset is required
                 */ 
-                if (alert.ProcessName == exemptProcess) { alert.resetTick(); } else
+                if(alert.AlertAction == "close")
                 {
                     alert.addTick();
+                } else
+                {
+                    if (alert.ProcessName == exemptProcess) { alert.resetTick(); } else
+                                    {
+                                        alert.addTick();
+                                    }
                 }
+                
             }
 
         }
@@ -63,6 +70,11 @@ namespace Antilobby_2.Alert
                             alertAction.closeProcess();
                             this.disposeList.Add(alert);
                             break;
+                            /*
+                        case "front":
+                            alertAction.bringToFront();
+                            break;
+                            */
                         case "none":
                             break;
                         default:
@@ -73,7 +85,7 @@ namespace Antilobby_2.Alert
 
             ClearDisposeListFromList();
 
-            if (activeAlerts.Count > -1 ) {return null; }
+            if (activeAlerts.Count < 1) {return null; }
             else
             {
                 alertSound.play();
