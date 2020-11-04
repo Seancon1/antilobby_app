@@ -12,6 +12,7 @@ namespace Antilobby_2.Alert
     {
         Alert alert;
         Process process;
+        Process[] processList;
 
         //static extern bool SetForegroundWindow(IntPtr hWnd);
 
@@ -24,14 +25,21 @@ namespace Antilobby_2.Alert
 
         public void closeProcess()
         {
-                try
+            try
+            {
+                this.processList = Process.GetProcessesByName(alert.ProcessName);
+                foreach(Process item in this.processList)
                 {
-                    this.process = Process.GetProcessesByName(alert.ProcessName).First();
-                    process.Kill();
-                } catch(Exception e)
-                {
-                    Debug.WriteLine(e.ToString());
+                    //process.Close();
+                    //process.SafeHandle.Close();
+                    item.Kill();
                 }
+                
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
         }
         public void bringToFront()
         {

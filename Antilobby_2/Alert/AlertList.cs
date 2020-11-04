@@ -40,9 +40,9 @@ namespace Antilobby_2.Alert
                 } else
                 {
                     if (alert.ProcessName == exemptProcess) { alert.resetTick(); } else
-                                    {
-                                        alert.addTick();
-                                    }
+                    {
+                        alert.addTick();
+                    }
                 }
                 
             }

@@ -26,12 +26,12 @@ namespace Antilobby_2
         Button alertButton = new Button();
         CursorStatus cursorStatus = new CursorStatus();
         private AutoUpdate.AutoUpdate VersionControl = new AutoUpdate.AutoUpdate(global.APP_RELEASE_NUM);
+        AutomationFocusChangedEventHandler focusHandler = OnFocusChanged;
 
         public Form1()
         {
             InitializeComponent();
-
-            AutomationFocusChangedEventHandler focusHandler = OnFocusChanged;
+            //AutomationFocusChangedEventHandler focusHandler = OnFocusChanged;
             Automation.AddAutomationFocusChangedEventHandler(focusHandler);
             flowLayoutActiveAlerts.VerticalScroll.Enabled = true;
             alertButton.MouseClick += AlertButton_MouseClick; //Add a handler so i can do stuff with clicks
@@ -228,9 +228,34 @@ namespace Antilobby_2
                 //update UI for cursor status
                 lblCursorStatus.Text = "Cursor Idle";
                 superSession.processList.addAndCountOrCount(new ProcessItem(global.processName), 1); //essential tick, ignore current process tick
+                //Process.GetProcessesByName(this);
+                //Process.
+                //OnFocusChanged(this, new AutomationFocusChangedEventArgs(0,0));
             }
             else
             {
+                if(global.processName == "LockApp")
+                {
+                    try
+                    {
+                    var process = Process.GetProcessesByName(global.processName);
+                    Debug.Print("LockApp Thread State " + process.First().Threads[0].ThreadState.ToString());
+                    Debug.Print("Reason: " + process.First().Threads[0].ThreadState + " | Details: " + process.First().Threads[0].WaitReason.ToString());
+                    Debug.Print("Responding:" + process.First().Responding.ToString());
+                    if (process.First().Threads[0].WaitReason == ThreadWaitReason.Suspended)
+                    {
+                        process.First().Kill();
+                        Debug.Print("Killed LockApp");
+                    }
+                    //Debug.Print("Responding:" + process.First().Responding.ToString());
+                    //process.First().ToString();
+                    //this.BringToFront();
+                    //this.Focus();
+
+                    }
+                    catch { Debug.Print($"Process {global.processName} cannot be located."); global.processName = "null"; }
+                }
+
                 lblCursorStatus.Text = "Cursor Active";
                 superSession.processList.addAndCountOrCount(new ProcessItem(global.processName)); //essential tick, normal function
             }
@@ -263,13 +288,12 @@ namespace Antilobby_2
                         Button newButton = new Button();
                         newButton.MouseClick += AlertButton_MouseClick;
                         newButton.BackColor = Color.MediumSeaGreen;
-                        newButton.Text = "" + alert.AlertLimit + ":" + alert.CurrentCount + "|" + alert.ProcessName;
-                        newButton.Dock = DockStyle.Fill;
+                        newButton.Text = "" + alert.AlertLimit + ":" + alert.CurrentCount + "|" + alert.ProcessName + $"({alert.AlertAction})";
                         newButton.AutoSize = true;
                         newButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
-                        newButton.TextAlign = ContentAlignment.MiddleLeft;
-                        newButton.Size = new Size(new Point(200));
-                        newButton.Padding = new Padding(1);
+                        newButton.TextAlign = ContentAlignment.MiddleCenter;
+                        newButton.Padding = new Padding(5);
+
                         flowLayoutActiveAlerts.Controls.Add(newButton);
                         //flowLayoutActiveAlerts.Controls.
                     }
@@ -288,7 +312,7 @@ namespace Antilobby_2
                     Button newButton = new Button();
                     newButton.MouseClick += AlertButton_MouseClick;
                     newButton.BackColor = Color.LightGray;
-                    newButton.Text = "" + alert.AlertLimit + " : " + alert.CurrentCount + " | " + alert.ProcessName;
+                    newButton.Text = "" + alert.AlertLimit + " : " + alert.CurrentCount + " | " + alert.ProcessName + $"({alert.AlertAction})";
                     newButton.AutoSize = true;
                     newButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
                     newButton.TextAlign = ContentAlignment.MiddleCenter;
@@ -326,14 +350,16 @@ namespace Antilobby_2
         /*
          * Detects that the mouse has changed focus
          * */
-        private void OnFocusChanged(object sender, AutomationFocusChangedEventArgs e)
+        static private void OnFocusChanged(object sender, AutomationFocusChangedEventArgs e)
         {
+
             try
             {
                 AutomationElement focusedElement = sender as AutomationElement;
                 if (focusedElement != null)
                 {
                     int processId = focusedElement.Current.ProcessId; //error when closing a program that is being focused?
+
                     using (Process process = Process.GetProcessById(processId))
                     {
                         //toolStripStatusMain.Text = "Working... " + DateTime.Now;
@@ -349,9 +375,9 @@ namespace Antilobby_2
                         //adds a new ProcessItem with a defined name to the current ProcessList
                         //with the assumption the item is not already defined in the ProcessList
                         //addItem checks if item is located, does nothing if is (so no duplicates)
-                        
+                        Debug.Print(process.ProcessName);
                         global.processName = process.ProcessName; //Store this value in another class to escape Exception Out of Thread
-
+                        
                         
                         //label1.Text = "" + process.ProcessName.ToString();
                         //superSession.processList.setListObject(listProcesses);
@@ -366,7 +392,8 @@ namespace Antilobby_2
             {
                 //something bad happened
                 //MessageBox.Show(ee.ToString());
-                showStatus("Error" + ee.ToString());
+                //showStatus("Error" + ee.ToString());
+                Debug.Print("Error" + ee.ToString());
             }
         }
 
@@ -486,14 +513,15 @@ namespace Antilobby_2
             try
             {
                 if(superSession.processList != null)
-                            {
-                                foreach(string name in superSession.processList.getListOfNames())
-                                {
-                                    comboBoxSelectableProcessesAlert.Items.Add(name);
-                                }
-           
-                            }
-            }catch (Exception ee)
+                {
+                    foreach (string name in superSession.processList.getListOfNames())
+                    {
+                        comboBoxSelectableProcessesAlert.Items.Add(name);
+                    }
+
+                }
+            }
+            catch (Exception ee)
             {
                 showStatus("Error refreshing");
             }

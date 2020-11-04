@@ -600,9 +600,9 @@
             // lblLogginInAccountName
             // 
             this.lblLogginInAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLogginInAccountName.Location = new System.Drawing.Point(0, 63);
+            this.lblLogginInAccountName.Location = new System.Drawing.Point(3, 63);
             this.lblLogginInAccountName.Name = "lblLogginInAccountName";
-            this.lblLogginInAccountName.Size = new System.Drawing.Size(258, 60);
+            this.lblLogginInAccountName.Size = new System.Drawing.Size(255, 60);
             this.lblLogginInAccountName.TabIndex = 0;
             this.lblLogginInAccountName.Text = "AccountName";
             this.lblLogginInAccountName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -803,9 +803,9 @@
             // 
             // btnLoginPlease
             // 
-            this.btnLoginPlease.Location = new System.Drawing.Point(102, 94);
+            this.btnLoginPlease.Location = new System.Drawing.Point(177, 100);
             this.btnLoginPlease.Name = "btnLoginPlease";
-            this.btnLoginPlease.Size = new System.Drawing.Size(134, 49);
+            this.btnLoginPlease.Size = new System.Drawing.Size(150, 67);
             this.btnLoginPlease.TabIndex = 7;
             this.btnLoginPlease.Text = "Please Login";
             this.btnLoginPlease.UseVisualStyleBackColor = true;
