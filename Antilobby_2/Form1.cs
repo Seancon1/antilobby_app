@@ -256,8 +256,22 @@ namespace Antilobby_2
                     catch { Debug.Print($"Process {global.processName} cannot be located."); global.processName = "null"; }
                 }
 
+
+
                 lblCursorStatus.Text = "Cursor Active";
                 superSession.processList.addAndCountOrCount(new ProcessItem(global.processName)); //essential tick, normal function
+
+                try
+                {
+                    //Auto-saving every 5-minutes
+                    if (superSession.TickCount != 0 && superSession.TickCount % 300 == 0)
+                    {
+                        superSession.processList.saveToDatabase(69);
+                        showStatus("Auto Saved");
+                    }
+
+                }
+                catch { showStatus("Error Auto Saving"); }
             }
 
             superSession.processList.refreshList(listProcesses); //link listProcesses list to use the processList items
@@ -327,6 +341,9 @@ namespace Antilobby_2
             /*
             * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Alert Handler 
             * */
+
+
+
         }
 
         
