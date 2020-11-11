@@ -526,9 +526,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lblSelectedProcessName);
-            this.groupBox1.Location = new System.Drawing.Point(370, 31);
+            this.groupBox1.Location = new System.Drawing.Point(377, 18);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(155, 71);
+            this.groupBox1.Size = new System.Drawing.Size(133, 113);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -536,10 +536,9 @@
             // 
             // lblSelectedProcessName
             // 
-            this.lblSelectedProcessName.AutoSize = true;
             this.lblSelectedProcessName.Location = new System.Drawing.Point(7, 20);
             this.lblSelectedProcessName.Name = "lblSelectedProcessName";
-            this.lblSelectedProcessName.Size = new System.Drawing.Size(73, 13);
+            this.lblSelectedProcessName.Size = new System.Drawing.Size(120, 26);
             this.lblSelectedProcessName.TabIndex = 0;
             this.lblSelectedProcessName.Text = "ProcessName";
             // 
@@ -550,7 +549,7 @@
             this.listProcesses.Location = new System.Drawing.Point(6, 18);
             this.listProcesses.MultiColumn = true;
             this.listProcesses.Name = "listProcesses";
-            this.listProcesses.Size = new System.Drawing.Size(509, 225);
+            this.listProcesses.Size = new System.Drawing.Size(365, 225);
             this.listProcesses.TabIndex = 1;
             this.listProcesses.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listProcesses_MouseClick);
             // 
@@ -843,7 +842,6 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.accountPanel.ResumeLayout(false);
             this.tabPageMyAlerts.ResumeLayout(false);

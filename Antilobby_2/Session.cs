@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AntiLobby_2;
 using Antilobby_2.Utils;
+using System.Diagnostics;
+
 namespace Antilobby_2
 {
     /*
@@ -28,7 +30,7 @@ namespace Antilobby_2
             this.tickCount = 0;
             this.user = user;
             //assign internally fetched User.userToken here
-            this.id = "null"; //Create and assign new session ID immediately
+            this.id = "null"; //fill id as null for replacement shortly after creation
             this.logger = new Logger(this, user); //create a logger instance
             this.processList = new ProcessList(this, user);
             this.alertList = new Alert.AlertList(processList); //processList must not be null before linking, aka create processList link before calling this
@@ -57,7 +59,35 @@ namespace Antilobby_2
                  * */
                 alertList.incrementAllTicks(activeProcess);
             }
-            
+
+
+            /*
+             * Experimental Feature
+             * Tracks apps that user interacted with and counts the amount of time they are open/having process time
+             * */
+            try
+            {
+                foreach(ProcessItem processItem in processList.ReturnAllItems())
+                {
+                    var checkProcess = Process.GetProcessesByName(processItem.getName()) != null ? true: false;
+                    if (checkProcess)
+                    {
+                        using (var process = Process.GetProcessesByName(processItem.getName()).First())
+                        {
+                            if (process != null && !process.HasExited )
+                            {
+                                processItem.logOpenTime();
+                                //Debug.Print($"Logging OpenTime for this item: Now has {processItem.getTimeOpen()} ticks");
+                            }
+                        }   
+                    }
+                }
+
+            }
+            catch { Debug.Print("Error logging process name idle time. May have been closed"); }
+            //add tick if process name is still open but no actively engaged
+
+
         }
 
         public void saveSession()

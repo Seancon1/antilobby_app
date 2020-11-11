@@ -192,7 +192,7 @@ namespace Antilobby_2
 
         }
 
-        private void TimerProcesses_Tick(object sender, EventArgs e)
+        private async void TimerProcesses_Tick(object sender, EventArgs e)
         {
        
             try
@@ -220,6 +220,8 @@ namespace Antilobby_2
 
 
             superSession.incrementTick(global.processName); //pass current process FOR alertList
+
+
 
             //INCREMENT GLOBAL TICKS 
             //Check cursor idle status after (global.AFK_TIMER_LIMIT)
@@ -266,7 +268,8 @@ namespace Antilobby_2
                     //Auto-saving every 5-minutes
                     if (superSession.TickCount != 0 && superSession.TickCount % 300 == 0)
                     {
-                        superSession.processList.saveToDatabase(69);
+                        showStatus("Auto Saving...");
+                        await superSession.processList.saveToDatabase(69);
                         showStatus("Auto Saved");
                     }
 
@@ -437,7 +440,7 @@ namespace Antilobby_2
         }
 
 
-        private void saveToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private async void saveToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             try {
                 if(!global.isLoggedIn)
@@ -447,7 +450,8 @@ namespace Antilobby_2
                 }
                 else
                 {
-                    superSession.processList.saveToDatabase(69);
+                    showStatus("Saving...");
+                    await superSession.processList.saveToDatabase(69);
                     showStatus("Saved");
                 }
                 
@@ -479,7 +483,7 @@ namespace Antilobby_2
         /*
          * An attempt to save session information before application closes.
          * */
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private async void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
 
             //Optional close without saving, default FALSE
@@ -490,7 +494,7 @@ namespace Antilobby_2
                     //Save offline data as a precaution
                     //superSession.
                     //superSession.
-                    superSession.processList.saveToDatabase(69); //flag = 1 to set state to false
+                    await superSession.processList.saveToDatabase(69); //flag = 1 to set state to false
 
                     //Loop until saveToDatabase sets State to false, otherwise keep on trying.
                     //not exactly the best way to approach this but it works now
@@ -786,9 +790,9 @@ namespace Antilobby_2
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void newOnlineSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void newOnlineSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            superSession.processList.saveToDatabase(69); //using flag 69 to switch to new API
+            await superSession.processList.saveToDatabase(69); //using flag 69 to switch to new API
         }
 
         private void fetchSaveTokenToolStripMenuItem_Click(object sender, EventArgs e)

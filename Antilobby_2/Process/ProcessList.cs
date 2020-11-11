@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -38,16 +39,16 @@ namespace AntiLobby_2
         public List<ProcessItem> ReturnAllItems()
         {
             List<ProcessItem> tempList = new List<ProcessItem>();
-          
-            if(this.list.Count() < 1) { return null; }
 
-            foreach(var item in this.list)
+            if (this.list.Count() < 1) { return null; }
+
+            foreach (var item in this.list)
             {
                 tempList.Add(item.Value); //get just the object ProcessItem, which is the value
             }
 
-           return tempList;
-        } 
+            return tempList;
+        }
 
         public void setListObject(ListBox listBox)
         {
@@ -61,12 +62,12 @@ namespace AntiLobby_2
             {
                 this.list.TryGetValue(inItem, out processItem);
             }
-                return processItem;
+            return processItem;
         }
 
         public ProcessItem GetFirstProcessItem()
         {
-            ProcessItem processItem = null; 
+            ProcessItem processItem = null;
             return this.list.First().Value; //ProcessItem is stored in VALUE as an object, so return that
         }
 
@@ -99,16 +100,17 @@ namespace AntiLobby_2
                 if (!this.list.ContainsKey(inItem.getName()))
                 {
                     this.list.Add(inItem.getName(), inItem); //add item if it isn't located inside list
-                } else
+                }
+                else
                 {
-                    if (flag == 1) {
+                    if (flag == 1)
+                    {
                         //do nothing
-                    } else { this.list[inItem.getName()].addTime(1); } //Adds one second to the item if present in list already
+                    }
+                    else { this.list[inItem.getName()].addTime(1); } //Adds one second to the item if present in list already
                 }
 
             }
-
-
 
         }
         /*
@@ -121,9 +123,10 @@ namespace AntiLobby_2
         }
         */
 
-       public void addTimeExistingItem(string processName)
+        public void addTimeExistingItem(string processName)
         {
-            if(this.list.ContainsKey(processName)) {
+            if (this.list.ContainsKey(processName))
+            {
                 this.list[processName].addTime(1);
             }
         }
@@ -145,8 +148,8 @@ namespace AntiLobby_2
 
             //if (!list.Any())
             //{
-                foreach (KeyValuePair<string, ProcessItem> item in this.list)
-                {
+            foreach (KeyValuePair<string, ProcessItem> item in this.list)
+            {
                 //inList.Items.Add("" + item.Value.showNameFormatted());
                 inList.Items.Add("" + item.Value.showNameFormatted());
             }
@@ -157,18 +160,19 @@ namespace AntiLobby_2
         {
             List<string> list = new List<string>();
 
-            foreach(KeyValuePair<string, ProcessItem> item in this.list)
+            foreach (KeyValuePair<string, ProcessItem> item in this.list)
             {
                 list.Add(item.Key);
             }
 
-            if (list.Count > 0) { return list; } else { return null;  };
+            if (list.Count > 0) { return list; } else { return null; };
         }
 
-        
-        public void saveToDatabase(int flag = 0) 
+
+        public async Task<bool> saveToDatabase(int flag = 0)
         {
             Logger logger = new Logger(this.session, this.user);
+           // bool testresult;
             try
             {
                 //throw new System.Net.WebException("Cannot connect");
@@ -178,11 +182,18 @@ namespace AntiLobby_2
                     //new save API switch
                     case 69:
 
-                        logger.doGenericSaveViaAPI();
+                        logger.doGenericSaveViaAPI(); //Save session time
 
+                        //Then save session apptimes
                         foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
                         {
-                            logger.doGenericSaveViaAPI(itemToSave.Value.getName(), itemToSave.Value.getTime());
+                            
+                            Task<bool> t1 = DoSave(logger, itemToSave, 1);
+                            bool status = await t1;
+                            if (status == true)
+                            {
+                                Task t2 = DoSave(logger, itemToSave, 2);
+                            }
                         }
 
                         break;
@@ -202,18 +213,27 @@ namespace AntiLobby_2
                 }
 
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 logger.SaveOffline(this.session);
                 throw new System.Net.WebException("Cannot connect");
-                
             }
 
-            if(flag == 1)
+            if (flag == 1)
             {
                 this.session.State = false;
             }
             //MessageBox.Show("Games should be saved");
+            return true;
+        }
+
+        public async Task<bool> DoSave(Logger logger, KeyValuePair<string, ProcessItem> itemToSave, int flag)
+        {
+                await logger.DoGenericSaveViaAPI(itemToSave.Value.getName(), itemToSave.Value.getTime(), itemToSave.Value.getTimeViewedSpecific(), flag); //save first segment
+                await Task.Delay(500);
+                Debug.Print($"DoSave with flag ID: {flag} = completed.");
+                return true;
         }
 
         public ProcessItem pop()
@@ -242,13 +262,13 @@ namespace AntiLobby_2
             return json;
         }
 
-        
+
         public void LoadProcessListFromJSONString(string[] oInput)
         {
 
             List<ProcessItem> itemCollection = new List<ProcessItem>();
-            
-            for(int x =0; oInput.Length > x; x++)
+
+            for (int x = 0; oInput.Length > x; x++)
             {
                 itemCollection.Add(JsonConvert.DeserializeObject<ProcessItem>(oInput[x]));
             }
@@ -257,17 +277,17 @@ namespace AntiLobby_2
             this.list.Clear();
 
             //iterate through and seperate data to be deserialized into items
-            foreach(ProcessItem item in itemCollection)
+            foreach (ProcessItem item in itemCollection)
             {
-                if(item != null) {
+                if (item != null)
+                {
                     this.list.Add(item.Name.ToString(), item);
                 }
-                
+
             }
-            
-            
         }
-    
-        
+
+
+
     }
 }

@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using Antilobby_2;
 using Antilobby_2.Utils;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace AntiLobby_2
 {
@@ -437,23 +439,71 @@ namespace AntiLobby_2
             }
         }
 
-        //for apptime
-        public async void doGenericSaveViaAPI(string processName, int processTime)
+        /**
+         * Save session apptimes to database
+         *  int [,] specifics - with dimensions [48,120] 24hr x2 = 48 for entire day, 120 for... just in case double the space :D?
+         * */
+        public async Task<bool> DoGenericSaveViaAPI(string processName, int processTime, int[,] specifics = null, int flag = 0)
         {
             var returnString = "";
             using (var client = new HttpClient())
             {
 
-                var values = new Dictionary<string, string>
-            {
-            { "value", "blank" },
-            };
+                var values = new Dictionary<string, string>()
+                {
+                    { "data-segment", $"{flag}" },
+                };
+
+
+                //If app specifics is passed along as NOT NULL then populate content to be passed along with request
+                if (specifics != null && flag != 0)
+                {
+                    switch(flag)
+                    {
+                        case 1:
+
+                            for (int x = 1; x <= 12; x++)
+                            {
+                                for (int y = 1; y <= 59; y++)
+                                {
+                                    if(specifics[x, y] != 0)
+                                    {
+                                        values.Add($"{x}:{y}", $"{specifics[x, y]}");
+                                        Debug.Write($"Saving: [{x},{y}] = {specifics[x, y]} |");
+                                    }
+                                    
+                                }
+                            }
+
+                            break;
+                        case 2:
+
+                            for (int x = 13; x <= 24; x++)
+                            {
+                                for (int y = 1; y <= 59; y++)
+                                {
+                                    if (specifics[x, y] != 0)
+                                    {
+                                        values.Add($"{x}:{y}", $"{specifics[x, y]}");
+                                        Debug.Write($"Saving: [{x},{y}] = {specifics[x, y]} |");
+                                    }
+
+                                }
+                            }
+
+                            break;
+                    }
+
+                    Debug.WriteLine($"Done saving segment {flag}");
+                }
+                
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
                 var content = new FormUrlEncodedContent(values);
-                //var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/sanctum/token", content);
-                var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/user/apptime/" + this.session.Id + "/" + processName +"/" + processTime, content);
+                var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/user/apptime/v2/" + this.session.Id + "/" + processName + "/" + processTime, content);
                 var responseString = await response.Content.ReadAsStringAsync();
+
+                Debug.Print(responseString);
 
                 //response modification, probably not the best way to detect an error 
                 //but I expect a string 100% of the time to be smaller than 256 chars
@@ -466,7 +516,7 @@ namespace AntiLobby_2
                 }
             }
             Debug.WriteLine("Done saving to API: session data");
-
+            return true;
         }
 
         public async void getSessionIDFromAPI()
