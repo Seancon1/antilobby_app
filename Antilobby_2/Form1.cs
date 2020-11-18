@@ -241,13 +241,13 @@ namespace Antilobby_2
                     try
                     {
                     var process = Process.GetProcessesByName(global.processName);
-                    Debug.Print("LockApp Thread State " + process.First().Threads[0].ThreadState.ToString());
-                    Debug.Print("Reason: " + process.First().Threads[0].ThreadState + " | Details: " + process.First().Threads[0].WaitReason.ToString());
-                    Debug.Print("Responding:" + process.First().Responding.ToString());
+                    //Debug.Print("LockApp Thread State " + process.First().Threads[0].ThreadState.ToString());
+                    //Debug.Print("Reason: " + process.First().Threads[0].ThreadState + " | Details: " + process.First().Threads[0].WaitReason.ToString());
+                    //Debug.Print("Responding:" + process.First().Responding.ToString());
                     if (process.First().Threads[0].WaitReason == ThreadWaitReason.Suspended)
                     {
                         process.First().Kill();
-                        Debug.Print("Killed LockApp");
+                        //Debug.Print("Killed LockApp");
                     }
                     //Debug.Print("Responding:" + process.First().Responding.ToString());
                     //process.First().ToString();
@@ -317,7 +317,7 @@ namespace Antilobby_2
                 }
             } catch
             {
-                Debug.WriteLine("ActiveAlerts not instantiated");
+                //Debug.WriteLine("ActiveAlerts not instantiated");
             }
             
 
@@ -815,7 +815,7 @@ namespace Antilobby_2
         private void saveWTokenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Logger logger = new Logger(superSession, superUser);
-            logger.doGenericSaveViaAPI();
+            logger.doSessionIDSaveViaAPI();
         }
 
         private void btnLoginPlease_Click(object sender, EventArgs e)

@@ -376,7 +376,7 @@ namespace AntiLobby_2
                 return null;
         }
 
-        public async void doGenericSaveViaAPI()
+        public async void doSessionIDSaveViaAPI()
         {
             var returnString = "";
             using (var client = new HttpClient())
@@ -400,10 +400,11 @@ namespace AntiLobby_2
                 if (returnString == "error")
                 {
                     MessageBox.Show("There was an error processing.");
+                    //return false;
                 }
             }
             Debug.WriteLine("Done saving to API: session data");
-        
+            //return true;
         }
 
         public async void doGetAuthEmail()
@@ -443,8 +444,11 @@ namespace AntiLobby_2
          * Save session apptimes to database
          *  int [,] specifics - with dimensions [48,120] 24hr x2 = 48 for entire day, 120 for... just in case double the space :D?
          * */
-        public async Task<bool> DoGenericSaveViaAPI(string processName, int processTime, int[,] specifics = null, int flag = 0)
+        public async Task<bool> DoGenericSaveViaAPI(Dictionary<string, int> itemsToSave, string processName, int processTime, int[,] specifics = null, int flag = 0)
         {
+            Debug.WriteLine($"--------Process:{processName}--START-----------------------------------");
+            if (itemsToSave.Count < 1) { return true; }
+
             var returnString = "";
             using (var client = new HttpClient())
             {
@@ -454,68 +458,38 @@ namespace AntiLobby_2
                     { "data-segment", $"{flag}" },
                 };
 
+                //var convertedList = itemToSave.Value.GetDetailedtime().ToDictionary(x => x.Key, x=>x.Value.ToString());
+                var convertedList = itemsToSave.ToDictionary(x => x.Key, x=>x.Value.ToString());
 
-                //If app specifics is passed along as NOT NULL then populate content to be passed along with request
-                if (specifics != null && flag != 0)
+                foreach (KeyValuePair<string, string> pair in convertedList)
                 {
-                    switch(flag)
-                    {
-                        case 1:
-
-                            for (int x = 1; x <= 12; x++)
-                            {
-                                for (int y = 1; y <= 59; y++)
-                                {
-                                    if(specifics[x, y] != 0)
-                                    {
-                                        values.Add($"{x}:{y}", $"{specifics[x, y]}");
-                                        Debug.Write($"Saving: [{x},{y}] = {specifics[x, y]} |");
-                                    }
-                                    
-                                }
-                            }
-
-                            break;
-                        case 2:
-
-                            for (int x = 13; x <= 24; x++)
-                            {
-                                for (int y = 1; y <= 59; y++)
-                                {
-                                    if (specifics[x, y] != 0)
-                                    {
-                                        values.Add($"{x}:{y}", $"{specifics[x, y]}");
-                                        Debug.Write($"Saving: [{x},{y}] = {specifics[x, y]} |");
-                                    }
-
-                                }
-                            }
-
-                            break;
-                    }
-
-                    Debug.WriteLine($"Done saving segment {flag}");
+                    values.Add(pair.Key, pair.Value);
+                    Debug.WriteLine($" Adding key={pair.Key} with value={pair.Value} to list");
                 }
-                
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
-                var content = new FormUrlEncodedContent(values);
-                var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/user/apptime/v2/" + this.session.Id + "/" + processName + "/" + processTime, content);
-                var responseString = await response.Content.ReadAsStringAsync();
 
-                Debug.Print(responseString);
+                var content = new FormUrlEncodedContent(values);
+
+                var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/user/apptime/v3/" + this.session.Id + "/" + processName + "/" + processTime, content);
+                var responseString = await response.Content.ReadAsStringAsync();
 
                 //response modification, probably not the best way to detect an error 
                 //but I expect a string 100% of the time to be smaller than 256 chars
-                //returnString = (responseString.ToString() == "success") ? "" + responseString.ToString() : null;
+                returnString = (responseString.ToString() == "success") ? "" + responseString.ToString() : null;
+                //Debug.WriteLine("Saving response " + returnString);
 
                 if (returnString == "success")
                 {
                     //MessageBox.Show("There was an error processing.");
-                    Debug.WriteLine("Done saving " + processTime.ToString());
+                    //Debug.WriteLine("Done saving entries");
+
+                } else {
+                    Debug.WriteLine("Error " + returnString.ToString());
+                    return false;
                 }
             }
-            Debug.WriteLine("Done saving to API: session data");
+            Debug.WriteLine($"--------Process:{processName}--FINISHED-----------------------------------");
             return true;
         }
 

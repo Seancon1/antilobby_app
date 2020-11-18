@@ -182,18 +182,40 @@ namespace AntiLobby_2
                     //new save API switch
                     case 69:
 
-                        logger.doGenericSaveViaAPI(); //Save session time
+                        logger.doSessionIDSaveViaAPI(); //Save session time
 
                         //Then save session apptimes
                         foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
                         {
-                            
-                            Task<bool> t1 = DoSave(logger, itemToSave, 1);
+                            //Call method to seperate Details to Save
+                            //itemToSave.Value.SeperateDetailedToSavetime
+                            //split data to save here
+
+
+
+                            Task<bool> t1 = DoSave(logger, itemToSave, itemToSave.Value.ReturnPreparedList().First());
                             bool status = await t1;
-                            if (status == true)
+                            if (status)
                             {
-                                Task t2 = DoSave(logger, itemToSave, 2);
+
+                                Task<bool> t2 = DoSave(logger, itemToSave, itemToSave.Value.ReturnPreparedList().Last());
+                                bool status2 = await t2;
+                                if (!status2)
+                                {
+                                    //Remove items from list if successfully saved
+                                    //Debug.Print("Failed to save segment 2");
+                                    //itemToSave.Value.clearDetailedTime();
+                                    //return false;
+                                }
+                                itemToSave.Value.clearDetailedToSaveTime();
+                                t2 = null; //check to see if this clears memory?
+                                //return true;
+                            } else
+                            {
+                                //Debug.Print("Failed to save segment 1");
+                                //return false;
                             }
+                            t1 = null; //check to see if this clears memory?
                         }
 
                         break;
@@ -228,13 +250,13 @@ namespace AntiLobby_2
             return true;
         }
 
-        public async Task<bool> DoSave(Logger logger, KeyValuePair<string, ProcessItem> itemToSave, int flag)
+        public async Task<bool> DoSave(Logger logger, KeyValuePair<string, ProcessItem> itemToSave, Dictionary<string, int> sectionToSave,  int flag=0)
         {
-                await logger.DoGenericSaveViaAPI(itemToSave.Value.getName(), itemToSave.Value.getTime(), itemToSave.Value.getTimeViewedSpecific(), flag); //save first segment
+                await logger.DoGenericSaveViaAPI(sectionToSave, itemToSave.Value.getName(), itemToSave.Value.getTime(), itemToSave.Value.getTimeViewedSpecific(), flag); //save first segment
                 await Task.Delay(500);
-                Debug.Print($"DoSave with flag ID: {flag} = completed.");
-                return true;
+            return true;
         }
+
 
         public ProcessItem pop()
         {
