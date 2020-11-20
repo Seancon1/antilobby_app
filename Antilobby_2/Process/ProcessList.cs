@@ -208,14 +208,18 @@ namespace AntiLobby_2
                                     //return false;
                                 }
                                 itemToSave.Value.clearDetailedToSaveTime();
-                                t2 = null; //check to see if this clears memory?
+                                t2.Dispose();
+                                
+                                //t2 = null; //check to see if this clears memory?
+
                                 //return true;
                             } else
                             {
                                 //Debug.Print("Failed to save segment 1");
                                 //return false;
                             }
-                            t1 = null; //check to see if this clears memory?
+                            //t1 = null; //check to see if this clears memory?
+                            t1.Dispose();
                         }
 
                         break;

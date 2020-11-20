@@ -490,6 +490,7 @@ namespace AntiLobby_2
                 }
             }
             Debug.WriteLine($"--------Process:{processName}--FINISHED-----------------------------------");
+            
             return true;
         }
 
