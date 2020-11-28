@@ -41,6 +41,7 @@
             this.btnLoginClientRegister = new System.Windows.Forms.Button();
             this.lblLoginClientReturnToLogin = new System.Windows.Forms.Label();
             this.timerLoginClient = new System.Windows.Forms.Timer(this.components);
+            this.lblWorking = new System.Windows.Forms.Label();
             this.panLogin.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,9 +128,11 @@
             this.txtPassword.Size = new System.Drawing.Size(275, 31);
             this.txtPassword.TabIndex = 2;
             this.txtPassword.UseSystemPasswordChar = true;
+            this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
             // 
             // panLogin
             // 
+            this.panLogin.Controls.Add(this.lblWorking);
             this.panLogin.Controls.Add(this.btnLoginClientRegister);
             this.panLogin.Controls.Add(this.txtEmail);
             this.panLogin.Controls.Add(this.btnLoginClientLogin);
@@ -169,6 +172,16 @@
             this.timerLoginClient.Interval = 1000;
             this.timerLoginClient.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // lblWorking
+            // 
+            this.lblWorking.AutoSize = true;
+            this.lblWorking.Location = new System.Drawing.Point(179, 23);
+            this.lblWorking.Name = "lblWorking";
+            this.lblWorking.Size = new System.Drawing.Size(56, 13);
+            this.lblWorking.TabIndex = 9;
+            this.lblWorking.Text = "Working...";
+            this.lblWorking.Visible = false;
+            // 
             // LoginClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -205,5 +218,6 @@
         private System.Windows.Forms.Button btnLoginClientRegister;
         private System.Windows.Forms.Label lblLoginClientReturnToLogin;
         private System.Windows.Forms.Timer timerLoginClient;
+        private System.Windows.Forms.Label lblWorking;
     }
 }

@@ -181,8 +181,13 @@ namespace AntiLobby_2
                 {
                     //new save API switch
                     case 69:
-
-                        logger.doSessionIDSaveViaAPI(); //Save session time
+                        
+                        //Save session time
+                        if (!await logger.doSessionIDSaveViaAPI())
+                        {
+                            return false;
+                        }
+                            
 
                         //Then save session apptimes
                         foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)

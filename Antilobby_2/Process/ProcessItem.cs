@@ -157,7 +157,8 @@ namespace AntiLobby_2
 
         public void clearDetailedToSaveTime()
         {
-            this.DetailedTime.Clear();
+            this.DetailsToSave.Clear();
+            Debug.Print("Clearing item old save data...");
         }
 
     }

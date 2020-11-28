@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
@@ -94,11 +95,17 @@ namespace Antilobby_2
             }
         }
 
-        private void btnLoginClientLogin_Click(object sender, EventArgs e)
+        private async Task<bool> performDoLoginAsync()
         {
+            lblWorking.Visible = true;
+            lblWorking.Text = "Working...";
+            lblWorking.Text = !await doLogin() ? "Unable to login" : "Success";
+            return true;
+        }
 
-                doLogin();
-            
+        private async void btnLoginClientLogin_Click(object sender, EventArgs e)
+        {
+            await performDoLoginAsync();
         }
 
         private void lblLoginClientReturnToLogin_Click(object sender, EventArgs e)
@@ -114,7 +121,7 @@ namespace Antilobby_2
         }
 
 
-        private async void doLogin()
+        private async Task<bool> doLogin()
         {
             //putting a new reference to logger to prevent errors when Session is null
             AntiLobby_2.Logger logger = new AntiLobby_2.Logger();
@@ -147,9 +154,11 @@ namespace Antilobby_2
                 {
                     MessageBox.Show("There was an error processing your credentials.");
                     global.needsRestart = false;
+                    return false;
                 } else
                 {
                     global.needsRestart = true;
+                    return true;
                 }
 
                 
@@ -165,5 +174,15 @@ namespace Antilobby_2
                 MessageBox.Show("Logged in successful. The client is now authorized to save data on your behalf.");
             }
         }
+
+        private async void txtPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Return)
+            {
+                await performDoLoginAsync();
+            }
+
+        }
+
     }
 }

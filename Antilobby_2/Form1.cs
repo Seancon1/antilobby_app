@@ -156,6 +156,13 @@ namespace Antilobby_2
                 return;
             }
 
+            if(this.WindowState == FormWindowState.Minimized && !global.isHidden)
+            {
+                global.isHidden = true;
+                this.Hide();
+                Debug.Print("Form hidden.");
+            }
+
             //Update all interface components
             if(superSession != null)
             {
@@ -182,8 +189,15 @@ namespace Antilobby_2
                 this.Text = "Antilobby" + " (" + superSession.getInMemoryUserEmail() + ")";
                 btnLoginPlease.Visible = false;
                 listProcesses.Enabled = true;
-            } else
+                saveOfflineToolStripMenuItem.Visible = true;
+                saveToolStripMenuItem.Visible = true;
+                startSessionToolStripMenuItem.Visible = true;
+            }
+            else
             {
+                saveOfflineToolStripMenuItem.Visible = false;
+                saveToolStripMenuItem.Visible = false;
+                startSessionToolStripMenuItem.Visible = false;
                 btnLoginPlease.Visible = true;
                 listProcesses.Enabled = false;
                 loginToolStripMenuItem.Visible = true;
@@ -265,8 +279,8 @@ namespace Antilobby_2
 
                 try
                 {
-                    //Auto-saving every 5-minutes
-                    if (superSession.TickCount != 0 && superSession.TickCount % 300 == 0)
+                    //Auto-saving every 5-minutes IF logged in
+                    if (superSession.TickCount != 0 && superSession.TickCount % 300 == 0 && superSession.hasInMemoryUserToken())
                     {
                         showStatus("Auto Saving...");
                         await superSession.processList.saveToDatabase(69);
@@ -274,7 +288,7 @@ namespace Antilobby_2
                     }
 
                 }
-                catch { showStatus("Error Auto Saving"); }
+                catch (Exception error) { showStatus("Error Auto Saving"); Debug.Print("Error Details: " + error); }
             }
 
             superSession.processList.refreshList(listProcesses); //link listProcesses list to use the processList items
@@ -395,7 +409,7 @@ namespace Antilobby_2
                         //adds a new ProcessItem with a defined name to the current ProcessList
                         //with the assumption the item is not already defined in the ProcessList
                         //addItem checks if item is located, does nothing if is (so no duplicates)
-                        Debug.Print(process.ProcessName);
+                        Debug.Print("Selected: " + process.ProcessName);
                         global.processName = process.ProcessName; //Store this value in another class to escape Exception Out of Thread
                         
                         
@@ -664,11 +678,15 @@ namespace Antilobby_2
             superSession.saveAllOfflineStorage();
         }
 
+        public void openLoginWindow()
+        {
+            new LoginClient(superSession).Show();
+        }
+
         private void loginToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Open login client and carry session over
-            new LoginClient(superSession).Show();
-
+            openLoginWindow();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -832,6 +850,22 @@ namespace Antilobby_2
         {
             TimerProcesses.Enabled = !TimerProcesses.Enabled;
             pauseToolStripMenuItem.Text = (TimerProcesses.Enabled) ? "Pause" : "Resume";
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if(this.WindowState != FormWindowState.Normal)
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                global.isHidden = false;
+                Debug.Print("Form shown.");
+            }
+        }
+
+        private void btnLoginPlease_Click_1(object sender, EventArgs e)
+        {
+            openLoginWindow();
         }
     }
 }

@@ -13,3 +13,9 @@ A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Release\Antilobby_2.cs
 A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Release\Antilobby_2.csproj.CopyComplete
 A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Release\Antilobby_2.exe
 A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Release\Antilobby_2.pdb
+A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Release\Antilobby_2.csprojAssemblyReference.cache
+A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Release\Antilobby_2.TrustInfo.xml
+A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\bin\Release\Antilobby_2.exe.manifest
+A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\bin\Release\Antilobby_2.application
+A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Release\Antilobby_2.exe.manifest
+A:\GoogleDrive\PrestigeCode\antilobby_app\Antilobby_2\obj\Release\Antilobby_2.application

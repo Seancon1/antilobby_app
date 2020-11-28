@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,6 +38,7 @@
             this.startSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wARNINGWillNotSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFromOfflineSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -75,18 +77,12 @@
             this.toolStripStatusMain = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabAlerts = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPageProcesses = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblSelectedProcessName = new System.Windows.Forms.Label();
             this.listProcesses = new System.Windows.Forms.ListBox();
             this.lblCurrentProcess = new System.Windows.Forms.Label();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.accountPanel = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.lblLogginInAccountName = new System.Windows.Forms.Label();
-            this.lblUserIP = new System.Windows.Forms.Label();
-            this.lblMyInfoSessionID = new System.Windows.Forms.Label();
             this.tabPageMyAlerts = new System.Windows.Forms.TabPage();
             this.comboBoxAlertAction = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -100,20 +96,26 @@
             this.btnAddAlert = new System.Windows.Forms.Button();
             this.lblActiveAlertsTitle = new System.Windows.Forms.Label();
             this.flowLayoutActiveAlerts = new System.Windows.Forms.FlowLayoutPanel();
+            this.tabPageMyInfo = new System.Windows.Forms.TabPage();
+            this.accountPanel = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.lblLogginInAccountName = new System.Windows.Forms.Label();
+            this.lblUserIP = new System.Windows.Forms.Label();
+            this.lblMyInfoSessionID = new System.Windows.Forms.Label();
             this.TimerMainUIComponents = new System.Windows.Forms.Timer(this.components);
             this.TimerProcesses = new System.Windows.Forms.Timer(this.components);
             this.lblTimeElapsed = new System.Windows.Forms.Label();
             this.lblCursorStatus = new System.Windows.Forms.Label();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.btnLoginPlease = new System.Windows.Forms.Button();
-            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabAlerts.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabPageProcesses.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.accountPanel.SuspendLayout();
             this.tabPageMyAlerts.SuspendLayout();
+            this.tabPageMyInfo.SuspendLayout();
+            this.accountPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -148,14 +150,14 @@
             // loginToolStripMenuItem
             // 
             this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
-            this.loginToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loginToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.loginToolStripMenuItem.Text = "Login";
             this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click_1);
             // 
@@ -165,6 +167,7 @@
             this.saveOfflineToolStripMenuItem.Name = "saveOfflineToolStripMenuItem";
             this.saveOfflineToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveOfflineToolStripMenuItem.Text = "SaveOffline";
+            this.saveOfflineToolStripMenuItem.Visible = false;
             this.saveOfflineToolStripMenuItem.Click += new System.EventHandler(this.saveOfflineToolStripMenuItem_Click);
             // 
             // startSessionToolStripMenuItem
@@ -193,6 +196,13 @@
             this.startToolStripMenuItem.Text = "Start";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
+            // pauseToolStripMenuItem
+            // 
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.pauseToolStripMenuItem.Text = "Pause";
+            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
+            // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Enabled = false;
@@ -206,30 +216,31 @@
             this.loadFromOfflineSaveToolStripMenuItem.Name = "loadFromOfflineSaveToolStripMenuItem";
             this.loadFromOfflineSaveToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.loadFromOfflineSaveToolStripMenuItem.Text = "Load from Offline Save";
+            this.loadFromOfflineSaveToolStripMenuItem.Visible = false;
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(172, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // exitWithoutSavingToolStripMenuItem
             // 
             this.exitWithoutSavingToolStripMenuItem.Name = "exitWithoutSavingToolStripMenuItem";
-            this.exitWithoutSavingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitWithoutSavingToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.exitWithoutSavingToolStripMenuItem.Text = "Exit without Saving";
             this.exitWithoutSavingToolStripMenuItem.Click += new System.EventHandler(this.exitWithoutSavingToolStripMenuItem_Click);
             // 
             // newOnlineSaveToolStripMenuItem
             // 
             this.newOnlineSaveToolStripMenuItem.Name = "newOnlineSaveToolStripMenuItem";
-            this.newOnlineSaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newOnlineSaveToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.newOnlineSaveToolStripMenuItem.Text = "New Online Save";
             this.newOnlineSaveToolStripMenuItem.Visible = false;
             this.newOnlineSaveToolStripMenuItem.Click += new System.EventHandler(this.newOnlineSaveToolStripMenuItem_Click);
@@ -245,7 +256,7 @@
             // websiteToolStripMenuItem
             // 
             this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.websiteToolStripMenuItem.Text = "Website";
             this.websiteToolStripMenuItem.Click += new System.EventHandler(this.websiteToolStripMenuItem_Click);
             // 
@@ -270,6 +281,8 @@
             this.aFKLimitToolStripMenuItem.Name = "aFKLimitToolStripMenuItem";
             this.aFKLimitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aFKLimitToolStripMenuItem.Text = "AFK Limit";
+            this.aFKLimitToolStripMenuItem.ToolTipText = "Set the amount of time it takes before Antilobby stops recording time for last ac" +
+    "tive process.";
             // 
             // minutesToolStripMenuItem2
             // 
@@ -305,6 +318,7 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem1.Text = "Alert Settings";
+            this.toolStripMenuItem1.Visible = false;
             // 
             // offlineStorageToolStripMenuItem
             // 
@@ -317,6 +331,7 @@
             this.offlineStorageToolStripMenuItem.Name = "offlineStorageToolStripMenuItem";
             this.offlineStorageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.offlineStorageToolStripMenuItem.Text = "Offline Storage";
+            this.offlineStorageToolStripMenuItem.Visible = false;
             this.offlineStorageToolStripMenuItem.Click += new System.EventHandler(this.offlineStorageToolStripMenuItem_Click);
             // 
             // testRetrieveToolStripMenuItem
@@ -350,7 +365,7 @@
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.updateToolStripMenuItem.Text = "Update";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
@@ -369,6 +384,7 @@
             this.getToolStripMenuItem.Name = "getToolStripMenuItem";
             this.getToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.getToolStripMenuItem.Text = "Get";
+            this.getToolStripMenuItem.Visible = false;
             // 
             // mACAddresssaveToClipboardToolStripMenuItem
             // 
@@ -409,14 +425,14 @@
             // jSONOfFirstObjectToolStripMenuItem
             // 
             this.jSONOfFirstObjectToolStripMenuItem.Name = "jSONOfFirstObjectToolStripMenuItem";
-            this.jSONOfFirstObjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.jSONOfFirstObjectToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.jSONOfFirstObjectToolStripMenuItem.Text = "JSON of first object";
             this.jSONOfFirstObjectToolStripMenuItem.Click += new System.EventHandler(this.jSONOfFirstObjectToolStripMenuItem_Click);
             // 
             // loadSavedSessionToolStripMenuItem
             // 
             this.loadSavedSessionToolStripMenuItem.Name = "loadSavedSessionToolStripMenuItem";
-            this.loadSavedSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadSavedSessionToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.loadSavedSessionToolStripMenuItem.Text = "Load Saved Session";
             this.loadSavedSessionToolStripMenuItem.Click += new System.EventHandler(this.loadSavedSessionToolStripMenuItem_Click);
             // 
@@ -490,29 +506,29 @@
             // 
             // tabAlerts
             // 
-            this.tabAlerts.Controls.Add(this.tabPage2);
-            this.tabAlerts.Controls.Add(this.tabPage4);
+            this.tabAlerts.Controls.Add(this.tabPageProcesses);
             this.tabAlerts.Controls.Add(this.tabPageMyAlerts);
+            this.tabAlerts.Controls.Add(this.tabPageMyInfo);
             this.tabAlerts.Location = new System.Drawing.Point(0, 27);
             this.tabAlerts.Name = "tabAlerts";
             this.tabAlerts.SelectedIndex = 0;
             this.tabAlerts.Size = new System.Drawing.Size(529, 278);
             this.tabAlerts.TabIndex = 13;
             // 
-            // tabPage2
+            // tabPageProcesses
             // 
-            this.tabPage2.Controls.Add(this.btnLoginPlease);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.groupBox1);
-            this.tabPage2.Controls.Add(this.listProcesses);
-            this.tabPage2.Controls.Add(this.lblCurrentProcess);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(521, 252);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Processes";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPageProcesses.Controls.Add(this.btnLoginPlease);
+            this.tabPageProcesses.Controls.Add(this.label1);
+            this.tabPageProcesses.Controls.Add(this.listProcesses);
+            this.tabPageProcesses.Controls.Add(this.lblCurrentProcess);
+            this.tabPageProcesses.Controls.Add(this.groupBox1);
+            this.tabPageProcesses.Location = new System.Drawing.Point(4, 22);
+            this.tabPageProcesses.Name = "tabPageProcesses";
+            this.tabPageProcesses.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcesses.Size = new System.Drawing.Size(521, 252);
+            this.tabPageProcesses.TabIndex = 1;
+            this.tabPageProcesses.Text = "Processes";
+            this.tabPageProcesses.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -549,7 +565,7 @@
             this.listProcesses.Location = new System.Drawing.Point(6, 18);
             this.listProcesses.MultiColumn = true;
             this.listProcesses.Name = "listProcesses";
-            this.listProcesses.Size = new System.Drawing.Size(365, 225);
+            this.listProcesses.Size = new System.Drawing.Size(509, 225);
             this.listProcesses.TabIndex = 1;
             this.listProcesses.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listProcesses_MouseClick);
             // 
@@ -561,68 +577,6 @@
             this.lblCurrentProcess.Size = new System.Drawing.Size(96, 13);
             this.lblCurrentProcess.TabIndex = 0;
             this.lblCurrentProcess.Text = "Session Processes";
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.accountPanel);
-            this.tabPage4.Controls.Add(this.lblUserIP);
-            this.tabPage4.Controls.Add(this.lblMyInfoSessionID);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(521, 252);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "My Information";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // accountPanel
-            // 
-            this.accountPanel.BackColor = System.Drawing.Color.AliceBlue;
-            this.accountPanel.Controls.Add(this.button2);
-            this.accountPanel.Controls.Add(this.lblLogginInAccountName);
-            this.accountPanel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.accountPanel.Location = new System.Drawing.Point(249, 6);
-            this.accountPanel.Name = "accountPanel";
-            this.accountPanel.Size = new System.Drawing.Size(261, 240);
-            this.accountPanel.TabIndex = 2;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(41, 165);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(185, 36);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Disconnect Account and Deauthorize Client";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // lblLogginInAccountName
-            // 
-            this.lblLogginInAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLogginInAccountName.Location = new System.Drawing.Point(3, 63);
-            this.lblLogginInAccountName.Name = "lblLogginInAccountName";
-            this.lblLogginInAccountName.Size = new System.Drawing.Size(255, 60);
-            this.lblLogginInAccountName.TabIndex = 0;
-            this.lblLogginInAccountName.Text = "AccountName";
-            this.lblLogginInAccountName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblUserIP
-            // 
-            this.lblUserIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserIP.Location = new System.Drawing.Point(19, 17);
-            this.lblUserIP.Name = "lblUserIP";
-            this.lblUserIP.Size = new System.Drawing.Size(224, 52);
-            this.lblUserIP.TabIndex = 1;
-            this.lblUserIP.Text = "UserIP: 127.0.0.1";
-            // 
-            // lblMyInfoSessionID
-            // 
-            this.lblMyInfoSessionID.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMyInfoSessionID.Location = new System.Drawing.Point(19, 69);
-            this.lblMyInfoSessionID.Name = "lblMyInfoSessionID";
-            this.lblMyInfoSessionID.Size = new System.Drawing.Size(210, 85);
-            this.lblMyInfoSessionID.TabIndex = 0;
-            this.lblMyInfoSessionID.Text = "Session ID: 1234567890";
             // 
             // tabPageMyAlerts
             // 
@@ -771,6 +725,68 @@
             this.flowLayoutActiveAlerts.Size = new System.Drawing.Size(376, 171);
             this.flowLayoutActiveAlerts.TabIndex = 0;
             // 
+            // tabPageMyInfo
+            // 
+            this.tabPageMyInfo.Controls.Add(this.accountPanel);
+            this.tabPageMyInfo.Controls.Add(this.lblUserIP);
+            this.tabPageMyInfo.Controls.Add(this.lblMyInfoSessionID);
+            this.tabPageMyInfo.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMyInfo.Name = "tabPageMyInfo";
+            this.tabPageMyInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMyInfo.Size = new System.Drawing.Size(521, 252);
+            this.tabPageMyInfo.TabIndex = 3;
+            this.tabPageMyInfo.Text = "My Information";
+            this.tabPageMyInfo.UseVisualStyleBackColor = true;
+            // 
+            // accountPanel
+            // 
+            this.accountPanel.BackColor = System.Drawing.Color.AliceBlue;
+            this.accountPanel.Controls.Add(this.button2);
+            this.accountPanel.Controls.Add(this.lblLogginInAccountName);
+            this.accountPanel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.accountPanel.Location = new System.Drawing.Point(249, 6);
+            this.accountPanel.Name = "accountPanel";
+            this.accountPanel.Size = new System.Drawing.Size(261, 240);
+            this.accountPanel.TabIndex = 2;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(41, 165);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(185, 36);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Disconnect Account and Deauthorize Client";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // lblLogginInAccountName
+            // 
+            this.lblLogginInAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogginInAccountName.Location = new System.Drawing.Point(3, 63);
+            this.lblLogginInAccountName.Name = "lblLogginInAccountName";
+            this.lblLogginInAccountName.Size = new System.Drawing.Size(255, 60);
+            this.lblLogginInAccountName.TabIndex = 0;
+            this.lblLogginInAccountName.Text = "AccountName";
+            this.lblLogginInAccountName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblUserIP
+            // 
+            this.lblUserIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserIP.Location = new System.Drawing.Point(19, 17);
+            this.lblUserIP.Name = "lblUserIP";
+            this.lblUserIP.Size = new System.Drawing.Size(224, 52);
+            this.lblUserIP.TabIndex = 1;
+            this.lblUserIP.Text = "UserIP: 127.0.0.1";
+            // 
+            // lblMyInfoSessionID
+            // 
+            this.lblMyInfoSessionID.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMyInfoSessionID.Location = new System.Drawing.Point(19, 69);
+            this.lblMyInfoSessionID.Name = "lblMyInfoSessionID";
+            this.lblMyInfoSessionID.Size = new System.Drawing.Size(210, 85);
+            this.lblMyInfoSessionID.TabIndex = 0;
+            this.lblMyInfoSessionID.Text = "Session ID: 1234567890";
+            // 
             // TimerMainUIComponents
             // 
             this.TimerMainUIComponents.Enabled = true;
@@ -800,22 +816,22 @@
             this.lblCursorStatus.TabIndex = 14;
             this.lblCursorStatus.Text = "-";
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Antilobby";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
             // btnLoginPlease
             // 
-            this.btnLoginPlease.Location = new System.Drawing.Point(177, 100);
+            this.btnLoginPlease.Location = new System.Drawing.Point(190, 95);
             this.btnLoginPlease.Name = "btnLoginPlease";
             this.btnLoginPlease.Size = new System.Drawing.Size(150, 67);
-            this.btnLoginPlease.TabIndex = 7;
+            this.btnLoginPlease.TabIndex = 11;
             this.btnLoginPlease.Text = "Please Login";
             this.btnLoginPlease.UseVisualStyleBackColor = true;
-            this.btnLoginPlease.Click += new System.EventHandler(this.btnLoginPlease_Click);
-            // 
-            // pauseToolStripMenuItem
-            // 
-            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.pauseToolStripMenuItem.Text = "Pause";
-            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
+            this.btnLoginPlease.Click += new System.EventHandler(this.btnLoginPlease_Click_1);
             // 
             // Form1
             // 
@@ -828,9 +844,9 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Antilobby";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -839,13 +855,13 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tabAlerts.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tabPageProcesses.ResumeLayout(false);
+            this.tabPageProcesses.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.accountPanel.ResumeLayout(false);
             this.tabPageMyAlerts.ResumeLayout(false);
             this.tabPageMyAlerts.PerformLayout();
+            this.tabPageMyInfo.ResumeLayout(false);
+            this.accountPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -865,12 +881,12 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusMain;
         private System.Windows.Forms.TabControl tabAlerts;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPageProcesses;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblSelectedProcessName;
         private System.Windows.Forms.ListBox listProcesses;
         private System.Windows.Forms.Label lblCurrentProcess;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabPageMyInfo;
         private System.Windows.Forms.ToolStripMenuItem startSessionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
@@ -928,8 +944,9 @@
         private System.Windows.Forms.ToolStripMenuItem fetchSaveTokenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveWoTokenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveWTokenToolStripMenuItem;
-        private System.Windows.Forms.Button btnLoginPlease;
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.Button btnLoginPlease;
     }
 }
 

@@ -376,7 +376,7 @@ namespace AntiLobby_2
                 return null;
         }
 
-        public async void doSessionIDSaveViaAPI()
+        public async Task<bool> doSessionIDSaveViaAPI()
         {
             var returnString = "";
             using (var client = new HttpClient())
@@ -399,12 +399,13 @@ namespace AntiLobby_2
 
                 if (returnString == "error")
                 {
-                    MessageBox.Show("There was an error processing.");
-                    //return false;
+                    //MessageBox.Show("There was an error processing.");
+                    Debug.WriteLine("Error saving to API: session data");
+                    return false;
                 }
             }
             Debug.WriteLine("Done saving to API: session data");
-            //return true;
+            return true;
         }
 
         public async void doGetAuthEmail()
@@ -442,7 +443,7 @@ namespace AntiLobby_2
 
         /**
          * Save session apptimes to database
-         *  int [,] specifics - with dimensions [48,120] 24hr x2 = 48 for entire day, 120 for... just in case double the space :D?
+         * 
          * */
         public async Task<bool> DoGenericSaveViaAPI(Dictionary<string, int> itemsToSave, string processName, int processTime, int[,] specifics = null, int flag = 0)
         {

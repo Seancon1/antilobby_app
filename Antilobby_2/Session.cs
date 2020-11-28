@@ -77,14 +77,14 @@ namespace Antilobby_2
                             if (process != null && !process.HasExited )
                             {
                                 processItem.logOpenTime();
-                                //Debug.Print($"Logging OpenTime for this item: Now has {processItem.getTimeOpen()} ticks");
+                                //Debug.Print($"Logging OpenTime for this item({processItem.getName()}): Now has {processItem.getTimeOpen()} ticks");
                             }
                         }   
                     }
                 }
 
             }
-            catch { Debug.Print("Error logging process name idle time. May have been closed"); }
+            catch(Exception error) { Debug.Print("Error logging process name idle time. May have been closed" + error); }
             //add tick if process name is still open but no actively engaged
 
 
