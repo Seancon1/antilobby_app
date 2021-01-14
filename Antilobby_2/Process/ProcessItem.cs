@@ -161,5 +161,12 @@ namespace AntiLobby_2
             Debug.Print("Clearing item old save data...");
         }
 
+        public void PrintDebugDetails()
+        {
+            Debug.WriteLine($"::Item name: {this.getName()}");
+            Debug.WriteLine($"::Items not pending save: {this.DetailedTime.Count}");
+            Debug.WriteLine($"::Items pending save: {this.DetailsToSave.Count}");
+        }
+
     }
 }

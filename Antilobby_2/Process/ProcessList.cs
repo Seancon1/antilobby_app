@@ -318,7 +318,14 @@ namespace AntiLobby_2
             }
         }
 
-
+        public void PrintDebugInfo()
+        {
+            Debug.WriteLine($":Current list count: {this.list.Count}");
+            foreach (KeyValuePair<string, ProcessItem> item in this.list)
+            {
+                item.Value.PrintDebugDetails();
+            }
+        }
 
     }
 }

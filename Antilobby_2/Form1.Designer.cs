@@ -78,11 +78,12 @@
             this.toolStripStatusTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabAlerts = new System.Windows.Forms.TabControl();
             this.tabPageProcesses = new System.Windows.Forms.TabPage();
+            this.btnLoginPlease = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblSelectedProcessName = new System.Windows.Forms.Label();
             this.listProcesses = new System.Windows.Forms.ListBox();
             this.lblCurrentProcess = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblSelectedProcessName = new System.Windows.Forms.Label();
             this.tabPageMyAlerts = new System.Windows.Forms.TabPage();
             this.comboBoxAlertAction = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -107,7 +108,8 @@
             this.lblTimeElapsed = new System.Windows.Forms.Label();
             this.lblCursorStatus = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.btnLoginPlease = new System.Windows.Forms.Button();
+            this.printDebugInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDebug = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabAlerts.SuspendLayout();
@@ -125,12 +127,13 @@
             this.toolStripMenuItem2,
             this.viewToolStripMenuItem,
             this.settingsToolStripMenuItem,
-            this.getToolStripMenuItem});
+            this.getToolStripMenuItem,
+            this.toolStripDebug});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(526, 24);
             this.menuStrip1.TabIndex = 11;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.Text = "mem";
             // 
             // toolStripMenuItem2
             // 
@@ -165,7 +168,7 @@
             // 
             this.saveOfflineToolStripMenuItem.Enabled = false;
             this.saveOfflineToolStripMenuItem.Name = "saveOfflineToolStripMenuItem";
-            this.saveOfflineToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveOfflineToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.saveOfflineToolStripMenuItem.Text = "SaveOffline";
             this.saveOfflineToolStripMenuItem.Visible = false;
             this.saveOfflineToolStripMenuItem.Click += new System.EventHandler(this.saveOfflineToolStripMenuItem_Click);
@@ -179,7 +182,7 @@
             this.stopToolStripMenuItem,
             this.loadFromOfflineSaveToolStripMenuItem});
             this.startSessionToolStripMenuItem.Name = "startSessionToolStripMenuItem";
-            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.startSessionToolStripMenuItem.Text = "Session";
             // 
             // wARNINGWillNotSaveToolStripMenuItem
@@ -256,7 +259,7 @@
             // websiteToolStripMenuItem
             // 
             this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.websiteToolStripMenuItem.Text = "Website";
             this.websiteToolStripMenuItem.Click += new System.EventHandler(this.websiteToolStripMenuItem_Click);
             // 
@@ -266,7 +269,8 @@
             this.aFKLimitToolStripMenuItem,
             this.toolStripMenuItem1,
             this.offlineStorageToolStripMenuItem,
-            this.updateToolStripMenuItem});
+            this.updateToolStripMenuItem,
+            this.printDebugInfoToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -365,7 +369,7 @@
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.updateToolStripMenuItem.Text = "Update";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
@@ -530,6 +534,16 @@
             this.tabPageProcesses.Text = "Processes";
             this.tabPageProcesses.UseVisualStyleBackColor = true;
             // 
+            // btnLoginPlease
+            // 
+            this.btnLoginPlease.Location = new System.Drawing.Point(190, 95);
+            this.btnLoginPlease.Name = "btnLoginPlease";
+            this.btnLoginPlease.Size = new System.Drawing.Size(150, 67);
+            this.btnLoginPlease.TabIndex = 11;
+            this.btnLoginPlease.Text = "Please Login";
+            this.btnLoginPlease.UseVisualStyleBackColor = true;
+            this.btnLoginPlease.Click += new System.EventHandler(this.btnLoginPlease_Click_1);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -538,25 +552,6 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "label1";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.lblSelectedProcessName);
-            this.groupBox1.Location = new System.Drawing.Point(377, 18);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(133, 113);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
-            this.groupBox1.Visible = false;
-            // 
-            // lblSelectedProcessName
-            // 
-            this.lblSelectedProcessName.Location = new System.Drawing.Point(7, 20);
-            this.lblSelectedProcessName.Name = "lblSelectedProcessName";
-            this.lblSelectedProcessName.Size = new System.Drawing.Size(120, 26);
-            this.lblSelectedProcessName.TabIndex = 0;
-            this.lblSelectedProcessName.Text = "ProcessName";
             // 
             // listProcesses
             // 
@@ -577,6 +572,25 @@
             this.lblCurrentProcess.Size = new System.Drawing.Size(96, 13);
             this.lblCurrentProcess.TabIndex = 0;
             this.lblCurrentProcess.Text = "Session Processes";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lblSelectedProcessName);
+            this.groupBox1.Location = new System.Drawing.Point(377, 18);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(133, 113);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Visible = false;
+            // 
+            // lblSelectedProcessName
+            // 
+            this.lblSelectedProcessName.Location = new System.Drawing.Point(7, 20);
+            this.lblSelectedProcessName.Name = "lblSelectedProcessName";
+            this.lblSelectedProcessName.Size = new System.Drawing.Size(120, 26);
+            this.lblSelectedProcessName.TabIndex = 0;
+            this.lblSelectedProcessName.Text = "ProcessName";
             // 
             // tabPageMyAlerts
             // 
@@ -823,15 +837,19 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
-            // btnLoginPlease
+            // printDebugInfoToolStripMenuItem
             // 
-            this.btnLoginPlease.Location = new System.Drawing.Point(190, 95);
-            this.btnLoginPlease.Name = "btnLoginPlease";
-            this.btnLoginPlease.Size = new System.Drawing.Size(150, 67);
-            this.btnLoginPlease.TabIndex = 11;
-            this.btnLoginPlease.Text = "Please Login";
-            this.btnLoginPlease.UseVisualStyleBackColor = true;
-            this.btnLoginPlease.Click += new System.EventHandler(this.btnLoginPlease_Click_1);
+            this.printDebugInfoToolStripMenuItem.Name = "printDebugInfoToolStripMenuItem";
+            this.printDebugInfoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.printDebugInfoToolStripMenuItem.Text = "Print Debug Info";
+            this.printDebugInfoToolStripMenuItem.Click += new System.EventHandler(this.printDebugInfoToolStripMenuItem_Click);
+            // 
+            // toolStripDebug
+            // 
+            this.toolStripDebug.Enabled = false;
+            this.toolStripDebug.Name = "toolStripDebug";
+            this.toolStripDebug.Size = new System.Drawing.Size(43, 20);
+            this.toolStripDebug.Text = "0mb";
             // 
             // Form1
             // 
@@ -947,6 +965,8 @@
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.Button btnLoginPlease;
+        private System.Windows.Forms.ToolStripMenuItem printDebugInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripDebug;
     }
 }
 

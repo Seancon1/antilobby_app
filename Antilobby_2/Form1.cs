@@ -285,6 +285,17 @@ namespace Antilobby_2
                         showStatus("Auto Saving...");
                         await superSession.processList.saveToDatabase(69);
                         showStatus("Auto Saved");
+
+                    }
+
+                    //Check if TickCount reached 24 hours 
+                    if (superSession.TickCount >= 84400)
+                    {
+                        showStatus("Auto Saving...");
+                        await superSession.processList.saveToDatabase(69);
+                        showStatus("Session limit reached (saved).");
+                        global.needsRestart = true;
+
                     }
 
                 }
@@ -359,7 +370,11 @@ namespace Antilobby_2
             * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Alert Handler 
             * */
 
-
+            using (Process process1 = Process.GetCurrentProcess())
+            {
+                toolStripDebug.Text = $"{process1.PrivateMemorySize64/(1024*1024)}mb";
+            }
+                
 
         }
 
@@ -471,9 +486,10 @@ namespace Antilobby_2
                 
             } catch (System.Net.WebException error)
             {
-                MessageBox.Show("Error: " + error.ToString());
-                MessageBox.Show("Saving your session offline, your session will be submitted when you are online.");
-                superSession.saveSessionOffline();
+                //MessageBox.Show("Error: " + error.ToString());
+                //MessageBox.Show("Saving your session offline, your session will be submitted when you are online.");
+                superSession.saveSessionOffline(); 
+                showStatus("Saved Offline");
             }
 
         }
@@ -499,9 +515,13 @@ namespace Antilobby_2
          * */
         private async void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (global.needsRestart)
+            {
+                return;
+            }
 
             //Optional close without saving, default FALSE
-            if(!global.closeWithoutSave)
+            if (!global.closeWithoutSave)
             {
                 try
                 {
@@ -866,6 +886,11 @@ namespace Antilobby_2
         private void btnLoginPlease_Click_1(object sender, EventArgs e)
         {
             openLoginWindow();
+        }
+
+        private void printDebugInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.superSession.processList.PrintDebugInfo();
         }
     }
 }

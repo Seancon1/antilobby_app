@@ -65,11 +65,13 @@ namespace Antilobby_2
              * Experimental Feature
              * Tracks apps that user interacted with and counts the amount of time they are open/having process time
              * */
+            /*
             try
             {
+                if(processList.ReturnAllItems() != null)
                 foreach(ProcessItem processItem in processList.ReturnAllItems())
                 {
-                    var checkProcess = Process.GetProcessesByName(processItem.getName()) != null ? true: false;
+                    var checkProcess = Process.GetProcessesByName(processItem.getName()).First() != null ? true: false;
                     if (checkProcess)
                     {
                         using (var process = Process.GetProcessesByName(processItem.getName()).First())
@@ -82,11 +84,10 @@ namespace Antilobby_2
                         }   
                     }
                 }
-
             }
             catch(Exception error) { Debug.Print("Error logging process name idle time. May have been closed" + error); }
             //add tick if process name is still open but no actively engaged
-
+            */
 
         }
 
