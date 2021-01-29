@@ -52,7 +52,7 @@ namespace Antilobby_2
                 updateToolStripMenuItem.BackColor = VersionControl.IsOutDated() ? Color.FromArgb(255,150,152) : Color.FromName("Control");
             } catch (Exception error)
             {
-                
+                new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
             }
 
             //try checking existing auth token
@@ -67,9 +67,9 @@ namespace Antilobby_2
                 {
 
                 }
-            } catch
+            } catch (Exception error)
             {
-
+                new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
             }
 
             /**
@@ -99,9 +99,9 @@ namespace Antilobby_2
                 toolStripStatusMain.ForeColor = Color.Gray;
                 toolStripStatusMain.Text = "[" + DateTime.Now + "] " + inText;
             }
-            catch (Exception e)
+            catch (Exception error)
             {
-                //nothing for now, still investigating bug
+                new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
             }
         }
 
@@ -220,9 +220,9 @@ namespace Antilobby_2
                 }
 
             }
-            catch
+            catch (Exception error)
             {
-
+                new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
             }
 
             if (superSession == null)
@@ -232,8 +232,10 @@ namespace Antilobby_2
             }
 
 
-
-            superSession.incrementTick(global.processName); //pass current process FOR alertList
+            if (superSession.TickCount < 86400)
+            {
+                superSession.incrementTick(global.processName); //pass current process FOR alertList
+            }
 
 
 
@@ -269,7 +271,10 @@ namespace Antilobby_2
                     //this.Focus();
 
                     }
-                    catch { Debug.Print($"Process {global.processName} cannot be located."); global.processName = "null"; }
+                    catch (Exception error)
+                    { Debug.Print($"Process {global.processName} cannot be located."); global.processName = "null";
+                        new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
+                    }
                 }
 
 
@@ -288,8 +293,8 @@ namespace Antilobby_2
 
                     }
 
-                    //Check if TickCount reached 24 hours 
-                    if (superSession.TickCount >= 84400)
+                    //Check if TickCount reached 24 hours (24hrs x 60secs x 60mins)
+                    if (superSession.TickCount >= 86400)
                     {
                         showStatus("Auto Saving...");
                         await superSession.processList.saveToDatabase(69);
@@ -299,7 +304,9 @@ namespace Antilobby_2
                     }
 
                 }
-                catch (Exception error) { showStatus("Error Auto Saving"); Debug.Print("Error Details: " + error); }
+                catch (Exception error) { showStatus("Error Auto Saving"); Debug.Print("Error Details: " + error);
+                    new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
+                }
             }
 
             superSession.processList.refreshList(listProcesses); //link listProcesses list to use the processList items
@@ -437,12 +444,10 @@ namespace Antilobby_2
                     }
                 }
             }
-            catch (Exception ee)
+            catch (Exception error)
             {
-                //something bad happened
-                //MessageBox.Show(ee.ToString());
-                //showStatus("Error" + ee.ToString());
-                Debug.Print("Error" + ee.ToString());
+                new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
+                Debug.Print("Error" + error.ToString());
             }
         }
 
@@ -486,6 +491,7 @@ namespace Antilobby_2
                 
             } catch (System.Net.WebException error)
             {
+                new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
                 //MessageBox.Show("Error: " + error.ToString());
                 //MessageBox.Show("Saving your session offline, your session will be submitted when you are online.");
                 superSession.saveSessionOffline(); 
@@ -542,6 +548,7 @@ namespace Antilobby_2
                 }
                 catch (Exception error)
                 {
+                    new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
                     if (global.needsRestart)
                     {
                         return;
@@ -776,9 +783,10 @@ namespace Antilobby_2
                     MessageBox.Show("You are running the most current version.");
                 }
             }
-            catch (Exception e)
+            catch (Exception error)
             {
-                MessageBox.Show("Unable to update. e:" + e.ToString());
+                new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
+                MessageBox.Show("Unable to update. e:" + error.ToString());
             }
 
 
@@ -892,5 +900,6 @@ namespace Antilobby_2
         {
             this.superSession.processList.PrintDebugInfo();
         }
+
     }
 }

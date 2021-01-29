@@ -118,11 +118,16 @@ namespace AntiLobby_2
             //Directory and File path information
             //User directory
             var pathFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\" + fileName;
+            var pathFileErrorLogs = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\logs\\error_log";
             var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\";
+            var errorpath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\logs\\";
 
             if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path); //Create directory
+            } else if (!Directory.Exists(errorpath))
+                {
+                    Directory.CreateDirectory(errorpath); //Create directory
                 }
 
             try
@@ -151,10 +156,15 @@ namespace AntiLobby_2
                         }
 
                     break;
+
+                    case 3:
+                        File.AppendAllText(pathFileErrorLogs, $"[{DateTime.Now}] " + saveContents[0] + Environment.NewLine);
+                        break;
+
                 }
             } catch (Exception e)
             {
-                MessageBox.Show("Unable to save offline data." + e.ToString());
+                MessageBox.Show("Critical Error: Unable to save offline data." + e.ToString());
             }
         }
 

@@ -196,8 +196,6 @@ namespace AntiLobby_2
                             //itemToSave.Value.SeperateDetailedToSavetime
                             //split data to save here
 
-
-
                             Task<bool> t1 = DoSave(logger, itemToSave, itemToSave.Value.ReturnPreparedList().First());
                             bool status = await t1;
                             if (status)
@@ -245,8 +243,9 @@ namespace AntiLobby_2
 
 
             }
-            catch (Exception e)
+            catch (Exception error)
             {
+                new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
                 logger.SaveOffline(this.session);
                 throw new System.Net.WebException("Cannot connect");
             }

@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Antilobby_2.exe" size="128512">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Antilobby_2.exe" size="130048">
       <assemblyIdentity name="Antilobby_2" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>IynFQbz30PZh7OjaJ2uwITr9oF5Sv3dOGGL5T7uHa1Q=</dsig:DigestValue>
+        <dsig:DigestValue>/HqH58N2/oXWkZWYdXzFJjII0XJoAbC5/M+2PYdoB4Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

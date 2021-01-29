@@ -60,6 +60,7 @@
             this.tESTItemSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tESTItemRetrieveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printDebugInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mACAddresssaveToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.iPAddressclipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,6 +73,7 @@
             this.fetchSaveTokenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveWoTokenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveWTokenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDebug = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatuslblVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusMain = new System.Windows.Forms.ToolStripStatusLabel();
@@ -108,8 +110,6 @@
             this.lblTimeElapsed = new System.Windows.Forms.Label();
             this.lblCursorStatus = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.printDebugInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripDebug = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabAlerts.SuspendLayout();
@@ -259,7 +259,7 @@
             // websiteToolStripMenuItem
             // 
             this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.websiteToolStripMenuItem.Text = "Website";
             this.websiteToolStripMenuItem.Click += new System.EventHandler(this.websiteToolStripMenuItem_Click);
             // 
@@ -291,28 +291,28 @@
             // minutesToolStripMenuItem2
             // 
             this.minutesToolStripMenuItem2.Name = "minutesToolStripMenuItem2";
-            this.minutesToolStripMenuItem2.Size = new System.Drawing.Size(132, 22);
+            this.minutesToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             this.minutesToolStripMenuItem2.Text = "5 minutes";
             this.minutesToolStripMenuItem2.Click += new System.EventHandler(this.minutesToolStripMenuItem2_Click);
             // 
             // minutesToolStripMenuItem
             // 
             this.minutesToolStripMenuItem.Name = "minutesToolStripMenuItem";
-            this.minutesToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.minutesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.minutesToolStripMenuItem.Text = "10 minutes";
             this.minutesToolStripMenuItem.Click += new System.EventHandler(this.minutesToolStripMenuItem_Click);
             // 
             // minutesToolStripMenuItem1
             // 
             this.minutesToolStripMenuItem1.Name = "minutesToolStripMenuItem1";
-            this.minutesToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
+            this.minutesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.minutesToolStripMenuItem1.Text = "30 minutes";
             this.minutesToolStripMenuItem1.Click += new System.EventHandler(this.minutesToolStripMenuItem1_Click);
             // 
             // hourToolStripMenuItem
             // 
             this.hourToolStripMenuItem.Name = "hourToolStripMenuItem";
-            this.hourToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.hourToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.hourToolStripMenuItem.Text = "1 hour";
             this.hourToolStripMenuItem.Click += new System.EventHandler(this.hourToolStripMenuItem_Click);
             // 
@@ -372,6 +372,14 @@
             this.updateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.updateToolStripMenuItem.Text = "Update";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
+            // 
+            // printDebugInfoToolStripMenuItem
+            // 
+            this.printDebugInfoToolStripMenuItem.Name = "printDebugInfoToolStripMenuItem";
+            this.printDebugInfoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.printDebugInfoToolStripMenuItem.Text = "Print Debug Info";
+            this.printDebugInfoToolStripMenuItem.Visible = false;
+            this.printDebugInfoToolStripMenuItem.Click += new System.EventHandler(this.printDebugInfoToolStripMenuItem_Click);
             // 
             // getToolStripMenuItem
             // 
@@ -473,6 +481,13 @@
             this.saveWTokenToolStripMenuItem.Text = "Save w/ token";
             this.saveWTokenToolStripMenuItem.Visible = false;
             this.saveWTokenToolStripMenuItem.Click += new System.EventHandler(this.saveWTokenToolStripMenuItem_Click);
+            // 
+            // toolStripDebug
+            // 
+            this.toolStripDebug.Enabled = false;
+            this.toolStripDebug.Name = "toolStripDebug";
+            this.toolStripDebug.Size = new System.Drawing.Size(43, 20);
+            this.toolStripDebug.Text = "0mb";
             // 
             // statusStrip1
             // 
@@ -836,20 +851,6 @@
             this.notifyIcon1.Text = "Antilobby";
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
-            // 
-            // printDebugInfoToolStripMenuItem
-            // 
-            this.printDebugInfoToolStripMenuItem.Name = "printDebugInfoToolStripMenuItem";
-            this.printDebugInfoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.printDebugInfoToolStripMenuItem.Text = "Print Debug Info";
-            this.printDebugInfoToolStripMenuItem.Click += new System.EventHandler(this.printDebugInfoToolStripMenuItem_Click);
-            // 
-            // toolStripDebug
-            // 
-            this.toolStripDebug.Enabled = false;
-            this.toolStripDebug.Name = "toolStripDebug";
-            this.toolStripDebug.Size = new System.Drawing.Size(43, 20);
-            this.toolStripDebug.Text = "0mb";
             // 
             // Form1
             // 
