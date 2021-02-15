@@ -9,7 +9,7 @@ namespace Antilobby_2
     class global
     {
 
-        public static double APP_RELEASE_NUM = 1.186;
+        public static double APP_RELEASE_NUM = 1.187;
         
         public static string processName = "null";
         public static string showstatus_value = "";

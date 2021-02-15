@@ -658,7 +658,7 @@ namespace Antilobby_2
         {
             try
             {
-                System.Diagnostics.Process.Start("https://www.prestigecode.com/api/antilobby");
+                System.Diagnostics.Process.Start("https://antilobby.prestigecode.com/");
             } catch (Exception x)
             {
                 MessageBox.Show("Unable to open the website." + e.ToString());

@@ -400,7 +400,7 @@ namespace AntiLobby_2
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
                 var content = new FormUrlEncodedContent(values);
                 //var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/sanctum/token", content);
-                var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/user/session/update/" + this.session.Id + "/"+ this.session.TickCount, content);
+                var response = await client.PostAsync("https://antilobby.prestigecode.com/user/session/update/" + this.session.Id + "/"+ this.session.TickCount, content);
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 //response modification, probably not the best way to detect an error 
@@ -431,7 +431,7 @@ namespace AntiLobby_2
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
                 var content = new FormUrlEncodedContent(values);
-                var response = await client.GetAsync("https://www.prestigecode.com/api/antilobby/user/get");
+                var response = await client.GetAsync("https://antilobby.prestigecode.com/user/get");
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 //response modification, probably not the best way to detect an error 
@@ -482,7 +482,7 @@ namespace AntiLobby_2
 
                 var content = new FormUrlEncodedContent(values);
 
-                var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/user/apptime/v3/" + this.session.Id + "/" + processName + "/" + processTime, content);
+                var response = await client.PostAsync("https://antilobby.prestigecode.com/user/apptime/v3/" + this.session.Id + "/" + processName + "/" + processTime, content);
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 //response modification, probably not the best way to detect an error 
@@ -519,7 +519,7 @@ namespace AntiLobby_2
                 var token = (session.hasInMemoryUserToken() == true) ? session.getInMemoryUserToken() : session.readUserToken();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var content = new FormUrlEncodedContent(values);
-                var response = await client.GetAsync("https://www.prestigecode.com/api/antilobby/user/session/id");
+                var response = await client.GetAsync("https://antilobby.prestigecode.com/user/session/id");
                 var responseString = await response.Content.ReadAsStringAsync();
                 
                 Debug.WriteLine("Return string" + returnString.ToString());

@@ -86,7 +86,7 @@ namespace Antilobby_2
             //switchLoginRegister();
             try
             {
-                System.Diagnostics.Process.Start("https://www.prestigecode.com/api2/register");
+                System.Diagnostics.Process.Start("https://antilobby.prestigecode.com/register");
                 this.Close();
             }
             catch (Exception x)
@@ -136,7 +136,7 @@ namespace Antilobby_2
             };
 
                 var content = new FormUrlEncodedContent(values);
-                var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/sanctum/token", content);
+                var response = await client.PostAsync("https://antilobby.prestigecode.com/sanctum/token", content);
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 //response modification, probably not the best way to detect an error 
