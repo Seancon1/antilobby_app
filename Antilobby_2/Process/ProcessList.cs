@@ -249,11 +249,12 @@ namespace AntiLobby_2
                 logger.SaveOffline(this.session);
                 throw new System.Net.WebException("Cannot connect");
             }
-
+            /*
             if (flag == 1)
             {
                 this.session.State = false;
             }
+            */
             //MessageBox.Show("Games should be saved");
             return true;
         }

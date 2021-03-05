@@ -9,3 +9,5 @@ Antilobby_2/bin/Release/Antilobby_release.exe
 Antilobby_2/bin/Release/Antilobby_2.exe
 Antilobby_2/bin/Debug/app.publish/Antilobby_2.exe
 Antilobby_2/bin/Debug/Antilobby_2.exe
+*.exe
+Antilobby_2/bin/Debug/Antilobby_2.exe.manifest

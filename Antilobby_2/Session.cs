@@ -34,13 +34,17 @@ namespace Antilobby_2
             this.logger = new Logger(this, user); //create a logger instance
             this.processList = new ProcessList(this, user);
             this.alertList = new Alert.AlertList(processList); //processList must not be null before linking, aka create processList link before calling this
-            this.user.Token = readUserToken(); //gets token if located on machine locally, otherwise set null !! LOGGER instance must be called 
+            user.Token = readUserToken(); //set token of user that has been passed to this session instance
+            this.user.Token = readUserToken();//gets token if located on machine locally, otherwise set null !! LOGGER instance must be called 
             logger.getSessionIDFromAPI(); //this will replace null originally placed
+            this.State = false; //start in a false state
+            this.Paused = false; //start not paused
         }
 
         public string Id { get => this.id; set => this.id = value; }
         public int TickCount { get => tickCount; set => tickCount = value; }
         public bool State { get => state; set => state = value; }
+        public bool Paused { get => state; set => state = value; }
 
         /*
          * String activeProcess - string that represents the current active process 
@@ -49,7 +53,10 @@ namespace Antilobby_2
         public void incrementTick(String activeProcess)
         {
             this.tickCount++;
-
+            /*
+             * Set State to true. This value is defined as a way to tell us if we have done any incrementation ever.
+             * */
+            this.State = true;
 
             //also increment all alert counts
             if (alertList == null) { } else

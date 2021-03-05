@@ -120,32 +120,33 @@ namespace Antilobby_2
         //Tool Tip buttons
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(superSession != null)
+            if (superSession == null) return;
+               
+            //if false
+            if(!superSession.State)
             {
-                MessageBox.Show("Session already exists.");
-            } else
-            {
-                //Start new session with existing user
-                superSession = new Session(superUser); 
+                TimerProcesses.Start();
+                Debug.WriteLine("superSession = false. Starting tick cycle");
                 MessageBox.Show("A new session ("+ superSession.Id.ToString() +") has been started.");
-            
             }
+
         }
-
-        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        /**
+         * Once a Session is stopped, it cannot be resumed. Pause functionality must be used.
+         *
+         **/
+        private async void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (superSession != null)
-            {
-                //New session destroy method will be made later when session saving is finished
-                superSession = null; //unlink session, keep in memory.
-                MessageBox.Show("Session stopped.");
-                
-            }
-            else
-            {
-                MessageBox.Show("No session available.");
+            if (superSession == null) return;
+            TimerProcesses.Stop();
+            //force save of current session
+            await doSessionSave();
 
-            }
+            //Session will be overwritten by a new session. Effectively overwriting old session with blank new one
+            MessageBox.Show("Session stopped.");
+
+            superSession = new Session(superUser);
+            
         }
 
 
@@ -164,24 +165,21 @@ namespace Antilobby_2
             }
 
             //Update all interface components
-            if(superSession != null)
+            if(superSession != null & superSession.State)
             {
-
                 //Disable UI components
                 startToolStripMenuItem.Enabled = false;
                 stopToolStripMenuItem.Enabled = true;
-
-                lblMyInfoSessionID.Text = "Session ID: \n" + superSession.Id.ToString();
             } else
             {
                 //Disable UI components
                 startToolStripMenuItem.Enabled = true;
                 stopToolStripMenuItem.Enabled = false;
-
-                lblMyInfoSessionID.Text = "Session ID: none";
             }
 
-            if(global.isLoggedIn && superSession != null)
+            lblMyInfoSessionID.Text = (superSession != null ) ? "Session ID: \n" + superSession.Id.ToString() : null;
+
+            if (global.isLoggedIn && superSession != null)
             {
                 accountPanel.Show();
                 loginToolStripMenuItem.Visible = false;
@@ -192,6 +190,9 @@ namespace Antilobby_2
                 saveOfflineToolStripMenuItem.Visible = true;
                 saveToolStripMenuItem.Visible = true;
                 startSessionToolStripMenuItem.Visible = true;
+
+                //startToolStripMenuItem.Enabled = !stopToolStripMenuItem.Enabled;
+                //stopToolStripMenuItem.Enabled = !startToolStripMenuItem.Enabled;
             }
             else
             {
@@ -473,14 +474,15 @@ namespace Antilobby_2
             
         }
 
-
-        private async void saveToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private async Task doSessionSave()
         {
-            try {
-                if(!global.isLoggedIn)
+            try
+            {
+                if (!global.isLoggedIn)
                 {
                     MessageBox.Show("You must login now to save sessions.");
                     showStatus("Error Saving");
+                    
                 }
                 else
                 {
@@ -488,16 +490,21 @@ namespace Antilobby_2
                     await superSession.processList.saveToDatabase(69);
                     showStatus("Saved");
                 }
-                
-            } catch (System.Net.WebException error)
+
+            }
+            catch (System.Net.WebException error)
             {
                 new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
                 //MessageBox.Show("Error: " + error.ToString());
                 //MessageBox.Show("Saving your session offline, your session will be submitted when you are online.");
-                superSession.saveSessionOffline(); 
+                superSession.saveSessionOffline();
                 showStatus("Saved Offline");
-            }
-
+                
+            }  
+        }
+        private async void saveToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            await doSessionSave();
         }
 
         private void mACAddresssaveToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -569,12 +576,13 @@ namespace Antilobby_2
 
         private void comboBox1_MouseHover(object sender, EventArgs e)
         {
-            
-            //refresh list for alert selection of previously hovered processes
-            comboBoxSelectableProcessesAlert.Items.Clear();
+            if (superSession.processList == null || superSession == null || superSession.processList.getListOfNames() == null) return;
+
+                //refresh list for alert selection of previously hovered processes
+                comboBoxSelectableProcessesAlert.Items.Clear();
             try
             {
-                if(superSession.processList != null)
+                if(superSession.processList != null && superSession != null)
                 {
                     foreach (string name in superSession.processList.getListOfNames())
                     {
@@ -583,9 +591,9 @@ namespace Antilobby_2
 
                 }
             }
-            catch (Exception ee)
+            catch (Exception error)
             {
-                showStatus("Error refreshing");
+                Debug.WriteLine("Error refreshing selectable process list" + error.ToString());
             }
             
         }
