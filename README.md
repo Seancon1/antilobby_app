@@ -4,5 +4,5 @@ Program designed to collect program use and display it centrally on the Prestige
 
 
 Website:
-https://www.prestigecode.com/projects/antilobby/about.php
+https://antilobby.prestigecode.com/about
 
