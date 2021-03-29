@@ -11,7 +11,7 @@ namespace Antilobby_2.AutoUpdate
     class FetchUpdateVersion
     {
 
-        public static string VERSION_URL = "https://www.prestigecode.com/projects/antilobby/releases/version.php";
+        public static string VERSION_URL = "https://antilobby.prestigecode.com/download/latest/version";
 
         public double newVersionNumber;
 

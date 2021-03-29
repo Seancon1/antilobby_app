@@ -29,7 +29,6 @@ namespace Antilobby_2
         {
             this.tickCount = 0;
             this.user = user;
-            //assign internally fetched User.userToken here
             this.id = "null"; //fill id as null for replacement shortly after creation
             this.logger = new Logger(this, user); //create a logger instance
             this.processList = new ProcessList(this, user);

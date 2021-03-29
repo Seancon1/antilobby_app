@@ -12,8 +12,9 @@ namespace Antilobby_2.ApplicationUpdater
     class Updater
     {
 
-        public static string DIRECT_EXE_URL = "https://www.prestigecode.com/projects/antilobby/releases/current/Antilobby_release.exe";
-
+        //public static string DIRECT_EXE_URL = "https://www.prestigecode.com/projects/antilobby/releases/current/Antilobby_release.exe";
+        public static string DIRECT_EXE_URL = "https://antilobby.prestigecode.com/download/latest";
+        
         public Updater()
         {
             DoProcess();

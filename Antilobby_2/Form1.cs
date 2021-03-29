@@ -447,7 +447,7 @@ namespace Antilobby_2
             }
             catch (Exception error)
             {
-                new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
+                //new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
                 Debug.Print("Error" + error.ToString());
             }
         }
