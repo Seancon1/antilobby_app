@@ -58,11 +58,10 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>16D5C6329F5B68211FB040C329B9AFD19A55E996</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>13E93354718076E8258B9D981C8338C354A26EAD</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
+    <ManifestKeyFile>pc_sign.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>Internet</TargetZone>
@@ -75,6 +74,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>pc_sign.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -167,6 +169,7 @@
     </Compile>
     <None Include="Antilobby_2_TemporaryKey.pfx" />
     <None Include="packages.config" />
+    <None Include="pc_sign.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\AntiLobby_2.ProcessList.datasource" />
     <None Include="Properties\Settings.settings">

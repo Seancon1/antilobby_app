@@ -18,30 +18,37 @@ namespace AntiLobby_2
 
         public static String getIP()
         {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST 
-            string myIP = Dns.GetHostEntry(hostName).AddressList[0].ToString();
+            string myIP = "0.0.0.0";
+            try
+            {
+                string hostName = Dns.GetHostName(); // Retrive the Name of HOST 
+                myIP = Dns.GetHostEntry(hostName).AddressList[0].ToString();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("Unable to getIP. " + exception.ToString());
+            }
             return myIP;
         }
 
         public static string GetIPAddress()
         {
-            String address = "";
-            WebRequest request = WebRequest.Create("https://www.prestigecode.com/projects/antilobby/checkIP.php");
-            using (WebResponse response = request.GetResponse())
-            using (StreamReader stream = new StreamReader(response.GetResponseStream()))
-            {
-                address = stream.ReadToEnd();
-            }
+            String address = "null";
 
-            /**
-             * 
-             * Modified old method to use prestigecode and also got rid of trimming the response
-             * webpage returns ONLY the ip of the current user so no need to trim html before returning value
-            
-            int first = address.IndexOf("Address: ") + 9;
-            int last = address.LastIndexOf("</body>");
-            address = address.Substring(first, last - first);
-            */
+            try
+            {
+                
+                WebRequest request = WebRequest.Create("https://www.prestigecode.com/get/myip");
+                using (WebResponse response = request.GetResponse())
+                using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+                {
+                    address = stream.ReadToEnd();
+                }
+
+            } catch (Exception exception)
+            {
+                Console.WriteLine("Unable to GetIPAddress. " + exception.ToString());
+            }
 
             return address;
         }
@@ -66,28 +73,38 @@ namespace AntiLobby_2
 
         public static string getMacAddress()
         {
-            //Got this from some person on stackoverflow
             const int MIN_MAC_ADDR_LENGTH = 12;
             string macAddress = string.Empty;
             long maxSpeed = -1;
 
-            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+            try
             {
-                /*
-                log.Debug(
-                    "Found MAC Address: " + nic.GetPhysicalAddress() +
-                    " Type: " + nic.NetworkInterfaceType);
-                */
-                string tempMac = nic.GetPhysicalAddress().ToString();
-                if (nic.Speed > maxSpeed &&
-                    !string.IsNullOrEmpty(tempMac) &&
-                    tempMac.Length >= MIN_MAC_ADDR_LENGTH)
+                //Got this from some person on stackoverflow
+                foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
                 {
-                    //log.Debug("New Max Speed = " + nic.Speed + ", MAC: " + tempMac);
-                    maxSpeed = nic.Speed;
-                    macAddress = tempMac;
+                    /*
+                    log.Debug(
+                        "Found MAC Address: " + nic.GetPhysicalAddress() +
+                        " Type: " + nic.NetworkInterfaceType);
+                    */
+                    string tempMac = nic.GetPhysicalAddress().ToString();
+                    if (nic.Speed > maxSpeed &&
+                        !string.IsNullOrEmpty(tempMac) &&
+                        tempMac.Length >= MIN_MAC_ADDR_LENGTH)
+                    {
+                        //log.Debug("New Max Speed = " + nic.Speed + ", MAC: " + tempMac);
+                        maxSpeed = nic.Speed;
+                        macAddress = tempMac;
+                    }
                 }
+
+                
+
+            } catch (Exception exception)
+            {
+                Console.WriteLine("Unable to getMacAddress. " + exception.ToString());
             }
+            
 
             return macAddress;
         }
