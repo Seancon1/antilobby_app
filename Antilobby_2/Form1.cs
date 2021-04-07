@@ -338,7 +338,7 @@ namespace Antilobby_2
                         Button newButton = new Button();
                         newButton.MouseClick += AlertButton_MouseClick;
                         newButton.BackColor = Color.MediumSeaGreen;
-                        newButton.Text = "" + alert.AlertLimit + ":" + alert.CurrentCount + "|" + alert.ProcessName + $"({alert.AlertAction})";
+                        newButton.Text = "" + alert.AlertLimit + " : " + alert.CurrentCount + " | " + alert.ProcessName + $"({alert.AlertAction})";
                         newButton.AutoSize = true;
                         newButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
                         newButton.TextAlign = ContentAlignment.MiddleCenter;
@@ -909,5 +909,12 @@ namespace Antilobby_2
             this.superSession.processList.PrintDebugInfo();
         }
 
+        private void comboBoxAlertAction_TextUpdate(object sender, EventArgs e)
+        {
+            lblAlertWarning.Visible = (comboBoxAlertAction.Text == "focus") ? true : false;
+            lblAlertWarning.Text = "You have selected an experimental feature. Please understand this may not work as intended.";
+            lblAlertWarning.BackColor = Color.PeachPuff;
+
+        }
     }
 }

@@ -70,11 +70,14 @@ namespace Antilobby_2.Alert
                             alertAction.closeProcess();
                             this.disposeList.Add(alert);
                             break;
-                            /*
+                            
                         case "front":
+                        case "bring to focus":
+                        case "focus":
                             alertAction.bringToFront();
+                            //this.disposeList.Add(alert);
                             break;
-                            */
+                            
                         case "none":
                             break;
                         default:

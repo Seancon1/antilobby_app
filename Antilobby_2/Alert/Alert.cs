@@ -50,5 +50,10 @@ namespace Antilobby_2.Alert
         {
             currentCount = 0;
         }
+
+        public bool reachedLimit()
+        {
+            return (currentCount >= alertLimit) ? true : false;
+        }
     }
 }

@@ -110,6 +110,7 @@
             this.lblTimeElapsed = new System.Windows.Forms.Label();
             this.lblCursorStatus = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.lblAlertWarning = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabAlerts.SuspendLayout();
@@ -259,7 +260,7 @@
             // websiteToolStripMenuItem
             // 
             this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.websiteToolStripMenuItem.Text = "Website";
             this.websiteToolStripMenuItem.Click += new System.EventHandler(this.websiteToolStripMenuItem_Click);
             // 
@@ -291,28 +292,28 @@
             // minutesToolStripMenuItem2
             // 
             this.minutesToolStripMenuItem2.Name = "minutesToolStripMenuItem2";
-            this.minutesToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.minutesToolStripMenuItem2.Size = new System.Drawing.Size(132, 22);
             this.minutesToolStripMenuItem2.Text = "5 minutes";
             this.minutesToolStripMenuItem2.Click += new System.EventHandler(this.minutesToolStripMenuItem2_Click);
             // 
             // minutesToolStripMenuItem
             // 
             this.minutesToolStripMenuItem.Name = "minutesToolStripMenuItem";
-            this.minutesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.minutesToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.minutesToolStripMenuItem.Text = "10 minutes";
             this.minutesToolStripMenuItem.Click += new System.EventHandler(this.minutesToolStripMenuItem_Click);
             // 
             // minutesToolStripMenuItem1
             // 
             this.minutesToolStripMenuItem1.Name = "minutesToolStripMenuItem1";
-            this.minutesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.minutesToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
             this.minutesToolStripMenuItem1.Text = "30 minutes";
             this.minutesToolStripMenuItem1.Click += new System.EventHandler(this.minutesToolStripMenuItem1_Click);
             // 
             // hourToolStripMenuItem
             // 
             this.hourToolStripMenuItem.Name = "hourToolStripMenuItem";
-            this.hourToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.hourToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.hourToolStripMenuItem.Text = "1 hour";
             this.hourToolStripMenuItem.Click += new System.EventHandler(this.hourToolStripMenuItem_Click);
             // 
@@ -609,6 +610,7 @@
             // 
             // tabPageMyAlerts
             // 
+            this.tabPageMyAlerts.Controls.Add(this.lblAlertWarning);
             this.tabPageMyAlerts.Controls.Add(this.comboBoxAlertAction);
             this.tabPageMyAlerts.Controls.Add(this.label3);
             this.tabPageMyAlerts.Controls.Add(this.button1);
@@ -636,11 +638,13 @@
             this.comboBoxAlertAction.FormattingEnabled = true;
             this.comboBoxAlertAction.Items.AddRange(new object[] {
             "none",
-            "close"});
+            "close",
+            "focus"});
             this.comboBoxAlertAction.Location = new System.Drawing.Point(40, 84);
             this.comboBoxAlertAction.Name = "comboBoxAlertAction";
             this.comboBoxAlertAction.Size = new System.Drawing.Size(88, 21);
             this.comboBoxAlertAction.TabIndex = 3;
+            this.comboBoxAlertAction.SelectedValueChanged += new System.EventHandler(this.comboBoxAlertAction_TextUpdate);
             // 
             // label3
             // 
@@ -852,6 +856,15 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
+            // lblAlertWarning
+            // 
+            this.lblAlertWarning.Location = new System.Drawing.Point(3, 141);
+            this.lblAlertWarning.Name = "lblAlertWarning";
+            this.lblAlertWarning.Size = new System.Drawing.Size(125, 108);
+            this.lblAlertWarning.TabIndex = 11;
+            this.lblAlertWarning.Text = "Warning";
+            this.lblAlertWarning.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -968,6 +981,7 @@
         private System.Windows.Forms.Button btnLoginPlease;
         private System.Windows.Forms.ToolStripMenuItem printDebugInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripDebug;
+        private System.Windows.Forms.Label lblAlertWarning;
     }
 }
 
