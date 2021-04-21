@@ -88,6 +88,10 @@ namespace Antilobby_2
                 comboBoxAlertTime.Items.Add((i == 0) ? ((1 * hr) + $" ({1} hr)") : (i * hr) + $" ({i} hr)");
             }
             
+            /**
+             * MISC Control visibility
+             */
+            
 
         }
 
@@ -186,7 +190,7 @@ namespace Antilobby_2
                 lblLogginInAccountName.Text = superSession.getInMemoryUserEmail();
                 this.Text = "Antilobby" + " (" + superSession.getInMemoryUserEmail() + ")";
                 btnLoginPlease.Visible = false;
-                listProcesses.Enabled = true;
+                listView1.Enabled = true;
                 saveOfflineToolStripMenuItem.Visible = true;
                 saveToolStripMenuItem.Visible = true;
                 startSessionToolStripMenuItem.Visible = true;
@@ -200,7 +204,7 @@ namespace Antilobby_2
                 saveToolStripMenuItem.Visible = false;
                 startSessionToolStripMenuItem.Visible = false;
                 btnLoginPlease.Visible = true;
-                listProcesses.Enabled = false;
+                listView1.Enabled = false;
                 loginToolStripMenuItem.Visible = true;
                 accountPanel.Hide();
             }
@@ -274,7 +278,7 @@ namespace Antilobby_2
                     }
                     catch (Exception error)
                     { Debug.Print($"Process {global.processName} cannot be located."); global.processName = "null";
-                        new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
+                        //new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
                     }
                 }
 
@@ -310,7 +314,7 @@ namespace Antilobby_2
                 }
             }
 
-            superSession.processList.refreshList(listProcesses); //link listProcesses list to use the processList items
+            //superSession.processList.refreshList(listProcesses); //link listProcesses list to use the processList items
 
             lblTimeElapsed.Text = "Time Elapsed: " + superSession.TickCount;
             label1.Text = "" + global.processName;
@@ -382,7 +386,12 @@ namespace Antilobby_2
             {
                 toolStripDebug.Text = $"{process1.PrivateMemorySize64/(1024*1024)}mb";
             }
-                
+
+            /**
+             *  New test to display total counts, pass Control to AlertList class UpdateControl
+             *  -
+             **/
+            await superSession.processList.UpdateControl(listView1);
 
         }
 
@@ -464,13 +473,14 @@ namespace Antilobby_2
             }
 
             */
-
+            /*
             if(listProcesses.SelectedItem != null)
             {
                 
                 lblSelectedProcessName.Text = listProcesses.SelectedItem.ToString();
 
             }
+            */
             
         }
 
@@ -669,7 +679,7 @@ namespace Antilobby_2
                 System.Diagnostics.Process.Start("https://antilobby.prestigecode.com/");
             } catch (Exception x)
             {
-                MessageBox.Show("Unable to open the website." + e.ToString());
+                MessageBox.Show("Unable to open the website." + x.ToString());
             }
         }
 
@@ -866,10 +876,10 @@ namespace Antilobby_2
 
         }
 
-        private void saveWTokenToolStripMenuItem_Click(object sender, EventArgs e)
+        private async Task saveWTokenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Logger logger = new Logger(superSession, superUser);
-            logger.doSessionIDSaveViaAPI();
+            await logger.doSessionIDSaveViaAPI();
         }
 
         private void btnLoginPlease_Click(object sender, EventArgs e)

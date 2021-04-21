@@ -3,11 +3,13 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace AntiLobby_2
 {
@@ -325,6 +327,27 @@ namespace AntiLobby_2
             {
                 item.Value.PrintDebugDetails();
             }
+        }
+
+        /**
+ *  Pass Flow Control to this method to update contents with process list items
+ * 
+ * */
+        public async Task<bool> UpdateControl(ListView panel)
+        {
+            /*
+            Button button = sender as Button;
+            flowLayoutActiveAlerts.Controls.Remove(button);
+            */
+            panel.Columns[0].Width = 150;
+            panel.Columns[1].Width = 69;
+            panel.Items.Clear();
+            foreach (var item in list)
+            {
+                panel.Items.Add(new ListViewItem(new[] { ""+ item.Value.Name, ""+item.Value.TimeViewed }));
+            }
+
+            return true;
         }
 
     }

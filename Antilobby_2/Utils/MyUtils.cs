@@ -71,6 +71,10 @@ namespace AntiLobby_2
             
         }
 
+        /*
+         * 
+         * Fetched from stackoverflow, saved here incase needed
+         * */
         public static string getMacAddress()
         {
             const int MIN_MAC_ADDR_LENGTH = 12;

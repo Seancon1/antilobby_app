@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace Antilobby_2.Alert
 {
     class AlertList
@@ -31,7 +33,7 @@ namespace Antilobby_2.Alert
             foreach (Alert alert in this.list)
             {
                 /*
-                 * exempt process is the current process active, so don't increment the AFK timer.
+                 * exempt process is the current active process, so don't increment the AFK timer.
                  * This AFK alert is for continuous seconds NOT ACTIVELY on, so a reset is required
                 */ 
                 if(alert.AlertAction == "close")
@@ -116,6 +118,14 @@ namespace Antilobby_2.Alert
             
         }
 
+        /**
+         * ClearDisposeListFromList()
+         * Action: 
+         *  Removes the alerts located in disposeList from the active list
+         * ETC info:
+         * dispostList - a List<Alert> that contains alerts that are pending deletion
+         * 
+         * */
         public void ClearDisposeListFromList()
         {
             if (list != null && disposeList != null)
@@ -228,6 +238,7 @@ namespace Antilobby_2.Alert
                 return true;
             }
         }
+
 
     }
 }
