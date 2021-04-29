@@ -28,6 +28,7 @@ namespace Antilobby_2
         private AutoUpdate.AutoUpdate VersionControl = new AutoUpdate.AutoUpdate(global.APP_RELEASE_NUM);
         AutomationFocusChangedEventHandler focusHandler = OnFocusChanged;
 
+
         public Form1()
         {
             InitializeComponent();
@@ -109,8 +110,12 @@ namespace Antilobby_2
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //save
+            showStatus("Saving...");
+            await doSessionSave();
+
             //exit application
             this.Close();
         }
@@ -190,11 +195,11 @@ namespace Antilobby_2
                 lblLogginInAccountName.Text = superSession.getInMemoryUserEmail();
                 this.Text = "Antilobby" + " (" + superSession.getInMemoryUserEmail() + ")";
                 btnLoginPlease.Visible = false;
-                listView1.Enabled = true;
+                listViewProcessOverview.Enabled = true;
                 saveOfflineToolStripMenuItem.Visible = true;
                 saveToolStripMenuItem.Visible = true;
                 startSessionToolStripMenuItem.Visible = true;
-
+                currentSessionToolStripMenuItem.Visible = true;
                 //startToolStripMenuItem.Enabled = !stopToolStripMenuItem.Enabled;
                 //stopToolStripMenuItem.Enabled = !startToolStripMenuItem.Enabled;
             }
@@ -203,8 +208,9 @@ namespace Antilobby_2
                 saveOfflineToolStripMenuItem.Visible = false;
                 saveToolStripMenuItem.Visible = false;
                 startSessionToolStripMenuItem.Visible = false;
+                currentSessionToolStripMenuItem.Visible = false;
                 btnLoginPlease.Visible = true;
-                listView1.Enabled = false;
+                listViewProcessOverview.Enabled = false;
                 loginToolStripMenuItem.Visible = true;
                 accountPanel.Hide();
             }
@@ -277,7 +283,7 @@ namespace Antilobby_2
 
                     }
                     catch (Exception error)
-                    { Debug.Print($"Process {global.processName} cannot be located."); global.processName = "null";
+                    { Debug.Print($"Process {global.processName} cannot be located."+error); global.processName = "null";
                         //new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
                     }
                 }
@@ -391,7 +397,10 @@ namespace Antilobby_2
              *  New test to display total counts, pass Control to AlertList class UpdateControl
              *  -
              **/
-            await superSession.processList.UpdateControl(listView1);
+            if (!mainProcessListHasMouse)
+            {
+                await superSession.processList.UpdateControl(listViewProcessOverview);
+            }
 
         }
 
@@ -544,24 +553,16 @@ namespace Antilobby_2
             }
 
             //Optional close without saving, default FALSE
-            if (!global.closeWithoutSave)
+            if (!global.closeWithoutSave && superSession != null)
             {
                 try
                 {
-                    //Save offline data as a precaution
-                    //superSession.
-                    //superSession.
-                    await superSession.processList.saveToDatabase(69); //flag = 1 to set state to false
+                    showStatus("Saving...");
 
-                    //Loop until saveToDatabase sets State to false, otherwise keep on trying.
-                    //not exactly the best way to approach this but it works now
-                    /*
-                    while (superSession.State)
-                    {
-                        this.Enabled = false; //disables main client to prevent any other actions
-                        //superSession.processList.saveToDatabase(69); //flag = 1 to set state to false
-                    }
-                    */
+                    //await superSession.processList.saveToDatabase(69); //flag = 1 to set state to false
+                    await doSessionSave();
+                    Debug.WriteLine("Done saving...");
+
                 }
                 catch (Exception error)
                 {
@@ -672,16 +673,49 @@ namespace Antilobby_2
             }
         }
 
+        /**
+         * 
+         * View Tab Actions
+         * 
+         * */
+
+        /*
+         * Visit website
+         * Brings user to the website. Depending on if they are logged in or not the URL is changed.
+         *
+         */
         private void websiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                System.Diagnostics.Process.Start("https://antilobby.prestigecode.com/");
-            } catch (Exception x)
+                if(superSession.hasInMemoryUserToken())
+                {
+                    System.Diagnostics.Process.Start("https://antilobby.prestigecode.com/user/sessions");
+                }
+                else
+                {
+                    System.Diagnostics.Process.Start("https://antilobby.prestigecode.com/");
+                }
+            }
+            catch (Exception x)
             {
                 MessageBox.Show("Unable to open the website." + x.ToString());
             }
         }
+
+        private void currentSessionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("https://antilobby.prestigecode.com/session/"+ superSession.Id);
+            }
+            catch (Exception x)
+            {
+                MessageBox.Show("Unable to open the website." + x.ToString());
+            }
+
+        }
+
 
         private void bindingSource1_CurrentChanged(object sender, EventArgs e)
         {
@@ -926,5 +960,33 @@ namespace Antilobby_2
             lblAlertWarning.BackColor = Color.PeachPuff;
 
         }
+
+        /**
+         * Handle when the listView has a mouse over it and handle when the mouse leaves.
+         * Function: Pause updating while mouse is located inside.
+         * */
+        private bool mainProcessListHasMouse = false;
+
+        private void listViewProcessOverview_MouseEnter(object sender, EventArgs e)
+        {
+            listViewProcessOverview.Columns[0].Text = "Process (paused)";
+            mainProcessListHasMouse = true;
+        }
+
+        private void listViewProcessOverview_MouseLeave(object sender, EventArgs e)
+        {
+            listViewProcessOverview.Columns[0].Text = "Process";
+            mainProcessListHasMouse = false;
+        }
+
+        private void addDummyInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for(int i=0; i < 25; i++)
+            {
+                listViewProcessOverview.Items.Add(new ListViewItem(new[] { "DUMMY" + i, "" + i }));
+            }
+            
+        }
+
     }
 }

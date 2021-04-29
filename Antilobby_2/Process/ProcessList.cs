@@ -339,8 +339,8 @@ namespace AntiLobby_2
             Button button = sender as Button;
             flowLayoutActiveAlerts.Controls.Remove(button);
             */
-            panel.Columns[0].Width = 150;
-            panel.Columns[1].Width = 69;
+            panel.Columns[0].Width = 135;
+            panel.Columns[1].Width = 65;
             panel.Items.Clear();
             foreach (var item in list)
             {

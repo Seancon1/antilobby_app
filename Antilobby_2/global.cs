@@ -8,7 +8,7 @@ namespace Antilobby_2
 {
     class global
     {
-        public static double APP_RELEASE_NUM = 1.189;
+        public static double APP_RELEASE_NUM = 1.19;
         
         public static string processName = "null";
         public static string showstatus_value = "";
@@ -17,7 +17,7 @@ namespace Antilobby_2
         public static Boolean isHidden = false;
 
 
-        public static int AFK_TIMER_LIMIT = 600;
+        public static int AFK_TIMER_LIMIT = 300;
 
         public static bool closeWithoutSave = false;
 

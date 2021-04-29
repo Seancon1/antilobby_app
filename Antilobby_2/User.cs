@@ -35,5 +35,6 @@ namespace Antilobby_2
         public string MAC1 { get => MAC; set => MAC = value; }
         public string Token { get => userToken; set => userToken = value; }
         public string Email { get => email; set => email = value; }
+
     }
 }

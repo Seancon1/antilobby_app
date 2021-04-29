@@ -61,6 +61,7 @@
             this.tESTItemRetrieveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printDebugInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addDummyInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mACAddresssaveToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.iPAddressclipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,9 +81,15 @@
             this.toolStripStatusTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabPageMain = new System.Windows.Forms.TabPage();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lblCursorStatus = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnLoginPlease = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listViewProcessOverview = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPageMyAlerts = new System.Windows.Forms.TabPage();
@@ -108,22 +115,17 @@
             this.TimerMainUIComponents = new System.Windows.Forms.Timer(this.components);
             this.TimerProcesses = new System.Windows.Forms.Timer(this.components);
             this.lblTimeElapsed = new System.Windows.Forms.Label();
-            this.lblCursorStatus = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.label4 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
+            this.currentSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.tabPageMyAlerts.SuspendLayout();
             this.tabPageMyInfo.SuspendLayout();
             this.accountPanel.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -257,7 +259,8 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.websiteToolStripMenuItem});
+            this.websiteToolStripMenuItem,
+            this.currentSessionToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -265,7 +268,7 @@
             // websiteToolStripMenuItem
             // 
             this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.websiteToolStripMenuItem.Text = "Website";
             this.websiteToolStripMenuItem.Click += new System.EventHandler(this.websiteToolStripMenuItem_Click);
             // 
@@ -276,7 +279,8 @@
             this.toolStripMenuItem1,
             this.offlineStorageToolStripMenuItem,
             this.updateToolStripMenuItem,
-            this.printDebugInfoToolStripMenuItem});
+            this.printDebugInfoToolStripMenuItem,
+            this.addDummyInfoToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -289,7 +293,7 @@
             this.minutesToolStripMenuItem1,
             this.hourToolStripMenuItem});
             this.aFKLimitToolStripMenuItem.Name = "aFKLimitToolStripMenuItem";
-            this.aFKLimitToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.aFKLimitToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.aFKLimitToolStripMenuItem.Text = "AFK Limit";
             this.aFKLimitToolStripMenuItem.ToolTipText = "Set the amount of time it takes before Antilobby stops recording time for last ac" +
     "tive process.";
@@ -326,7 +330,7 @@
             // 
             this.toolStripMenuItem1.Enabled = false;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(161, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
             this.toolStripMenuItem1.Text = "Alert Settings";
             this.toolStripMenuItem1.Visible = false;
             // 
@@ -339,7 +343,7 @@
             this.tESTItemRetrieveToolStripMenuItem});
             this.offlineStorageToolStripMenuItem.Enabled = false;
             this.offlineStorageToolStripMenuItem.Name = "offlineStorageToolStripMenuItem";
-            this.offlineStorageToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.offlineStorageToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.offlineStorageToolStripMenuItem.Text = "Offline Storage";
             this.offlineStorageToolStripMenuItem.Visible = false;
             this.offlineStorageToolStripMenuItem.Click += new System.EventHandler(this.offlineStorageToolStripMenuItem_Click);
@@ -375,17 +379,25 @@
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.updateToolStripMenuItem.Text = "Update";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
             // printDebugInfoToolStripMenuItem
             // 
             this.printDebugInfoToolStripMenuItem.Name = "printDebugInfoToolStripMenuItem";
-            this.printDebugInfoToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.printDebugInfoToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.printDebugInfoToolStripMenuItem.Text = "Print Debug Info";
             this.printDebugInfoToolStripMenuItem.Visible = false;
             this.printDebugInfoToolStripMenuItem.Click += new System.EventHandler(this.printDebugInfoToolStripMenuItem_Click);
+            // 
+            // addDummyInfoToolStripMenuItem
+            // 
+            this.addDummyInfoToolStripMenuItem.Name = "addDummyInfoToolStripMenuItem";
+            this.addDummyInfoToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.addDummyInfoToolStripMenuItem.Text = "add dummy info";
+            this.addDummyInfoToolStripMenuItem.Visible = false;
+            this.addDummyInfoToolStripMenuItem.Click += new System.EventHandler(this.addDummyInfoToolStripMenuItem_Click);
             // 
             // getToolStripMenuItem
             // 
@@ -545,7 +557,7 @@
             this.tabPageMain.Controls.Add(this.panel2);
             this.tabPageMain.Controls.Add(this.panel1);
             this.tabPageMain.Controls.Add(this.btnLoginPlease);
-            this.tabPageMain.Controls.Add(this.listView1);
+            this.tabPageMain.Controls.Add(this.listViewProcessOverview);
             this.tabPageMain.Location = new System.Drawing.Point(4, 22);
             this.tabPageMain.Name = "tabPageMain";
             this.tabPageMain.Padding = new System.Windows.Forms.Padding(3);
@@ -553,6 +565,66 @@
             this.tabPageMain.TabIndex = 5;
             this.tabPageMain.Text = "Processes";
             this.tabPageMain.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel3.Controls.Add(this.lblCursorStatus);
+            this.panel3.Controls.Add(this.label8);
+            this.panel3.Location = new System.Drawing.Point(243, 127);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(275, 122);
+            this.panel3.TabIndex = 20;
+            // 
+            // lblCursorStatus
+            // 
+            this.lblCursorStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCursorStatus.Location = new System.Drawing.Point(0, 24);
+            this.lblCursorStatus.Name = "lblCursorStatus";
+            this.lblCursorStatus.Size = new System.Drawing.Size(275, 98);
+            this.lblCursorStatus.TabIndex = 14;
+            this.lblCursorStatus.Text = "-";
+            this.lblCursorStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label8
+            // 
+            this.label8.BackColor = System.Drawing.Color.Gainsboro;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(0, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(275, 24);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Cursor Status";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Location = new System.Drawing.Point(243, 6);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(275, 118);
+            this.panel2.TabIndex = 17;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(-1, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(273, 94);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "-";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label4
+            // 
+            this.label4.BackColor = System.Drawing.Color.Gainsboro;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(0, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(275, 24);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Current Process";
             // 
             // panel1
             // 
@@ -571,20 +643,22 @@
             this.btnLoginPlease.UseVisualStyleBackColor = true;
             this.btnLoginPlease.Click += new System.EventHandler(this.btnLoginPlease_Click);
             // 
-            // listView1
+            // listViewProcessOverview
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewProcessOverview.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
-            this.listView1.FullRowSelect = true;
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(6, 6);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(231, 243);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listViewProcessOverview.FullRowSelect = true;
+            this.listViewProcessOverview.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewProcessOverview.HideSelection = false;
+            this.listViewProcessOverview.Location = new System.Drawing.Point(6, 6);
+            this.listViewProcessOverview.Name = "listViewProcessOverview";
+            this.listViewProcessOverview.Size = new System.Drawing.Size(231, 243);
+            this.listViewProcessOverview.TabIndex = 1;
+            this.listViewProcessOverview.UseCompatibleStateImageBehavior = false;
+            this.listViewProcessOverview.View = System.Windows.Forms.View.Details;
+            this.listViewProcessOverview.MouseEnter += new System.EventHandler(this.listViewProcessOverview_MouseEnter);
+            this.listViewProcessOverview.MouseLeave += new System.EventHandler(this.listViewProcessOverview_MouseLeave);
             // 
             // columnHeader1
             // 
@@ -830,22 +904,12 @@
             // 
             // lblTimeElapsed
             // 
-            this.lblTimeElapsed.AutoSize = true;
-            this.lblTimeElapsed.Location = new System.Drawing.Point(381, 9);
+            this.lblTimeElapsed.Location = new System.Drawing.Point(355, 0);
             this.lblTimeElapsed.Name = "lblTimeElapsed";
-            this.lblTimeElapsed.Size = new System.Drawing.Size(74, 13);
+            this.lblTimeElapsed.Size = new System.Drawing.Size(174, 24);
             this.lblTimeElapsed.TabIndex = 1;
             this.lblTimeElapsed.Text = "Time Elapsed:";
-            // 
-            // lblCursorStatus
-            // 
-            this.lblCursorStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCursorStatus.Location = new System.Drawing.Point(0, 24);
-            this.lblCursorStatus.Name = "lblCursorStatus";
-            this.lblCursorStatus.Size = new System.Drawing.Size(275, 98);
-            this.lblCursorStatus.TabIndex = 14;
-            this.lblCursorStatus.Text = "-";
-            this.lblCursorStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTimeElapsed.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // notifyIcon1
             // 
@@ -854,55 +918,12 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
-            // label4
+            // currentSessionToolStripMenuItem
             // 
-            this.label4.BackColor = System.Drawing.Color.Gainsboro;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(0, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(275, 24);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Current Process";
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(-1, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(273, 94);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "-";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.label4);
-            this.panel2.Location = new System.Drawing.Point(243, 6);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(275, 118);
-            this.panel2.TabIndex = 17;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel3.Controls.Add(this.lblCursorStatus);
-            this.panel3.Controls.Add(this.label8);
-            this.panel3.Location = new System.Drawing.Point(243, 127);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(275, 122);
-            this.panel3.TabIndex = 20;
-            // 
-            // label8
-            // 
-            this.label8.BackColor = System.Drawing.Color.Gainsboro;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(0, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(275, 24);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Cursor Status";
+            this.currentSessionToolStripMenuItem.Name = "currentSessionToolStripMenuItem";
+            this.currentSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.currentSessionToolStripMenuItem.Text = "Current Session";
+            this.currentSessionToolStripMenuItem.Click += new System.EventHandler(this.currentSessionToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -926,12 +947,12 @@
             this.statusStrip1.PerformLayout();
             this.tabMain.ResumeLayout(false);
             this.tabPageMain.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.tabPageMyAlerts.ResumeLayout(false);
             this.tabPageMyAlerts.PerformLayout();
             this.tabPageMyInfo.ResumeLayout(false);
             this.accountPanel.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1014,7 +1035,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripDebug;
         private System.Windows.Forms.Label lblAlertWarning;
         private System.Windows.Forms.TabPage tabPageMain;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listViewProcessOverview;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Button btnLoginPlease;
@@ -1024,6 +1045,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ToolStripMenuItem addDummyInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem currentSessionToolStripMenuItem;
     }
 }
 
