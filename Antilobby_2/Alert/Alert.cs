@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Antilobby_2.Alert
+﻿namespace Antilobby_2.Alert
 {
     /*
      * Alerts class
@@ -22,17 +16,17 @@ namespace Antilobby_2.Alert
         //Default constructor, must have both, default limit is 250 ticks
         public Alert(string inProcessName, int inAlertLimit = 250)
         {
-            this.processName = inProcessName;
-            this.alertLimit = inAlertLimit;
-            this.currentCount = 0;
-            this.AlertAction = "none";
+            processName = inProcessName;
+            alertLimit = inAlertLimit;
+            currentCount = 0;
+            AlertAction = "none";
         }
 
         public Alert(string inProcessName, int inAlertLimit = 250, string AlertAction = "none")
         {
-            this.processName = inProcessName;
-            this.alertLimit = inAlertLimit;
-            this.currentCount = 0;
+            processName = inProcessName;
+            alertLimit = inAlertLimit;
+            currentCount = 0;
             this.AlertAction = AlertAction;
         }
 

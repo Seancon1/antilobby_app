@@ -3,10 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -24,16 +21,15 @@ namespace AntiLobby_2
 
         public ProcessList(Session session, User user)
         {
-            //this.list.Add(new ProcessItem("test"));
             this.session = session;
             this.user = user;
-            this.list = new Dictionary<string, ProcessItem>();
+            list = new Dictionary<string, ProcessItem>();
         }
 
 
         public ProcessList(ListBox inListBox)
         {
-            this.listBox = inListBox;
+            listBox = inListBox;
         }
 
 
@@ -42,9 +38,9 @@ namespace AntiLobby_2
         {
             List<ProcessItem> tempList = new List<ProcessItem>();
 
-            if (this.list.Count() < 1) { return null; }
+            if (list.Count() < 1) { return null; }
 
-            foreach (var item in this.list)
+            foreach (var item in list)
             {
                 tempList.Add(item.Value); //get just the object ProcessItem, which is the value
             }
@@ -60,9 +56,9 @@ namespace AntiLobby_2
         public ProcessItem GetProcessItem(string inItem)
         {
             ProcessItem processItem = null;
-            if (this.list.ContainsKey(inItem) && inItem != null)
+            if (list.ContainsKey(inItem) && inItem != null)
             {
-                this.list.TryGetValue(inItem, out processItem);
+                list.TryGetValue(inItem, out processItem);
             }
             return processItem;
         }
@@ -70,23 +66,23 @@ namespace AntiLobby_2
         public ProcessItem GetFirstProcessItem()
         {
             ProcessItem processItem = null;
-            return this.list.First().Value; //ProcessItem is stored in VALUE as an object, so return that
+            return list.First().Value; //ProcessItem is stored in VALUE as an object, so return that
         }
 
         public void addItem(ProcessItem inItem)
         {
-            if (!this.list.ContainsKey(inItem.getName()) && inItem != null)
+            if (!list.ContainsKey(inItem.getName()) && inItem != null)
             {
-                this.list.Add(inItem.getName(), inItem);
+                list.Add(inItem.getName(), inItem);
             }
         }
 
         public int ReturnTickOf(string processName)
         {
             //IF true list contains name
-            if (this.list.ContainsKey(processName))
+            if (list.ContainsKey(processName))
             {
-                return this.list[processName].getTime(); //returns time of process
+                return list[processName].getTime(); //returns time of process
             }
             return 0;
         }
@@ -99,9 +95,9 @@ namespace AntiLobby_2
         {
             if (inItem != null && inItem.getName() != "null")
             {
-                if (!this.list.ContainsKey(inItem.getName()))
+                if (!list.ContainsKey(inItem.getName()))
                 {
-                    this.list.Add(inItem.getName(), inItem); //add item if it isn't located inside list
+                    list.Add(inItem.getName(), inItem); //add item if it isn't located inside list
                 }
                 else
                 {
@@ -109,7 +105,7 @@ namespace AntiLobby_2
                     {
                         //do nothing
                     }
-                    else { this.list[inItem.getName()].addTime(1); } //Adds one second to the item if present in list already
+                    else { list[inItem.getName()].addTime(1); } //Adds one second to the item if present in list already
                 }
 
             }
@@ -127,9 +123,9 @@ namespace AntiLobby_2
 
         public void addTimeExistingItem(string processName)
         {
-            if (this.list.ContainsKey(processName))
+            if (list.ContainsKey(processName))
             {
-                this.list[processName].addTime(1);
+                list[processName].addTime(1);
             }
         }
 
@@ -150,7 +146,7 @@ namespace AntiLobby_2
 
             //if (!list.Any())
             //{
-            foreach (KeyValuePair<string, ProcessItem> item in this.list)
+            foreach (KeyValuePair<string, ProcessItem> item in list)
             {
                 //inList.Items.Add("" + item.Value.showNameFormatted());
                 inList.Items.Add("" + item.Value.showNameFormatted());
@@ -173,8 +169,8 @@ namespace AntiLobby_2
 
         public async Task<bool> saveToDatabase(int flag = 0)
         {
-            Logger logger = new Logger(this.session, this.user);
-           // bool testresult;
+            Logger logger = new Logger(session, user);
+            // bool testresult;
             try
             {
                 //throw new System.Net.WebException("Cannot connect");
@@ -183,16 +179,16 @@ namespace AntiLobby_2
                 {
                     //new save API switch
                     case 69:
-                        
+
                         //Save session time
                         if (!await logger.doSessionIDSaveViaAPI())
                         {
                             return false;
                         }
-                            
+
 
                         //Then save session apptimes
-                        foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
+                        foreach (KeyValuePair<string, ProcessItem> itemToSave in list)
                         {
                             //Call method to seperate Details to Save
                             //itemToSave.Value.SeperateDetailedToSavetime
@@ -214,11 +210,12 @@ namespace AntiLobby_2
                                 }
                                 itemToSave.Value.clearDetailedToSaveTime();
                                 t2.Dispose();
-                                
+
                                 //t2 = null; //check to see if this clears memory?
 
                                 //return true;
-                            } else
+                            }
+                            else
                             {
                                 //Debug.Print("Failed to save segment 1");
                                 //return false;
@@ -235,7 +232,7 @@ namespace AntiLobby_2
 
 
                         //SAVES to 'antilobby_appTime'
-                        foreach (KeyValuePair<string, ProcessItem> itemToSave in this.list)
+                        foreach (KeyValuePair<string, ProcessItem> itemToSave in list)
                         {
                             //iterate through list and save for the MAC address
                             logger.saveGameTimeAsync(itemToSave.Value.getName(), itemToSave.Value.getTime());
@@ -248,7 +245,7 @@ namespace AntiLobby_2
             catch (Exception error)
             {
                 new Logger().SaveOfflineGeneric("null", new String[] { error.ToString() }, 3);
-                logger.SaveOffline(this.session);
+                logger.SaveOffline(session);
                 throw new System.Net.WebException("Cannot connect");
             }
             /*
@@ -261,10 +258,10 @@ namespace AntiLobby_2
             return true;
         }
 
-        public async Task<bool> DoSave(Logger logger, KeyValuePair<string, ProcessItem> itemToSave, Dictionary<string, int> sectionToSave,  int flag=0)
+        public async Task<bool> DoSave(Logger logger, KeyValuePair<string, ProcessItem> itemToSave, Dictionary<string, int> sectionToSave, int flag = 0)
         {
-                await logger.DoGenericSaveViaAPI(sectionToSave, itemToSave.Value.getName(), itemToSave.Value.getTime(), itemToSave.Value.getTimeViewedSpecific(), flag); //save first segment
-                await Task.Delay(500);
+            await logger.DoGenericSaveViaAPI(sectionToSave, itemToSave.Value.getName(), itemToSave.Value.getTime(), itemToSave.Value.getTimeViewedSpecific(), flag); //save first segment
+            await Task.Delay(500);
             return true;
         }
 
@@ -285,7 +282,7 @@ namespace AntiLobby_2
         public string ReturnEntireProcessListJSONFormat()
         {
             string json = "";
-            List<ProcessItem> list = this.ReturnAllItems();
+            List<ProcessItem> list = ReturnAllItems();
 
             foreach (ProcessItem item in list)
             {
@@ -307,14 +304,14 @@ namespace AntiLobby_2
             }
 
             //Clear current list to prevent errors from appearing when adding duplicate
-            this.list.Clear();
+            list.Clear();
 
             //iterate through and seperate data to be deserialized into items
             foreach (ProcessItem item in itemCollection)
             {
                 if (item != null)
                 {
-                    this.list.Add(item.Name.ToString(), item);
+                    list.Add(item.Name.ToString(), item);
                 }
 
             }
@@ -322,33 +319,30 @@ namespace AntiLobby_2
 
         public void PrintDebugInfo()
         {
-            Debug.WriteLine($":Current list count: {this.list.Count}");
-            foreach (KeyValuePair<string, ProcessItem> item in this.list)
+            Debug.WriteLine($":Current list count: {list.Count}");
+            foreach (KeyValuePair<string, ProcessItem> item in list)
             {
                 item.Value.PrintDebugDetails();
             }
         }
 
         /**
- *  Pass Flow Control to this method to update contents with process list items
- * 
- * */
+         *  Pass Flow Control to this method to update contents with process list items
+         * 
+         * */
         public async Task<bool> UpdateControl(ListView panel)
         {
-            /*
-            Button button = sender as Button;
-            flowLayoutActiveAlerts.Controls.Remove(button);
-            */
             panel.Columns[0].Width = 135;
             panel.Columns[1].Width = 65;
             panel.Items.Clear();
             foreach (var item in list)
             {
-                panel.Items.Add(new ListViewItem(new[] { ""+ item.Value.Name, ""+item.Value.TimeViewed }));
+                panel.Items.Add(new ListViewItem(new[] { "" + item.Value.Name, "" + item.Value.TimeViewed }));
             }
 
             return true;
         }
+
 
     }
 }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Antilobby_2.Utils;
 using AntiLobby_2;
-using Antilobby_2.Utils;
-using System.Diagnostics;
+using System;
 
 namespace Antilobby_2
 {
@@ -27,20 +22,20 @@ namespace Antilobby_2
 
         public Session(User user)
         {
-            this.tickCount = 0;
+            tickCount = 0;
             this.user = user;
-            this.id = "null"; //fill id as null for replacement shortly after creation
-            this.logger = new Logger(this, user); //create a logger instance
-            this.processList = new ProcessList(this, user);
-            this.alertList = new Alert.AlertList(processList); //processList must not be null before linking, aka create processList link before calling this
+            id = "null"; //fill id as null for replacement shortly after creation
+            logger = new Logger(this, user); //create a logger instance
+            processList = new ProcessList(this, user);
+            alertList = new Alert.AlertList(processList); //processList must not be null before linking, aka create processList link before calling this
             user.Token = readUserToken(); //set token of user that has been passed to this session instance
             this.user.Token = readUserToken();//gets token if located on machine locally, otherwise set null !! LOGGER instance must be called 
             logger.getSessionIDFromAPI(); //this will replace null originally placed
-            this.State = false; //start in a false state
-            this.Paused = false; //start not paused
+            State = false; //start in a false state
+            Paused = false; //start not paused
         }
 
-        public string Id { get => this.id; set => this.id = value; }
+        public string Id { get => id; set => id = value; }
         public int TickCount { get => tickCount; set => tickCount = value; }
         public bool State { get => state; set => state = value; }
         public bool Paused { get => state; set => state = value; }
@@ -51,14 +46,15 @@ namespace Antilobby_2
 
         public void incrementTick(String activeProcess)
         {
-            this.tickCount++;
+            tickCount++;
             /*
              * Set State to true. This value is defined as a way to tell us if we have done any incrementation ever.
              * */
-            this.State = true;
+            State = true;
 
             //also increment all alert counts
-            if (alertList == null) { } else
+            if (alertList == null) { }
+            else
             {
                 /*
                  * pass the activeProcess to the alertList incrementing so that AFK counter will increment
@@ -109,75 +105,77 @@ namespace Antilobby_2
 
         public String fetchOfflineStorage()
         {
-           return logger.fetchOfflineStorage();
+            return logger.fetchOfflineStorage();
         }
 
         public void saveAllOfflineStorage()
         {
             String offlineStorage = logger.fetchOfflineStorage(); //fetch text from file
             SessionConverter sessionConverter = new SessionConverter(offlineStorage); //put text into converter
-            ProcessList processList = new ProcessList(this, this.user); //create a new processList so we can use save to db function
+            ProcessList processList = new ProcessList(this, user); //create a new processList so we can use save to db function
 
-            while(sessionConverter.getFlag() > 0)
+            while (sessionConverter.getFlag() > 0)
             {
-                foreach(var item in sessionConverter.GetFirstProcessList())
-                    {
-                        //check flag
-                        processList.addItem(new ProcessItem(item.getName(), item.getTime()));
-                
-                    }
+                foreach (var item in sessionConverter.GetFirstProcessList())
+                {
+                    //check flag
+                    processList.addItem(new ProcessItem(item.getName(), item.getTime()));
+
+                }
             }
-            
+
             //if(everything is fine)
 
             processList.saveToDatabase();
-            
+
         }
 
         public void setInMemoryUserToken(string token)
         {
-            this.user.Token = token;
+            user.Token = token;
         }
         public string getInMemoryUserToken()
         {
-            return this.user.Token;
+            return user.Token;
         }
         public bool hasInMemoryUserToken()
         {
             try
             {
-                return (this.user.Token.Length < 1 || this.user.Token == "null") ? false : true;
-            } catch
+                return (user.Token.Length < 1 || user.Token == "null") ? false : true;
+            }
+            catch
             {
                 return false;
             }
-            
+
         }
-        
+
         public void setInMemoryUserEmail(string email)
         {
-            this.user.Email = email;
+            user.Email = email;
         }
         public string getInMemoryUserEmail()
         {
-            return this.user.Email;
+            return user.Email;
         }
-        
+
 
         public void saveUserToken(string content)
         {
-            this.logger.SaveOfflineGeneric("_UserToken.antilobby", new string[] { content });
+            logger.SaveOfflineGeneric("_UserToken.antilobby", new string[] { content });
         }
 
         public string readUserToken()
         {
-            var contents = this.logger.readOfflineGeneric("_UserToken.antilobby");
+            var contents = logger.readOfflineGeneric("_UserToken.antilobby");
             //System.Windows.Forms.MessageBox.Show("File contents:" + contents);
-            
-            if(contents.Length < 1)
+
+            if (contents.Length < 1)
             {
                 return null;
-            } else { return contents[0]; }
+            }
+            else { return contents[0]; }
         }
 
 

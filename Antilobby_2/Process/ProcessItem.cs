@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AntiLobby_2
 {
@@ -33,16 +31,16 @@ namespace AntiLobby_2
 
         public ProcessItem(string inName)
         {
-            this.name = inName;
-            this.timeViewed = 0;
-            this.TimeOpen = 0;
+            name = inName;
+            timeViewed = 0;
+            TimeOpen = 0;
         }
 
         public ProcessItem(string inName, int time)
         {
-            this.name = inName;
-            this.timeViewed = time;
-            this.TimeOpen = 0;
+            name = inName;
+            timeViewed = time;
+            TimeOpen = 0;
 
         }
 
@@ -51,23 +49,24 @@ namespace AntiLobby_2
             return this;
         }
 
-        public ProcessItem Self(){
+        public ProcessItem Self()
+        {
             return this;
         }
 
 
         public string getName()
         {
-            return this.name;
+            return name;
         }
         public int getTime()
         {
-            return this.timeViewed;
+            return timeViewed;
         }
 
         public String showNameFormatted()
         {
-            return $"{this.name} - {this.timeViewed}";
+            return $"{name} - {timeViewed}";
         }
 
         /**
@@ -75,37 +74,38 @@ namespace AntiLobby_2
          * */
         public void addTime(int timeQuantity)
         {
-            this.timeViewed += timeQuantity;
-            this.TimeViewedSpecific[DateTime.Now.Hour, DateTime.Now.Minute] += timeQuantity;
-            this.SaveDetailedTime(DateTime.Now.Hour + ":" + DateTime.Now.Minute, timeQuantity);
+            timeViewed += timeQuantity;
+            TimeViewedSpecific[DateTime.Now.Hour, DateTime.Now.Minute] += timeQuantity;
+            SaveDetailedTime(DateTime.Now.Hour + ":" + DateTime.Now.Minute, timeQuantity);
             //Debug.Print($"Logging: Total time ({TimeViewed}) with {DateTime.Now.Hour}:{DateTime.Now.Minute} at {this.TimeViewedSpecific[DateTime.Now.Hour, DateTime.Now.Minute]}");
         }
 
         public void logOpenTime()
         {
-            this.TimeOpen += 1;
+            TimeOpen += 1;
         }
 
         public int getTimeOpen()
         {
-            return this.TimeOpen;
+            return TimeOpen;
         }
 
         public int[,] getTimeViewedSpecific()
         {
-            return this.TimeViewedSpecific;
+            return TimeViewedSpecific;
         }
 
         public void SaveDetailedTime(string key, int time)
         {
-            if (this.DetailedTime.ContainsKey(key))
+            if (DetailedTime.ContainsKey(key))
             {
-                this.DetailedTime[key] += time;
-            } else
-            {
-                this.DetailedTime.Add(key, time);
+                DetailedTime[key] += time;
             }
-            
+            else
+            {
+                DetailedTime.Add(key, time);
+            }
+
         }
 
         /**
@@ -117,15 +117,15 @@ namespace AntiLobby_2
         {
             List<Dictionary<string, int>> collection = new List<Dictionary<string, int>>();
             var haveBeenSeperated = SeperateDetailedToSavetime();
-            if(haveBeenSeperated)
+            if (haveBeenSeperated)
             {
                 //check if even or odd and split sections based on that, if odd, add 1 to it
-                var firstSection = (this.DetailsToSave.Count % 2 == 1) ? (this.DetailsToSave.Count/2) : (this.DetailsToSave.Count +1)/2;
-                var secondSection = this.DetailsToSave.Count - firstSection;
+                var firstSection = (DetailsToSave.Count % 2 == 1) ? (DetailsToSave.Count / 2) : (DetailsToSave.Count + 1) / 2;
+                var secondSection = DetailsToSave.Count - firstSection;
 
-                collection.Add(this.DetailsToSave.OrderBy(pair => pair.Key).Take(firstSection).ToDictionary(pair => pair.Key, pair => pair.Value));
-                collection.Add(this.DetailsToSave.OrderBy(pair => pair.Key).Skip(firstSection).Take(secondSection).ToDictionary(pair => pair.Key, pair => pair.Value));
-                
+                collection.Add(DetailsToSave.OrderBy(pair => pair.Key).Take(firstSection).ToDictionary(pair => pair.Key, pair => pair.Value));
+                collection.Add(DetailsToSave.OrderBy(pair => pair.Key).Skip(firstSection).Take(secondSection).ToDictionary(pair => pair.Key, pair => pair.Value));
+
             }
 
             return collection;
@@ -133,39 +133,39 @@ namespace AntiLobby_2
 
         public bool SeperateDetailedToSavetime()
         {
-            foreach (KeyValuePair<string, int> pair in this.DetailedTime)
+            foreach (KeyValuePair<string, int> pair in DetailedTime)
             {
 
-                if (this.DetailsToSave.ContainsKey(pair.Key))
+                if (DetailsToSave.ContainsKey(pair.Key))
                 {
-                    this.DetailsToSave[pair.Key] = pair.Value;
+                    DetailsToSave[pair.Key] = pair.Value;
                 }
                 else
                 {
-                    this.DetailsToSave.Add(pair.Key, pair.Value);
+                    DetailsToSave.Add(pair.Key, pair.Value);
                 }
             }
             //add Detailed time to dictionary that is pending save
-            this.DetailedTime.Clear(); //clear detailed time
+            DetailedTime.Clear(); //clear detailed time
             return true;
         }
 
         public Dictionary<string, int> GetDetailedToSavetime()
         {
-            return this.DetailsToSave;
+            return DetailsToSave;
         }
 
         public void clearDetailedToSaveTime()
         {
-            this.DetailsToSave.Clear();
+            DetailsToSave.Clear();
             Debug.Print("Clearing item old save data...");
         }
 
         public void PrintDebugDetails()
         {
-            Debug.WriteLine($"::Item name: {this.getName()}");
-            Debug.WriteLine($"::Items not pending save: {this.DetailedTime.Count}");
-            Debug.WriteLine($"::Items pending save: {this.DetailsToSave.Count}");
+            Debug.WriteLine($"::Item name: {getName()}");
+            Debug.WriteLine($"::Items not pending save: {DetailedTime.Count}");
+            Debug.WriteLine($"::Items pending save: {DetailsToSave.Count}");
         }
 
     }

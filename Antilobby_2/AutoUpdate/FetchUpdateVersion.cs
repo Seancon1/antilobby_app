@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Net;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Antilobby_2.AutoUpdate
 {
@@ -39,7 +35,7 @@ namespace Antilobby_2.AutoUpdate
             double.TryParse(result, out returnVersion);
             StringBuilder stringBuilder = new StringBuilder();
             //stringBuilder
-            this.newVersionNumber = returnVersion;//set class public int to this as well
+            newVersionNumber = returnVersion;//set class public int to this as well
             return returnVersion;
         }
     }

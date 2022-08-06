@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AntiLobby_2
 {
@@ -37,7 +34,7 @@ namespace AntiLobby_2
 
             try
             {
-                
+
                 WebRequest request = WebRequest.Create("https://www.prestigecode.com/get/myip");
                 using (WebResponse response = request.GetResponse())
                 using (StreamReader stream = new StreamReader(response.GetResponseStream()))
@@ -45,7 +42,8 @@ namespace AntiLobby_2
                     address = stream.ReadToEnd();
                 }
 
-            } catch (Exception exception)
+            }
+            catch (Exception exception)
             {
                 Console.WriteLine("Unable to GetIPAddress. " + exception.ToString());
             }
@@ -57,18 +55,18 @@ namespace AntiLobby_2
         {
             //Random rand = new Random(DateTime.Now.Millisecond);
             //return rand.Next().ToString();
-            
-             
+
+
             Random random = new Random();
             StringBuilder id = new StringBuilder();
 
-            while(id.Length < 16)
+            while (id.Length < 16)
             {
                 id.Append(random.Next(0, 9));
             }
 
             return id.ToString();
-            
+
         }
 
         /*
@@ -102,18 +100,19 @@ namespace AntiLobby_2
                     }
                 }
 
-                
 
-            } catch (Exception exception)
+
+            }
+            catch (Exception exception)
             {
                 Console.WriteLine("Unable to getMacAddress. " + exception.ToString());
             }
-            
+
 
             return macAddress;
         }
 
-        
+
     }
 
     public class Time
@@ -127,6 +126,35 @@ namespace AntiLobby_2
             string dtString;
             dtString = dispDt.ToString(datePatt);
             return dtString;
+        }
+    }
+
+    public class TimeUtilities
+    {
+        public static DateTime dateTime { get; }
+        public DateTime dateTimeThen { get; set; }
+        public DateTime dateTimeNow { get; set; }
+
+
+        public TimeUtilities()
+        {
+            dateTimeThen = DateTime.Now;
+            dateTimeNow = DateTime.Now;
+        }
+        public DateTime getUTCTimeNow()
+        {
+            return dateTime;
+        }
+
+        public int getTimeDiff(DateTime dateThen, DateTime dateNow)
+        {
+            return (int)dateNow.Subtract(dateThen).Ticks;
+        }
+
+        public int getTimeDiff()
+        {
+            Console.WriteLine("TimeDiff: " + (int)dateTimeNow.Subtract(dateTimeThen).TotalMilliseconds);
+            return (int)dateTimeNow.Subtract(dateTimeThen).TotalSeconds;
         }
     }
 
@@ -148,6 +176,6 @@ namespace AntiLobby_2
     }
     */
 
-    
+
 
 }

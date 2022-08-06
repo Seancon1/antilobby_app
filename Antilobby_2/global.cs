@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Antilobby_2
 {
     class global
     {
-        public static double APP_RELEASE_NUM = 1.19;
-        
+        public static double APP_RELEASE_NUM = 1.193;
+
         public static string processName = "null";
         public static string showstatus_value = "";
         public static Boolean isLoggedIn = false;
@@ -20,7 +16,6 @@ namespace Antilobby_2
         public static int AFK_TIMER_LIMIT = 300;
 
         public static bool closeWithoutSave = false;
-
     }
 
 }

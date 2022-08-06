@@ -140,6 +140,7 @@
     <Compile Include="Storage\OfflineData.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Utils\AesCrypt.cs" />
+    <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\CursorStatus.cs" />
     <Compile Include="Utils\MyUtils.cs" />
     <Compile Include="Process\ProcessItem.cs" />

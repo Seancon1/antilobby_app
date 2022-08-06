@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Antilobby_2.Utils
+﻿namespace Antilobby_2.Utils
 {
     class CursorStatus
     {
@@ -23,13 +17,15 @@ namespace Antilobby_2.Utils
         /// <param name="x">X coordinate for cursor location</param>
         /// <param name="y">Y coordinate for cursor location</param>
         /// <returns></returns>
-        public bool isCursorIdle(int x, int y) {
+        public bool isCursorIdle(int x, int y)
+        {
 
             if (this.x == x && this.y == y)
             {
                 idleCount++;
                 return true;
-            } else
+            }
+            else
             {
                 this.x = x;
                 this.y = y;
@@ -39,7 +35,7 @@ namespace Antilobby_2.Utils
             return false;
         }
 
-        public int getIdleCount() { return this.idleCount; }
+        public int getIdleCount() { return idleCount; }
 
     }
 }

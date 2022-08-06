@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 
@@ -17,11 +15,11 @@ namespace Antilobby_2.Alert
         private AntiLobby_2.ProcessList processList;
         private AlertAction alertAction = new AlertAction();
 
-            
+
         public AlertList(AntiLobby_2.ProcessList processList)
         {
-            this.list = new List<Alert>();
-            this.disposeList = new List<Alert>();
+            list = new List<Alert>();
+            disposeList = new List<Alert>();
             this.processList = processList; //must be able to access the current processList
         }
 
@@ -30,23 +28,25 @@ namespace Antilobby_2.Alert
          * */
         public void incrementAllTicks(String exemptProcess)
         {
-            foreach (Alert alert in this.list)
+            foreach (Alert alert in list)
             {
                 /*
                  * exempt process is the current active process, so don't increment the AFK timer.
                  * This AFK alert is for continuous seconds NOT ACTIVELY on, so a reset is required
-                */ 
-                if(alert.AlertAction == "close")
+                */
+                if (alert.AlertAction == "close")
                 {
                     alert.addTick();
-                } else
+                }
+                else
                 {
-                    if (alert.ProcessName == exemptProcess) { alert.resetTick(); } else
+                    if (alert.ProcessName == exemptProcess) { alert.resetTick(); }
+                    else
                     {
                         alert.addTick();
                     }
                 }
-                
+
             }
 
         }
@@ -59,7 +59,7 @@ namespace Antilobby_2.Alert
             AlertPlay alertSound = new AlertPlay();
             List<Alert> activeAlerts = new List<Alert>();
 
-            foreach (Alert alert in this.list)
+            foreach (Alert alert in list)
             {
                 if (alert.AlertLimit < fetchTick(alert.ProcessName) && alert != null)
                 {
@@ -67,19 +67,20 @@ namespace Antilobby_2.Alert
 
                     //Check the specific action for the alert when it becomes active
                     AlertAction alertAction = new AlertAction(alert); //pass to AlertAction class
-                    switch(alert.AlertAction) {
+                    switch (alert.AlertAction)
+                    {
                         case "close":
                             alertAction.closeProcess();
-                            this.disposeList.Add(alert);
+                            disposeList.Add(alert);
                             break;
-                            
+
                         case "front":
                         case "bring to focus":
                         case "focus":
                             alertAction.bringToFront();
                             //this.disposeList.Add(alert);
                             break;
-                            
+
                         case "none":
                             break;
                         default:
@@ -90,7 +91,7 @@ namespace Antilobby_2.Alert
 
             ClearDisposeListFromList();
 
-            if (activeAlerts.Count < 1) {return null; }
+            if (activeAlerts.Count < 1) { return null; }
             else
             {
                 alertSound.play();
@@ -103,7 +104,7 @@ namespace Antilobby_2.Alert
         {
             List<Alert> passiveAlerts = new List<Alert>();
 
-            foreach (Alert alert in this.list)
+            foreach (Alert alert in list)
             {
                 if (alert.AlertLimit > fetchTick(alert.ProcessName) && alert != null)
                 {
@@ -115,7 +116,7 @@ namespace Antilobby_2.Alert
 
             if (passiveAlerts.Count < 1) { return null; } else { return passiveAlerts; } //return null if no alerts present
 
-            
+
         }
 
         /**
@@ -129,13 +130,14 @@ namespace Antilobby_2.Alert
         public void ClearDisposeListFromList()
         {
             if (list != null && disposeList != null)
-            if(list.Count > 0)
-            if (disposeList.Count > 0){
-                foreach(Alert alert in disposeList)
-                {
-                    removeAlert(alert);
-                }
-            }
+                if (list.Count > 0)
+                    if (disposeList.Count > 0)
+                    {
+                        foreach (Alert alert in disposeList)
+                        {
+                            removeAlert(alert);
+                        }
+                    }
 
         }
 
@@ -151,8 +153,9 @@ namespace Antilobby_2.Alert
             //Add a new alert to the list
             try
             {
-            this.list.Add(new Alert(processName, alertTime));
-            } catch (Exception ee)
+                list.Add(new Alert(processName, alertTime));
+            }
+            catch (Exception ee)
             {
                 return false;
             }
@@ -164,7 +167,7 @@ namespace Antilobby_2.Alert
             //Add a new alert to the list
             try
             {
-                this.list.Add(new Alert(processName, alertTime, alertAction));
+                list.Add(new Alert(processName, alertTime, alertAction));
             }
             catch (Exception ee)
             {
@@ -178,7 +181,7 @@ namespace Antilobby_2.Alert
             //Add a new alert to the list
             try
             {
-                this.list.Remove(alert);
+                list.Remove(alert);
             }
             catch (Exception ee)
             {
@@ -189,11 +192,11 @@ namespace Antilobby_2.Alert
 
         public void removeAlertByName(String inprocessName)
         {
-            foreach (Alert alert in this.list)
+            foreach (Alert alert in list)
             {
                 if (alert.ProcessName == inprocessName)
                 {
-                    this.list.Remove(alert); //remove
+                    list.Remove(alert); //remove
                 }
             }
         }
@@ -205,8 +208,9 @@ namespace Antilobby_2.Alert
 
         public int fetchAlertTime(string processName)
         {
-            foreach(Alert alert in this.list) {
-                if(alert.ProcessName == processName)
+            foreach (Alert alert in list)
+            {
+                if (alert.ProcessName == processName)
                 {
                     return alert.AlertLimit; //return if processName equals the same that is being searched
                 }
@@ -217,7 +221,7 @@ namespace Antilobby_2.Alert
 
         public int fetchTick(string processName)
         {
-            foreach (Alert alert in this.list)
+            foreach (Alert alert in list)
             {
                 if (alert.ProcessName == processName)
                 {
@@ -230,10 +234,11 @@ namespace Antilobby_2.Alert
 
         public bool isEmpty()
         {
-            if(list.Count() > 0)
+            if (list.Count() > 0)
             {
                 return false;
-            } else
+            }
+            else
             {
                 return true;
             }

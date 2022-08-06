@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Antilobby_2.AutoUpdate
+﻿namespace Antilobby_2.AutoUpdate
 {
     class AutoUpdate
     {
@@ -22,13 +15,13 @@ namespace Antilobby_2.AutoUpdate
         public AutoUpdate(double versionNumber)
         {
 
-            this.programVersionNum = versionNumber;
+            programVersionNum = versionNumber;
         }
 
         public bool IsOutDated()
         {
             //Compare hardcoded version with webversion
-            if(programVersionNum < FetchUpdateVersion.GetVersion())
+            if (programVersionNum < FetchUpdateVersion.GetVersion())
             {
                 return true;
             }
@@ -37,7 +30,7 @@ namespace Antilobby_2.AutoUpdate
 
         public double getNewVersion()
         {
-            this.fetchedVersion = FetchUpdateVersion.GetVersion();
+            fetchedVersion = FetchUpdateVersion.GetVersion();
             return FetchUpdateVersion.GetVersion();
         }
 

@@ -1,17 +1,14 @@
-﻿using System;
+﻿using Antilobby_2;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-using System.Net.Http;
-using System.Diagnostics;
 using System.Windows.Forms;
-using Antilobby_2;
-using Antilobby_2.Utils;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace AntiLobby_2
 {
@@ -34,13 +31,13 @@ namespace AntiLobby_2
 
         public Logger(Session inSession, User inUser)
         {
-            this.session = inSession;
-            this.user = inUser;
+            session = inSession;
+            user = inUser;
         }
 
         public async void saveSessionAsync()
         {
-            if (this.session.Id == null)
+            if (session.Id == null)
             {
                 //Form1.showStatus("unable to save");
                 return;
@@ -70,14 +67,14 @@ namespace AntiLobby_2
                 MessageBox.Show(responseString.ToString());
 
                 //MessageBox.Show("Saving Done");
-                
+
             }
             global.showstatus_value = "Saved";
         }
 
         public async void saveGameTimeAsync(string processName, int processTime)
         {
-            if (this.session.Id == null)
+            if (session.Id == null)
             {
                 //Form1.showStatus("unable to save");
                 return;
@@ -102,7 +99,7 @@ namespace AntiLobby_2
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 //MessageBox.Show("Game Times Saved for " + processName);
-                
+
             }
             global.showstatus_value = "Saved";
         }
@@ -123,17 +120,18 @@ namespace AntiLobby_2
             var errorpath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\logs\\";
 
             if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path); //Create directory
-            } else if (!Directory.Exists(errorpath))
-                {
-                    Directory.CreateDirectory(errorpath); //Create directory
-                }
+            {
+                Directory.CreateDirectory(path); //Create directory
+            }
+            else if (!Directory.Exists(errorpath))
+            {
+                Directory.CreateDirectory(errorpath); //Create directory
+            }
 
             try
             {
                 //Flag indicates different type of file saving, depending on the context
-                switch(flag)
+                switch (flag)
                 {
                     //Clear contents of file, replace with
                     case 0:
@@ -147,22 +145,23 @@ namespace AntiLobby_2
 
                     //Saving session info
                     case 2:
-                    //Change destination to Antilobby/Sessions/
+                        //Change destination to Antilobby/Sessions/
                         pathFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.Antilobby\\Sessions\\" + fileName;
-                        
-                        for(int x= 0; x < saveContents.Length; x++)
+
+                        for (int x = 0; x < saveContents.Length; x++)
                         {
                             File.AppendAllText(pathFile, saveContents[x]);
                         }
 
-                    break;
+                        break;
 
                     case 3:
                         File.AppendAllText(pathFileErrorLogs, $"[{DateTime.Now}] " + saveContents[0] + Environment.NewLine);
                         break;
 
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 MessageBox.Show("Critical Error: Unable to save offline data." + e.ToString());
             }
@@ -195,7 +194,8 @@ namespace AntiLobby_2
                             using (var sr = new StreamReader(fs))
                             {
                                 string line;
-                                while((line = sr.ReadLine()) != null){
+                                while ((line = sr.ReadLine()) != null)
+                                {
                                     returnString.Add(line);
                                 }
                             }
@@ -204,7 +204,7 @@ namespace AntiLobby_2
                         //Allocate size for string
                         String[] toReturn = new string[returnString.Count];
                         int count = 0;
-                        foreach(String item in returnString)
+                        foreach (String item in returnString)
                         {
                             toReturn[count++] = item;
                         }
@@ -216,7 +216,8 @@ namespace AntiLobby_2
                         break;
                 }
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 //MessageBox.Show("Unable to read offline data." + e.ToString());
                 Console.WriteLine("Unable to read offline data." + e.ToString()); //Print
@@ -258,13 +259,14 @@ namespace AntiLobby_2
                 }
                 else
                 {
-                    File.Create(path +  filename); //Create file
+                    File.Create(path + filename); //Create file
                     //File.c
                     //fileExists = true;
 
                 }
 
-            } else
+            }
+            else
             {
                 fileExists = true;
             }
@@ -273,39 +275,40 @@ namespace AntiLobby_2
             File.ReadAllLines(path + filename);
 
             //File.Close
-        
-                //string content = File.ReadAllText(@"C:\Users\Sean\Documents\ComputerLog\Log.txt");
+
+            //string content = File.ReadAllText(@"C:\Users\Sean\Documents\ComputerLog\Log.txt");
 
 
             /**
              * Continue with saving contents to file
              * */
-             if(fileExists) {
+            if (fileExists)
+            {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.Append(saveContents);
 
-                    try
+                try
+                {
+                    //File.Open(path + filename, FileMode.Open);
+
+                    /*
+                    foreach (var item in processList)
                     {
-                        //File.Open(path + filename, FileMode.Open);
 
-                        /*
-                        foreach (var item in processList)
-                        {
-
-                            stringBuilder.Append(item.getName() + ":" + item.getTime() + "|");
-                        }
-                        */
-
-                        //Add content to file
-                        File.AppendAllText(path + filename, stringBuilder.ToString());
-
+                        stringBuilder.Append(item.getName() + ":" + item.getTime() + "|");
                     }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show("Unable to save offline data." + e.ToString());
-                    }
+                    */
+
+                    //Add content to file
+                    File.AppendAllText(path + filename, stringBuilder.ToString());
+
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Unable to save offline data." + e.ToString());
+                }
             }
-                
+
         }
 
 
@@ -332,27 +335,28 @@ namespace AntiLobby_2
                 try
                 {
 
-                //File.Open(path + saveFile, FileMode.Open);
+                    //File.Open(path + saveFile, FileMode.Open);
 
-                foreach (var item in processList)
-                {
+                    foreach (var item in processList)
+                    {
 
                         stringBuilder.Append(item.getName() + ":" + item.getTime() + "|");
+                    }
+
+                    /*Encrypt or obfuscate
+                    *Pending... still establishing a way to implement this feature
+                    * for now keeping it in plaintext
+                    */
+
+                    //Add content to file
+                    File.AppendAllText(path + saveFile, stringBuilder.ToString());
+
                 }
-
-                /*Encrypt or obfuscate
-                *Pending... still establishing a way to implement this feature
-                * for now keeping it in plaintext
-                */
-           
-                //Add content to file
-                File.AppendAllText(path + saveFile, stringBuilder.ToString());
-
-                } catch (Exception e)
+                catch (Exception e)
                 {
                     MessageBox.Show("Unable to save offline data." + e.ToString());
                 }
-              
+
             }
             else
             {
@@ -377,13 +381,14 @@ namespace AntiLobby_2
             StringBuilder stringBuilder = new StringBuilder();
 
             //find file
-            if (File.Exists(path + saveFile)) {
+            if (File.Exists(path + saveFile))
+            {
                 stringBuilder.Append(File.ReadAllText(path + saveFile)); //append text from file into stringbuilder
                 return stringBuilder.ToString(); //return text
-            } 
+            }
 
 
-                return null;
+            return null;
         }
 
         public async Task<bool> doSessionIDSaveViaAPI()
@@ -391,21 +396,21 @@ namespace AntiLobby_2
             var returnString = "";
             using (var client = new HttpClient())
             {
-                
+
                 var values = new Dictionary<string, string>
             {
             { "value", "blank" },
             };
-            
+
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
                 var content = new FormUrlEncodedContent(values);
                 //var response = await client.PostAsync("https://www.prestigecode.com/api/antilobby/sanctum/token", content);
-                var response = await client.PostAsync("https://antilobby.prestigecode.com/user/session/update/" + this.session.Id + "/"+ this.session.TickCount, content);
+                var response = await client.PostAsync("https://antilobby.prestigecode.com/user/session/update/" + session.Id + "/" + session.TickCount, content);
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 //response modification, probably not the best way to detect an error 
                 //but I expect a string 100% of the time to be smaller than 256 chars
-                returnString = (responseString.ToString().Length <= 7 ) ? ""+responseString.ToString() : "error";
+                returnString = (responseString.ToString().Length <= 7) ? "" + responseString.ToString() : "error";
 
                 if (returnString == "error")
                 {
@@ -440,12 +445,13 @@ namespace AntiLobby_2
                 if (returnString == "null")
                 {
                     MessageBox.Show("There was an issue trying to authenticate the saved token.");
-                } else
+                }
+                else
                 {
-                    this.session.setInMemoryUserEmail(returnString);
+                    session.setInMemoryUserEmail(returnString);
                     global.isLoggedIn = true;
                 }
-                
+
                 Debug.WriteLine("Done getting auth email");
 
             }
@@ -470,7 +476,7 @@ namespace AntiLobby_2
                 };
 
                 //var convertedList = itemToSave.Value.GetDetailedtime().ToDictionary(x => x.Key, x=>x.Value.ToString());
-                var convertedList = itemsToSave.ToDictionary(x => x.Key, x=>x.Value.ToString());
+                var convertedList = itemsToSave.ToDictionary(x => x.Key, x => x.Value.ToString());
 
                 foreach (KeyValuePair<string, string> pair in convertedList)
                 {
@@ -482,7 +488,7 @@ namespace AntiLobby_2
 
                 var content = new FormUrlEncodedContent(values);
 
-                var response = await client.PostAsync("https://antilobby.prestigecode.com/user/apptime/v3/" + this.session.Id + "/" + processName + "/" + processTime, content);
+                var response = await client.PostAsync("https://antilobby.prestigecode.com/user/apptime/v3/" + session.Id + "/" + processName + "/" + processTime, content);
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 //response modification, probably not the best way to detect an error 
@@ -495,13 +501,15 @@ namespace AntiLobby_2
                     //MessageBox.Show("There was an error processing.");
                     //Debug.WriteLine("Done saving entries");
 
-                } else {
+                }
+                else
+                {
                     Debug.WriteLine("Error " + returnString.ToString());
                     return false;
                 }
             }
             Debug.WriteLine($"--------Process:{processName}--FINISHED-----------------------------------");
-            
+
             return true;
         }
 
@@ -521,7 +529,7 @@ namespace AntiLobby_2
                 var content = new FormUrlEncodedContent(values);
                 var response = await client.GetAsync("https://antilobby.prestigecode.com/user/session/id");
                 var responseString = await response.Content.ReadAsStringAsync();
-                
+
                 Debug.WriteLine("Return string" + returnString.ToString());
 
                 returnString = (responseString.Length < 256) ? "" + responseString.ToString() : null;
@@ -529,12 +537,13 @@ namespace AntiLobby_2
                 {
                     //MessageBox.Show("There was an error getting a new Session ID.");
                     Debug.Print("Error getting a new Session ID.");
-                    this.session.Id = MyUtils.getSessionID(); //get a randomly generated ID from application incase it cannot connect
-                }else
-                {
-                    this.session.Id = returnString;
+                    session.Id = MyUtils.getSessionID(); //get a randomly generated ID from application incase it cannot connect
                 }
-                
+                else
+                {
+                    session.Id = returnString;
+                }
+
 
             }
             Debug.WriteLine("Finished");

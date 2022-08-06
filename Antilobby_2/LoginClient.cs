@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,7 +16,7 @@ namespace Antilobby_2
         {
             InitializeComponent();
             WebBrowser clientView = webBrowser;
-            this.Session = session;
+            Session = session;
         }
 
 
@@ -35,30 +29,31 @@ namespace Antilobby_2
              * Action: When user url contains @, entire url contents will be saved to userToken for PrestigeCode account linking
              * */
 
-            if(webBrowser.Url.ToString().Contains("@"))
+            if (webBrowser.Url.ToString().Contains("@"))
             {
                 Session.saveUserToken(webBrowser.Url.ToString());
-                
+
                 return "client_close";
             }
 
             return null;
-            
+
         }
 
         private void webBrowser_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
             string returnValue = storedValue;
-            
+
             if (storedValue == null)
             {
                 //nothing returned
-            } else
+            }
+            else
             {
                 switch (storedValue)
                 {
                     case "client_close":
-                        this.Close();
+                        Close();
                         break;
                     default:
                         break;
@@ -68,7 +63,7 @@ namespace Antilobby_2
 
         private void lblLoginClientCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void txtUrlStatus_Click(object sender, EventArgs e)
@@ -87,7 +82,7 @@ namespace Antilobby_2
             try
             {
                 System.Diagnostics.Process.Start("https://antilobby.prestigecode.com/register");
-                this.Close();
+                Close();
             }
             catch (Exception x)
             {
@@ -141,43 +136,44 @@ namespace Antilobby_2
 
                 //response modification, probably not the best way to detect an error 
                 //but I expect a string 100% of the time to be smaller than 256 chars
-                returnString = (responseString.Length < 256) ? ""+responseString.ToString() : null;
+                returnString = (responseString.Length < 256) ? "" + responseString.ToString() : null;
                 Session.setInMemoryUserToken(returnString);
                 Session.saveUserToken(returnString);
                 //logger.SaveOfflineGeneric("_UserToken.antilobby", new string[] { returnString });
 
                 global.isLoggedIn = Session.hasInMemoryUserToken();
                 Session.setInMemoryUserEmail(txtEmail.Text);
-                
+
                 // httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
-                if(returnString == null)
+                if (returnString == null)
                 {
                     MessageBox.Show("There was an error processing your credentials.");
                     global.needsRestart = false;
                     return false;
-                } else
+                }
+                else
                 {
                     global.needsRestart = true;
                     return true;
                 }
 
-                
+
             }
-            
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(global.isLoggedIn)
+            if (global.isLoggedIn)
             {
-                this.Close();
+                Close();
                 MessageBox.Show("Logged in successful. The client is now authorized to save data on your behalf.");
             }
         }
 
         private async void txtPassword_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Return)
+            if (e.KeyCode == Keys.Return)
             {
                 await performDoLoginAsync();
             }

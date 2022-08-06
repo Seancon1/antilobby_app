@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 //https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.aescryptoserviceprovider?redirectedfrom=MSDN&view=netframework-4.8
 
@@ -40,14 +36,14 @@ namespace Antilobby_2.Utils
         }
         */
 
-        
+
 
         public string decrypt(byte[] encrypted)
         {
             using (AesCryptoServiceProvider myAes = new AesCryptoServiceProvider())
             {
-                myAes.Key = this.key;
-                myAes.IV = this.IV;
+                myAes.Key = key;
+                myAes.IV = IV;
                 // Decrypt the bytes to a string.
                 string roundtrip = DecryptStringFromBytes_Aes(encrypted, myAes.Key, myAes.IV);
 

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Antilobby_2.Alert
 {
@@ -20,7 +16,8 @@ namespace Antilobby_2.Alert
 
         public AlertAction() { }
 
-        public AlertAction(Alert alert) {
+        public AlertAction(Alert alert)
+        {
             this.alert = alert;
         }
 
@@ -29,14 +26,14 @@ namespace Antilobby_2.Alert
         {
             try
             {
-                this.processList = Process.GetProcessesByName(alert.ProcessName);
-                foreach(Process item in this.processList)
+                processList = Process.GetProcessesByName(alert.ProcessName);
+                foreach (Process item in processList)
                 {
                     //process.Close();
                     //process.SafeHandle.Close();
                     item.Kill();
                 }
-                
+
             }
             catch (Exception e)
             {
@@ -48,7 +45,7 @@ namespace Antilobby_2.Alert
 
         [System.Runtime.InteropServices.DllImport("User32.dll")]
         public static extern bool ShowWindow(IntPtr handle, int nCmdShow);
-        
+
         /*
          * Experimental Feature
          * 
@@ -78,8 +75,8 @@ namespace Antilobby_2.Alert
                 }
                 */
 
-                this.processList = Process.GetProcessesByName(alert.ProcessName);
-                foreach (Process item in this.processList)
+                processList = Process.GetProcessesByName(alert.ProcessName);
+                foreach (Process item in processList)
                 {
                     var processHandle = item.MainWindowHandle;
                     if (processHandle != null)
@@ -97,6 +94,6 @@ namespace Antilobby_2.Alert
                 Debug.WriteLine(e.ToString());
             }
         }
- 
+
     }
 }

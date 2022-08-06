@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Antilobby_2.Alert
 {
@@ -14,17 +10,17 @@ namespace Antilobby_2.Alert
 
         public AlertPlay()
         {
-            this.active = false;
+            active = false;
         }
 
         public void turnOff()
         {
-            this.active = false;
+            active = false;
         }
 
         public void turnOn()
         {
-            this.active = true;
+            active = true;
         }
 
         public void play()

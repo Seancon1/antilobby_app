@@ -1,9 +1,4 @@
 ﻿using AntiLobby_2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Antilobby_2
 {
@@ -11,7 +6,7 @@ namespace Antilobby_2
 
     public class User
     {
-        
+
         private string IP;
         private string MAC;
         private string userToken;
@@ -19,16 +14,16 @@ namespace Antilobby_2
 
         public User()
         {
-            this.IP = "" + MyUtils.GetIPAddress();
-            this.MAC = "" + MyUtils.getMacAddress();
-            this.email = "null";
+            IP = "" + MyUtils.GetIPAddress();
+            MAC = "" + MyUtils.getMacAddress();
+            email = "null";
         }
 
         public User(string inIP, string inMAC)
         {
-            this.IP = inIP;
-            this.MAC = inMAC;
-            this.email = "null";
+            IP = inIP;
+            MAC = inMAC;
+            email = "null";
         }
 
         public string IP1 { get => IP; set => IP = value; }

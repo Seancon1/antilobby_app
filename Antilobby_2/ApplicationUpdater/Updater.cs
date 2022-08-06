@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Net;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 
 
 namespace Antilobby_2.ApplicationUpdater
@@ -13,7 +9,7 @@ namespace Antilobby_2.ApplicationUpdater
     {
 
         public static string DIRECT_EXE_URL = "https://antilobby.prestigecode.com/download/latest";
-        
+
         public Updater()
         {
             DoProcess();
@@ -47,8 +43,8 @@ namespace Antilobby_2.ApplicationUpdater
                 }
 
                 //Put path into new Uri object for flexibility
-                Uri uriTest = new Uri((string) path);
-                string absolutePath = @uriTest.AbsolutePath + "" + timeNumber; 
+                Uri uriTest = new Uri((string)path);
+                string absolutePath = @uriTest.AbsolutePath + "" + timeNumber;
 
                 //Delete old backup if it's already there
                 /**
@@ -59,7 +55,7 @@ namespace Antilobby_2.ApplicationUpdater
                 }
     **/
                 //File.Move("Antilobby_2.exe.bac", absolutePath);
-                File.Move(""+timeNumber, absolutePath);
+                File.Move("" + timeNumber, absolutePath);
                 File.SetAttributes(absolutePath, FileAttributes.Normal); //takes away the access denied error?
 
             }
@@ -74,5 +70,5 @@ namespace Antilobby_2.ApplicationUpdater
 
     }
 
-    
+
 }
