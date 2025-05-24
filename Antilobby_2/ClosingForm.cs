@@ -9,18 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Antilobby_2;
 
-namespace Antilobby_2
-{
-    public partial class ClosingForm : Form
-    {
-        public ClosingForm()
-        {
-            InitializeComponent();
-
-           
-        }
-
-
-
-    }
+namespace Antilobby_2 {
+public partial class ClosingForm : Form {
+  /// <summary>
+  /// Initializes a new instance of the <see cref="ClosingForm"/> class.
+  /// </summary>
+  public ClosingForm() { InitializeComponent(); }
+}
 }
